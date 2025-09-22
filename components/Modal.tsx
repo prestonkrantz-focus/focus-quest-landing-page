@@ -36,23 +36,25 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 {!submitted ? (
                     <>
                         <h2 className="font-orbitron text-3xl font-bold text-white mb-2">WELCOME, AWAKENED.</h2>
-                        <p className="text-gray-300 mb-6">The Quest will begin soon. Leave your email to secure your place. We will not succumb to the Signal.</p>
-                        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-                            <input
-                                type="email"
-                                placeholder="your-callsign@domain.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="w-full px-4 py-3 bg-gray-900 border-2 border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all"
-                            />
-                            <button
-                                type="submit"
-                                className="w-full font-orbitron uppercase font-bold tracking-widest px-6 py-3 bg-cyan-500 text-gray-900 rounded-md hover:bg-cyan-400 transition-colors transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-cyan-400"
-                            >
-                                Submit Transmission
-                            </button>
-                        </form>
+<p className="text-gray-300 mb-6">The Quest will begin soon. Leave your email to secure your place. We will not succumb to the Signal.</p>
+<form name="alpha-signup" data-netlify="true" onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <input type="hidden" name="form-name" value="alpha-signup" />
+    <input
+        name="email" // <-- ATTRIBUTE ADDED
+        type="email"
+        placeholder="your-callsign@domain.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="w-full p-4 bg-gray-900 border-2 border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all"
+    />
+    <button
+        type="submit"
+        className="w-full font-orbitron uppercase font-bold tracking-widest px-6 py-3 bg-cyan-500 text-gray-900 rounded-md hover:bg-cyan-400 transition-colors transform hover:scale-105"
+    >
+        Submit Transmission
+    </button>
+</form>
                     </>
                 ) : (
                     <div>
