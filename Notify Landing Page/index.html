@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notify - Awareness Reimagined</title>
+    <meta name="description" content="Notify is your mindful browser companion. Stop scrolling, start living.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar glass">
+        <div class="logo">
+            <span class="logo-icon"><i class="fa-solid fa-bell"></i></span>
+            Notify
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#mission">Mission</a></li>
+            </ul>
+        </nav>
+        <button class="btn-primary cta-trigger">Get Early Access</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in-up">Reclaim Your <span class="gradient-text">Focus</span></h1>
+            <p class="fade-in-up delay-1">The mindful browser that helps you stop scrolling and start living. Break free from digital traps with awareness.</p>
+            <div class="hero-buttons fade-in-up delay-2">
+                <button class="btn-primary btn-large cta-trigger">Join the Waitlist <i class="fa-solid fa-arrow-right"></i></button>
+                <a href="#how-it-works" class="btn-secondary">How it works</a>
+            </div>
+            
+            <div class="stats-container fade-in-up delay-3">
+                <div class="stat-item">
+                    <span class="stat-number">2h+</span>
+                    <span class="stat-label">Daily Saved</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Privacy First</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual fade-in-up delay-2">
+            <!-- Abstract Dashboard / App Mockup Representation -->
+            <div class="app-mockup glass">
+                <div class="mockup-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="mockup-body">
+                    <div class="alert-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <p>Scroll Trap Detected</p>
+                        <span>You've been scrolling for 15 minutes. Take a breath?</span>
+                    </div>
+                    <div class="content-lines">
+                        <div class="line full"></div>
+                        <div class="line three-quarter"></div>
+                        <div class="line half"></div>
+                        <div class="line full"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="glow-effect"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>Why <span class="gradient-text">Notify?</span></h2>
+            <p>Designed to interrupt the loop and give you back your agency.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card glass tilt-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Scroll Guard</h3>
+                <p>Intelligent detection of doom-scrolling patterns. Notify gently nudges you when you get stuck.</p>
+            </div>
+            <div class="feature-card glass tilt-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3>Mindful Prompts</h3>
+                <p>Customizable checkpoints that ask "Do you really need this?" before you buy or click.</p>
+            </div>
+            <div class="feature-card glass tilt-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3>Awareness Stats</h3>
+                <p>Visualize your attention span and see how much life you reclaim every day.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="mission">
+        <div class="mission-content glass">
+            <h2>Our Mission</h2>
+            <p>We believe technology should serve us, not use us. In an attention economy fighting for every second of your time, <strong>Notify</strong> is your shield. We are building tools to help you navigate the digital world with intention.</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to take control?</h2>
+        <p>Join our growing community of mindful users.</p>
+        <button class="btn-primary btn-large cta-trigger">Get Early Access</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="brand">
+                <span>Notify</span>
+                <p>© 2026 Focus Quest. All rights reserved.</p>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://github.com/prestonkrantz-focus"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content glass">
+            <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <h3>Join the Waitlist</h3>
+                <p>Be the first to know when Notify launches.</p>
+            </div>
+            <!-- Netlify compliant form structure -->
+            <form id="signup-form" name="notify-waitlist" method="POST" data-netlify="true">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Jane Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Sign Up</button>
+            </form>
+            <div id="success-message" class="hidden">
+                <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+                <h3>You're on the list!</h3>
+                <p>We'll keep you posted.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
