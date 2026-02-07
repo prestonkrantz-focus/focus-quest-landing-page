@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,20 @@
     <meta name="description" content="Notify is your mindful browser companion. Stop scrolling, start living.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <!-- Navigation -->
     <header class="navbar glass">
         <div class="logo">
-            <span class="logo-icon"><i class="fa-solid fa-bell"></i></span>
+            <span class="logo-icon"><i class="fa-solid fa-bell-slash"></i></span>
             Notify
         </div>
         <nav>
@@ -26,83 +30,73 @@
                 <li><a href="#mission">Mission</a></li>
             </ul>
         </nav>
-        <button class="btn-primary cta-trigger">Get Early Access</button>
+        <div class="nav-buttons">
+            <a href="https://github.com/prestonkrantz-focus/notify" target="_blank" class="btn-secondary small"><i
+                    class="fa-brands fa-github"></i> Install</a>
+            <button class="btn-primary cta-trigger">Get Early Access</button>
+        </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="fade-in-up">Reclaim Your <span class="gradient-text">Focus</span></h1>
-            <p class="fade-in-up delay-1">The mindful browser that helps you stop scrolling and start living. Break free from digital traps with awareness.</p>
+            <h1 class="fade-in-up">Honor Your <span class="gradient-text">Intentions</span>, Not Your Impulses.</h1>
+            <p class="fade-in-up delay-1">Get the notifications you want, not the ones you don't. Notify holds you to
+                the resolutions you set, giving you peace of mind, filtered.</p>
             <div class="hero-buttons fade-in-up delay-2">
-                <button class="btn-primary btn-large cta-trigger">Join the Waitlist <i class="fa-solid fa-arrow-right"></i></button>
-                <a href="#how-it-works" class="btn-secondary">How it works</a>
+                <button class="btn-primary btn-large cta-trigger">Join the Waitlist <i
+                        class="fa-solid fa-arrow-right"></i></button>
+                <a href="https://github.com/prestonkrantz-focus/notify" target="_blank"
+                    class="btn-secondary btn-large"><i class="fa-brands fa-github"></i> Test on GitHub</a>
             </div>
-            
+
             <div class="stats-container fade-in-up delay-3">
                 <div class="stat-item">
-                    <span class="stat-number">2h+</span>
-                    <span class="stat-label">Daily Saved</span>
+                    <span class="stat-number"><i class="fa-solid fa-check-double"></i></span>
+                    <span class="stat-label">Zen Agent</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">100%</span>
-                    <span class="stat-label">Privacy First</span>
+                    <span class="stat-label">Local & Private</span>
                 </div>
             </div>
         </div>
         <div class="hero-visual fade-in-up delay-2">
-            <!-- Abstract Dashboard / App Mockup Representation -->
-            <div class="app-mockup glass">
-                <div class="mockup-header">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-                <div class="mockup-body">
-                    <div class="alert-box">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <p>Scroll Trap Detected</p>
-                        <span>You've been scrolling for 15 minutes. Take a breath?</span>
-                    </div>
-                    <div class="content-lines">
-                        <div class="line full"></div>
-                        <div class="line three-quarter"></div>
-                        <div class="line half"></div>
-                        <div class="line full"></div>
-                    </div>
-                </div>
+            <div class="image-wrapper tilt-card">
+                <img src="app-mockup.png" alt="Notify App Interface" class="hero-image">
+                <div class="glow-effect"></div>
             </div>
-            <div class="glow-effect"></div>
         </div>
     </section>
 
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="section-header">
-            <h2>Why <span class="gradient-text">Notify?</span></h2>
-            <p>Designed to interrupt the loop and give you back your agency.</p>
+            <h2>Peace of mind, <span class="gradient-text">filtered.</span></h2>
+            <p>Simply tell the bot what you need. We handle the rest.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card glass tilt-card">
                 <div class="icon-box">
-                    <i class="fa-solid fa-shield-halved"></i>
+                    <i class="fa-solid fa-ban"></i>
                 </div>
-                <h3>Scroll Guard</h3>
-                <p>Intelligent detection of doom-scrolling patterns. Notify gently nudges you when you get stuck.</p>
+                <h3>Block Distractions</h3>
+                <p>"Block Instagram and TikTok for 4 hours." Notify enforces your rules instantly.</p>
             </div>
             <div class="feature-card glass tilt-card">
                 <div class="icon-box">
-                    <i class="fa-solid fa-brain"></i>
+                    <i class="fa-solid fa-filter"></i>
                 </div>
-                <h3>Mindful Prompts</h3>
-                <p>Customizable checkpoints that ask "Do you really need this?" before you buy or click.</p>
+                <h3>Smart Filtering</h3>
+                <p>Allow DMs from specific people while silencing the noise. Granular control over your attention.</p>
             </div>
             <div class="feature-card glass tilt-card">
                 <div class="icon-box">
-                    <i class="fa-solid fa-chart-line"></i>
+                    <i class="fa-solid fa-robot"></i>
                 </div>
-                <h3>Awareness Stats</h3>
-                <p>Visualize your attention span and see how much life you reclaim every day.</p>
+                <h3>Zen Agent</h3>
+                <p>Natural language commands. Just type what you want to focus on, and let the agent configure your
+                    phone.</p>
             </div>
         </div>
     </section>
@@ -110,16 +104,22 @@
     <!-- Mission Section -->
     <section id="mission" class="mission">
         <div class="mission-content glass">
-            <h2>Our Mission</h2>
-            <p>We believe technology should serve us, not use us. In an attention economy fighting for every second of your time, <strong>Notify</strong> is your shield. We are building tools to help you navigate the digital world with intention.</p>
+            <h2>Reclaim Your Harbor</h2>
+            <p>We believe your phone should be a tool that serves you, not a slot machine that hooks you.
+                <strong>Notify</strong> helps you navigate the digital world with intention, ensuring your harbor
+                remains calm.</p>
         </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
-        <h2>Ready to take control?</h2>
-        <p>Join our growing community of mindful users.</p>
-        <button class="btn-primary btn-large cta-trigger">Get Early Access</button>
+        <h2>Ready to filter the noise?</h2>
+        <p>Join the movement towards digital mindfulness.</p>
+        <div class="cta-group">
+            <button class="btn-primary btn-large cta-trigger">Join Waitlist</button>
+            <a href="https://github.com/prestonkrantz-focus/notify" target="_blank" class="btn-secondary btn-large">View
+                on GitHub</a>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -167,4 +167,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
