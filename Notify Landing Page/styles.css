@@ -294,6 +294,9 @@ a {
     width: 100%;
     display: flex;
     justify-content: center;
+    /* Soften the edges of the image container to blend into the background */
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 .image-wrapper:hover {
