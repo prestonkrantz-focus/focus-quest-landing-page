@@ -19,21 +19,25 @@
 <body>
 
     <!-- Navigation -->
-    <header class="navbar glass">
-        <div class="logo">
-            <span class="logo-icon"><i class="fa-solid fa-bell-slash"></i></span>
-            Notify
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#mission">Mission</a></li>
-            </ul>
-        </nav>
-        <div class="nav-buttons">
-            <a href="https://github.com/prestonkrantz-focus/notify" target="_blank" class="btn-secondary small"><i
-                    class="fa-brands fa-github"></i> Install</a>
-            <button class="btn-primary cta-trigger">Get Early Access</button>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-bell-slash"></i></span>
+                Notify
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#mission">Mission</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </nav>
+            <div class="nav-buttons">
+                <a href="https://github.com/prestonkrantz-focus/notify" target="_blank" class="btn-text"><i
+                        class="fa-brands fa-github"></i> Install</a>
+                <button class="btn-primary small cta-trigger">Get Early Access</button>
+            </div>
         </div>
     </header>
 
@@ -52,8 +56,8 @@
 
             <div class="stats-container fade-in-up delay-3">
                 <div class="stat-item">
-                    <span class="stat-number"><i class="fa-solid fa-check-double"></i></span>
-                    <span class="stat-label">Zen Agent</span>
+                    <span class="stat-number"><i class="fa-solid fa-microphone-lines"></i></span>
+                    <span class="stat-label">Natural Language</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">100%</span>
@@ -63,8 +67,30 @@
         </div>
         <div class="hero-visual fade-in-up delay-2">
             <div class="image-wrapper tilt-card">
-                <img src="app-mockup.png" alt="Notify App Interface" class="hero-image">
+                <img src="hero-ui.png" alt="Notify App Interface" class="hero-image">
                 <div class="glow-effect"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section class="problem-section">
+        <div class="problem-content">
+            <div class="problem-text">
+                <h2>The Slot Machine in Your Pocket</h2>
+                <p>Apps are engineered to hook you with <span class="highlight">variable rewards</span>. Every
+                    notification is a pull of the lever. <strong>Notify</strong> breaks this cycle by filtering the
+                    noise and letting only the signal through.</p>
+                <div class="problem-stats">
+                    <div class="p-stat">
+                        <strong>5.7 hrs</strong>
+                        <span>Avg daily screen time</span>
+                    </div>
+                    <div class="p-stat">
+                        <strong>150+</strong>
+                        <span>Daily unlock attempts</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -92,11 +118,10 @@
             </div>
             <div class="feature-card glass tilt-card">
                 <div class="icon-box">
-                    <i class="fa-solid fa-robot"></i>
+                    <i class="fa-solid fa-comment-dots"></i>
                 </div>
-                <h3>Zen Agent</h3>
-                <p>Natural language commands. Just type what you want to focus on, and let the agent configure your
-                    phone.</p>
+                <h3>Natural Language</h3>
+                <p>No complex settings. Just scroll to the input and type what you want to focus on.</p>
             </div>
         </div>
     </section>
@@ -107,7 +132,65 @@
             <h2>Reclaim Your Harbor</h2>
             <p>We believe your phone should be a tool that serves you, not a slot machine that hooks you.
                 <strong>Notify</strong> helps you navigate the digital world with intention, ensuring your harbor
-                remains calm.</p>
+                remains calm.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog-section">
+        <div class="section-header">
+            <h2>Latest <span class="gradient-text">Insights</span></h2>
+            <p>Exploring the intersection of technology, psychology, and mindfulness.</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card glass tilt-card">
+                <div class="blog-image">
+                    <img src="blog-thumb.png" alt="Phone in void">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-tag">Digital Wellness</span>
+                    <h3>The Slot Machine in Your Pocket</h3>
+                    <p>Why variable rewards keep you hooked, and how to break the cycle using intent-based filtering.
+                    </p>
+                    <a href="#" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Placeholder for layout balance if needed, or just center the one -->
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community-section">
+        <div class="section-header">
+            <h2>Join the <span class="gradient-text">Movement</span></h2>
+            <p>Thousands of users are reclaiming their attention spans.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card glass">
+                <p>"Finally, a tool that respects my intention. I blocked TikTok for focus hours and my productivity
+                    doubled."</p>
+                <div class="user-info">
+                    <div class="user-avatar" style="background: #ef4444">A</div>
+                    <span>Alex M.</span>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <p>"The natural language control is a game changer. I just type 'Deep Work' and my phone goes silent."
+                </p>
+                <div class="user-info">
+                    <div class="user-avatar" style="background: #3b82f6">S</div>
+                    <span>Sarah K.</span>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <p>"Notify doesn't just block apps, it changes your relationship with your phone. Highly recommended."
+                </p>
+                <div class="user-info">
+                    <div class="user-avatar" style="background: #10b981">D</div>
+                    <span>David R.</span>
+                </div>
+            </div>
         </div>
     </section>
 
