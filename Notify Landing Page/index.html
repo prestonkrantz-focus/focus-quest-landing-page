@@ -189,37 +189,38 @@
         .intent-demo {
             margin-top: 48px;
             max-width: 400px;
-            height: 60px;
-            border: 1px solid rgba(240, 237, 232, 0.15);
-            background: rgba(255, 255, 255, 0.02);
+            height: 80px;
+            border: 1px solid rgba(240, 237, 232, 0.05);
+            background: rgba(255, 255, 255, 0.01);
             display: flex;
             align-items: center;
-            padding: 0 24px;
-            border-radius: 4px;
+            justify-content: center;
+            gap: 16px;
+            padding: 0 32px;
+            border-radius: 40px;
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity 1s, transform 1s;
+            transition: opacity 1.5s, transform 1.5s;
         }
         .intent-demo.show {
             opacity: 1;
             transform: translateY(0);
         }
-        .intent-text {
-            color: rgba(240, 237, 232, 0.4);
-        }
-        .intent-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.2em;
+        .intent-breath-circle {
+            width: 14px;
+            height: 14px;
             background: var(--accent);
-            margin-left: 4px;
-            vertical-align: middle;
-            opacity: 0;
+            border-radius: 50%;
+            opacity: 0.8;
+            transition: transform 3s ease-in-out;
         }
-        .intent-cursor.blink {
-            animation: blink 1s infinite step-end;
+        .intent-breath-circle.inhale {
+            transform: scale(2);
         }
-        @keyframes blink { 50% { opacity: 0; } }
+        .intent-text {
+            color: rgba(240, 237, 232, 0.7);
+            transition: opacity 0.5s;
+        }
 
         /* Scroll Line */
         .scroll-indicator {
@@ -644,10 +645,10 @@
     </section>
 
     <section class="problem-section container" id="problem">
-        <h2 class="fade-in">You're not addicted. You're just bored. Or sad. Or anxious.</h2>
+        <h2 class="fade-in">Your brain craves closure. But the scroll is endless.</h2>
         <div class="fade-in delay-1">
-            <p>Half of people who doomscroll know exactly why they're doing it. The other half don't. Both groups end up in the same place — an hour gone, feeling worse than before they started.</p>
-            <p>You're not using your phone wrong. You're using it the way it was designed to be used. Sentio doesn't fight that. It just adds one thing the designers left out: a moment to decide.</p>
+            <p>We don't scroll because we lack discipline. We scroll because our nervous system is seeking regulation. Your phone is a highly effective tool to manage overstimulation or fatigue—until it traps you.</p>
+            <p>The problem isn't the screen, it's the absence of an ending. Infinite feeds exploit our psychological need for closure. Sentio artificially induces that closure, honoring your need to regulate without losing another hour to the void.</p>
         </div>
     </section>
 
@@ -937,43 +938,34 @@
             const heroEls = document.querySelectorAll('.hero .fade-in');
             heroEls.forEach(el => el.classList.add('visible'));
 
-            // Intent Demo Typewriter
+            // Intent Demo Breathing
             const intentDemo = document.getElementById('intentDemo');
             const demoText = document.getElementById('demoText');
-            const cursorEl = document.querySelector('.intent-cursor');
+            const breathCircle = document.getElementById('breathCircle');
             
             setTimeout(() => {
                 intentDemo.classList.add('show');
                 
-                setTimeout(() => {
-                    cursorEl.style.opacity = '1';
-                    cursorEl.classList.add('blink');
-                }, 1000);
+                // Start breath cycle
+                setInterval(() => {
+                    if (breathCircle.classList.contains('inhale')) {
+                        breathCircle.classList.remove('inhale');
+                        demoText.style.opacity = '0';
+                        setTimeout(() => {
+                            demoText.innerText = "Breathe out.";
+                            demoText.style.opacity = '1';
+                        }, 500);
+                    } else {
+                        breathCircle.classList.add('inhale');
+                        demoText.style.opacity = '0';
+                        setTimeout(() => {
+                            demoText.innerText = "Breathe in.";
+                            demoText.style.opacity = '1';
+                        }, 500);
+                    }
+                }, 3500);
 
             }, 1500); // Wait 1.5s as requested before box appears
-
-            // Interaction on intent box
-            let clicked = false;
-            intentDemo.addEventListener('click', () => {
-                if(clicked) return;
-                clicked = true;
-                cursorEl.classList.remove('blink');
-                demoText.innerHTML = '';
-                
-                const finalStr = "That's the question Sentio asks too.";
-                let i = 0;
-                const typeTimer = setInterval(() => {
-                    demoText.innerHTML += finalStr.charAt(i);
-                    i++;
-                    if(i >= finalStr.length) {
-                        clearInterval(typeTimer);
-                        cursorEl.classList.add('blink');
-                        setTimeout(() => {
-                            intentDemo.style.opacity = '0';
-                        }, 2000);
-                    }
-                }, 50);
-            });
         });
 
         // Form Submit
