@@ -1,255 +1,994 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentio - Feel first. Scroll second.</title>
-    <meta name="description" content="Stop doomscrolling without giving up your social life. Sentio regulates your nervous system, it doesn't just block apps.">
-    
+    <title>Sentio | The moment before the trance</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="styles.css">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #141210;
+            --text: #F0EDE8;
+            --accent: #C8972A;
+            --accent-muted: rgba(200, 151, 42, 0.2);
+            --sage: #7A9B8A;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
 
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Custom cursor everywhere */
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container-wide {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 140px 24px;
+            position: relative;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            background-color: var(--text);
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        .cursor.hovered {
+            width: 48px;
+            height: 48px;
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            mix-blend-mode: normal;
+        }
+
+        /* Fade observer class */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: background 0.4s, backdrop-filter 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(20, 18, 16, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(240, 237, 232, 0.05);
+        }
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            font-size: 15px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--font-body);
+            font-size: 15px;
+            transition: all 0.3s;
+            background: transparent;
+            border-radius: 0; /* Sharp corners */
+        }
+        .btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 100px);
+            margin-bottom: 24px;
+            max-width: 900px;
+            will-change: transform;
+        }
+        .hero p {
+            font-size: 20px;
+            color: rgba(240, 237, 232, 0.7);
+            max-width: 580px;
+            margin-bottom: 48px;
+        }
+        .founding-text {
+            display: block;
+            font-size: 12px;
+            opacity: 0.5;
+            margin-top: 16px;
+        }
+
+        /* Intent Demo */
+        .intent-demo {
+            margin-top: 48px;
+            max-width: 400px;
+            height: 60px;
+            border: 1px solid rgba(240, 237, 232, 0.15);
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1s, transform 1s;
+        }
+        .intent-demo.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .intent-text {
+            color: rgba(240, 237, 232, 0.4);
+        }
+        .intent-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--accent);
+            margin-left: 4px;
+            vertical-align: middle;
+            opacity: 0;
+        }
+        .intent-cursor.blink {
+            animation: blink 1s infinite step-end;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Scroll Line */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            height: 80px;
+            background: var(--accent);
+            opacity: 0.8;
+            transform-origin: top;
+            animation: scrollLine 2s infinite ease-in-out;
+            transition: opacity 0.5s;
+        }
+        @keyframes scrollLine {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            50.1% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* Problem Section */
+        .problem-section {
+            text-align: center;
+        }
+        .problem-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vh;
+            height: 80vh;
+            background: radial-gradient(circle, var(--accent-muted) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 2s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .problem-section.glow::before {
+            opacity: 1;
+        }
+        .problem-section h2 {
+            font-size: clamp(36px, 5vw, 64px);
+            margin-bottom: 48px;
+            color: var(--text);
+        }
+        .problem-section p {
+            font-size: 20px;
+            color: rgba(240, 237, 232, 0.8);
+            text-align: left;
+        }
+        .problem-section p:first-child {
+            font-weight: 500;
+        }
+
+        /* How it Works / 3 Moments */
+        .moments-grid {
+            display: grid;
+            gap: 64px;
+            margin-top: 80px;
+        }
+        @media (min-width: 900px) {
+            .moments-grid {
+                grid-template-columns: 1fr;
+                gap: 120px;
+            }
+            .moment-card:nth-child(1) { margin-right: 20%; }
+            .moment-card:nth-child(2) { margin-left: 20%; }
+            .moment-card:nth-child(3) { margin-right: 10%; margin-left: 10%; }
+        }
+        .moment-card {
+            border-left: 4px solid var(--accent);
+            padding: 32px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            position: relative;
+        }
+        .moment-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 40px rgba(200, 151, 42, 0.05);
+            pointer-events: none;
+        }
+        .moment-label {
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 24px;
+            display: block;
+        }
+        .moment-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        @media (min-width: 768px) {
+            .moment-content { flex-direction: row; align-items: center; }
+            .moment-card:nth-child(even) .moment-content { flex-direction: row-reverse; }
+        }
+        .moment-text { flex: 1; }
+        .moment-visual {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .visual-box {
+            width: 240px;
+            height: 480px;
+            background: #080706; /* Mockup bg */
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Mockup Specifics */
+        /* 1: Vagus pulse */
+        .insta-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            border-radius: 14px;
+            filter: grayscale(40%);
+            position: relative;
+        }
+        .pulse-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px; height: 100px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: heartbeat 4s infinite ease-out;
+        }
+        @keyframes heartbeat {
+            0% { width: 60px; height: 60px; opacity: 0.8; }
+            50% { width: 140px; height: 140px; opacity: 0; }
+            100% { opacity: 0; }
+        }
+        .mockup-intent {
+            position: absolute;
+            bottom: 120px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0;
+            animation: fadeInOut 4s infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 20% { opacity: 0; }
+            30%, 70% { opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+
+        /* 2: Sensory Fade */
+        .fake-feed {
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                #1a1a1a,
+                #1a1a1a 120px,
+                #222 120px,
+                #222 130px
+            );
+            position: relative;
+        }
+        .fake-post {
+            width: 90%; height: 200px;
+            background:  #7A9B8A;
+            margin: 20px auto;
+            border-radius: 8px;
+            margin-top: 60px;
+            transition: filter 0.1s;
+        }
+        .mockup-timer {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: monospace;
+            border: 1px solid var(--accent);
+        }
+
+        /* 3: Somatic Reset */
+        .breathing-circle {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(122, 155, 138, 0.2);
+            border: 1px solid var(--sage);
+            animation: breathe 8s infinite ease-in-out;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+        .mood-grid {
+            position: absolute;
+            bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 80%;
+        }
+        .mood-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 4px;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        
+        .moment-text h3 { margin-bottom: 24px; font-size: 32px; }
+        .moment-text p { font-size: 18px; color: rgba(240, 237, 232, 0.8); }
+        .feature-tags { margin-top: 24px; font-size: 13px; color: rgba(240, 237, 232, 0.5); }
+        .feature-tags span { display: block; margin-bottom: 8px; }
+        .feature-tags span::before { content: '— '; color: var(--accent); }
+
+        /* Proxy Section */
+        .proxy-section {
+            background: rgba(255,255,255,0.01);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .proxy-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+            align-items: center;
+        }
+        @media (min-width: 900px) {
+            .proxy-layout { flex-direction: row; }
+        }
+        .proxy-text { flex: 1; }
+        .proxy-text h2 { font-size: 48px; margin-bottom: 24px; }
+        .proxy-cards {
+            flex: 1.5;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            justify-content: center;
+        }
+        .proxy-phone {
+            width: 200px; height: 400px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            background: #080706;
+            position: relative;
+        }
+        .proxy-phone.noisy {
+            background: repeating-linear-gradient(45deg, #222, #222 10px, #1a1a1a 10px, #1a1a1a 20px);
+            opacity: 0.6;
+        }
+        .proxy-phone.clean {
+            background: #080706;
+            display: flex; flex-direction: column; padding: 20px 10px;
+        }
+        .fake-dm { height: 40px; background: rgba(255,255,255,0.05); margin-bottom: 10px; border-radius: 8px; }
+        .proxy-arrow { color: var(--accent); font-size: 24px; text-align: center; }
+        .proxy-arrow span { display: block; font-size: 12px; margin-top: 8px; font-family: var(--font-body); }
+
+        /* Dashboard */
+        .dashboard-section { overflow: hidden; }
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-top: 64px;
+            position: relative;
+        }
+        @media (min-width: 768px) {
+            .dash-grid { grid-template-columns: repeat(3, 1fr); }
+            /* Break grid */
+            .dash-card:nth-child(2) { transform: translateY(40px); }
+            .dash-card:nth-child(3) { transform: translateY(-20px); }
+        }
+        .dash-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 40px 32px;
+        }
+        .dash-num {
+            font-family: var(--font-display);
+            font-size: 72px;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+        .dash-title { color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .dash-desc { font-size: 15px; color: rgba(240, 237, 232, 0.6); }
+        .dash-footer { margin-top: 80px; font-size: 14px; opacity: 0.5; text-align: center; }
+
+        /* What Sentio is not */
+        .not-list {
+            margin-top: 64px;
+        }
+        .not-item {
+            font-size: clamp(20px, 3vw, 24px);
+            margin-bottom: 32px;
+            position: relative;
+            display: inline-block;
+            clear: both;
+            float: left;
+            width: 100%;
+        }
+        .strikethrough {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            height: 2px;
+            background: var(--accent);
+            width: 0;
+            transition: width 0.8s ease-out;
+        }
+        .not-item.visible .strikethrough {
+            width: calc(100% + 20px);
+        }
+
+        /* Progress */
+        .progress-section { text-align: center; }
+        .progress-line {
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            margin: 64px 0 32px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+        }
+        .prog-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--bg); border: 2px solid var(--sage);
+            transform: translateY(-5px);
+        }
+        .prog-dot:nth-child(1) { border-color: rgba(122, 155, 138, 0.4); }
+        .prog-dot:nth-child(2) { border-color: rgba(122, 155, 138, 0.7); }
+        .prog-dot:nth-child(3) { border-color: var(--sage); }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 80vw; height: 80vh;
+            background: radial-gradient(circle at bottom, rgba(200, 151, 42, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cta-form {
+            max-width: 400px;
+            margin: 48px auto 0;
+            position: relative;
+            z-index: 2;
+        }
+        .input-group {
+            margin-bottom: 16px;
+        }
+        input {
+            width: 100%;
+            padding: 16px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 16px;
+        }
+        input:focus { outline: none; border-color: var(--accent); }
+        .btn-submit { width: 100%; margin-top: 32px; cursor: none; }
+        .success-msg { display: none; font-size: 20px; color: var(--sage); margin-top: 40px; }
+
+        footer { text-align: center; padding: 40px; font-size: 14px; opacity: 0.4; }
+
+    </style>
+</head>
 <body>
 
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="navbar-container">
-            <div class="logo">
-                <span class="logo-icon">
-                    <!-- A simple circle to represent the 'Somatic Reset' breathing -->
-                    <div class="breathing-circle-small"></div>
-                </span>
-                Sentio
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#insight">The Insight</a></li>
-                    <li><a href="#system">How it Works</a></li>
-                    <li><a href="#philosophy">Our Philosophy</a></li>
-                </ul>
-            </nav>
-            <div class="nav-buttons">
-                <button class="btn-primary small cta-trigger">Request Early Access</button>
-            </div>
-        </div>
-    </header>
+    <div class="cursor" id="cursor"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <nav id="nav">
+        <div class="logo">Sentio</div>
+        <div class="nav-links">
+            <a href="#how">How it Works</a>
+            <a href="#cta" class="btn hover-target">Request Access</a>
+        </div>
+    </nav>
+
+    <section class="hero container-wide">
         <div class="hero-content">
-            <span class="hero-kicker">A new kind of digital protocol.</span>
-            <h1 class="fade-in">Feel first.<br>Scroll second.</h1>
-            <p class="fade-in delay-1">Stop doomscrolling without deleting your social apps. Sentio gives you back the moment before the trance — every time.</p>
-            <div class="hero-buttons fade-in delay-2">
-                <button class="btn-primary btn-large cta-trigger">Join the Waitlist</button>
-                <span class="pricing-hint">Free for founding users</span>
+            <h1 class="hero-title">You didn't mean to scroll for 45 minutes.</h1>
+            <p class="hero-sub fade-in delay-1">Sentio gives you back the moment before the trance — every time. No app deletions. No cold turkey. Just a pause that actually works.</p>
+            <div class="fade-in delay-2">
+                <a href="#cta" class="btn hover-target">Get early access — it's free</a>
+                <span class="founding-text">Currently testing with a small group of founding members.</span>
+            </div>
+            
+            <div class="intent-demo" id="intentDemo">
+                <span class="intent-text" id="demoText">What are you looking for?</span>
+                <span class="intent-cursor"></span>
             </div>
         </div>
-        <div class="hero-visual fade-in delay-3">
-            <!-- Placeholder for future app mockup. Currently an atmospheric visual -->
-            <div class="atmosphere-box">
-                <div class="breathing-circle-large"></div>
-                <p class="prompt-text">What are you looking for?</p>
-            </div>
+        <div class="scroll-indicator" id="scrollLine"></div>
+    </section>
+
+    <section class="problem-section container" id="problem">
+        <h2 class="fade-in">You're not addicted. You're just bored. Or sad. Or anxious.</h2>
+        <div class="fade-in delay-1">
+            <p>Half of people who doomscroll know exactly why they're doing it. The other half don't. Both groups end up in the same place — an hour gone, feeling worse than before they started.</p>
+            <p>You're not using your phone wrong. You're using it the way it was designed to be used. Sentio doesn't fight that. It just adds one thing the designers left out: a moment to decide.</p>
         </div>
     </section>
 
-    <!-- The Core Insight Section -->
-    <section id="insight" class="insight-section">
-        <div class="content-wrapper">
-            <h2 class="section-title">Doomscrolling is an emotional regulation problem.</h2>
-            <div class="insight-grid">
-                <div class="insight-text">
-                    <p>Half of us scroll to manage boredom or sadness. The other half do it without knowing why. We are all using our phones as a nervous system tool.</p>
-                    <p><strong>Sentio meets you where you are.</strong> It doesn't lecture, and it doesn't block. It regulates. The goal isn't to make you use your phone less. It's to make you use it on purpose.</p>
+    <section id="how" class="container-wide">
+        <h2 class="fade-in" style="font-size: 48px; text-align: center;">Three moments that change everything</h2>
+        
+        <div class="moments-grid">
+            
+            <div class="moment-card fade-in">
+                <div class="moment-content">
+                    <div class="moment-text">
+                        <span class="moment-label">Vagus Gate + Intent Prompt</span>
+                        <h3>Before you open the app</h3>
+                        <p>Your phone pulses once — slow, like a breath — before the feed opens. Then a single question appears. You don't have to answer it. But you will think about it.</p>
+                        <div class="feature-tags">
+                            <span>Haptic breathing pulse</span>
+                            <span>Intent re-engagement</span>
+                            <span>Bypass-proof</span>
+                        </div>
+                    </div>
+                    <div class="moment-visual">
+                        <div class="visual-box">
+                            <div class="pulse-ring"></div>
+                            <div class="insta-icon"></div>
+                            <div class="mockup-intent">What are you looking for?</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="moment-card fade-in">
+                <div class="moment-content">
+                    <div class="moment-text">
+                        <span class="moment-label">The Valve + Sensory Fade</span>
+                        <h3>While you're scrolling</h3>
+                        <p>You get a real window of time — enough to catch up, enough to actually use the app. When time gets short, the screen quietly loses color. No alarm. No guilt. Just a natural exit.</p>
+                        <div class="feature-tags">
+                            <span>15-min active window</span>
+                            <span>Color fade warning</span>
+                            <span>Unbypassable timer</span>
+                        </div>
+                    </div>
+                    <div class="moment-visual">
+                        <div class="visual-box">
+                            <div class="mockup-timer">0:15</div>
+                            <div class="fake-feed" id="fakeFeed">
+                                <div class="fake-post"></div>
+                                <div class="fake-post"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="moment-card fade-in">
+                <div class="moment-content">
+                    <div class="moment-text">
+                        <span class="moment-label">Somatic Reset + Mood Check-In</span>
+                        <h3>When time's up</h3>
+                        <p>The cooldown screen belongs to you, not the algorithm. Sixty seconds of guided breathing, then one question about how you're feeling. Over time, Sentio shows you when you scroll most — and why.</p>
+                        <div class="feature-tags">
+                            <span>60s breathing prompt</span>
+                            <span>Mood tracking</span>
+                            <span>Pattern insights</span>
+                        </div>
+                    </div>
+                    <div class="moment-visual">
+                        <div class="visual-box">
+                            <div class="breathing-circle"></div>
+                            <div class="mood-grid">
+                                <div class="mood-btn">Happy</div>
+                                <div class="mood-btn">Okay</div>
+                                <div class="mood-btn">Stressed</div>
+                                <div class="mood-btn">Bored</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- The Architecture Section -->
-    <section id="system" class="architecture-section">
-        <div class="content-wrapper">
-            <div class="section-header center">
-                <span class="section-kicker">The Architecture</span>
-                <h2>Three Layers of Sovereignty</h2>
+    <section class="proxy-section">
+        <div class="container-wide proxy-layout">
+            <div class="proxy-text fade-in">
+                <h2>What if you could use Instagram without Instagram?</h2>
+                <p>Sentio can route you directly to your DMs or your Following feed — bypassing the discovery algorithm entirely. You get the utility without the trap. No competitor does this.</p>
             </div>
-
-            <div class="layers-container">
-                <!-- Layer 1 -->
-                <div class="layer-card">
-                    <div class="layer-number">01</div>
-                    <div class="layer-content">
-                        <h3>The Launch Moment</h3>
-                        <p class="layer-subtitle">Before the feed opens, a 5-second pause. Not a wall. A breath.</p>
-                        <ul class="feature-list">
-                            <li>
-                                <strong>Vagus Gate:</strong> A slow haptic pulse—inhale, exhale. Shifts your nervous system from reflexive-seeking to calm-intent.
-                            </li>
-                            <li>
-                                <strong>Intent Prompt:</strong> A single, non-judgmental question: <em>"What are you looking for?"</em> No answer required. It re-engages your prefrontal cortex.
-                            </li>
-                            <li>
-                                <strong>Interface Proxy:</strong> Route directly to DMs or Search, bypassing the algorithmic discovery feed entirely.
-                            </li>
-                        </ul>
-                    </div>
+            <div class="proxy-cards fade-in delay-1">
+                <div class="proxy-phone noisy"></div>
+                <div class="proxy-arrow">
+                    <i class="fa-solid fa-arrow-right-long"></i>
+                    <span>Sentio re-routes here</span>
                 </div>
-
-                <!-- Layer 2 -->
-                <div class="layer-card">
-                    <div class="layer-number">02</div>
-                    <div class="layer-content">
-                        <h3>The Session</h3>
-                        <p class="layer-subtitle">An unbreakable active window that fades out, rather than slamming shut.</p>
-                        <ul class="feature-list">
-                            <li>
-                                <strong>Valve Protocol:</strong> Set an active window (e.g., 15 minutes). No "Ignore Limit" button.
-                            </li>
-                            <li>
-                                <strong>Sensory Fade:</strong> At 1 minute left, color saturation drains. At 0:00, the app is greyscale. The visual reward is gone, making disengagement effortless.
-                            </li>
-                            <li>
-                                <strong>The Archive:</strong> Save any post to a queue for later. Leave without FOMO.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Layer 3 -->
-                <div class="layer-card">
-                    <div class="layer-number">03</div>
-                    <div class="layer-content">
-                        <h3>The Cooldown Window</h3>
-                        <p class="layer-subtitle">We own the transition out of the app.</p>
-                        <ul class="feature-list">
-                            <li>
-                                <strong>Somatic Reset (60s):</strong> A guided, minimal visual breathing prompt to address the emotional dysregulation that started the session.
-                            </li>
-                            <li>
-                                <strong>Mood Check-In (10s):</strong> One tap—Happy, Okay, Stressed, Bored. Builds a personal pattern map over time.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sovereignty Stats -->
-    <section class="stats-section">
-        <div class="content-wrapper">
-            <div class="stats-grid">
-                <div class="stats-text">
-                    <h2>Track sovereignty, not shame.</h2>
-                    <p>The dashboard never shows "minutes blocked". We track positive gain. You are not being punished; you are accumulating your life back.</p>
-                </div>
-                <div class="stats-cards">
-                    <div class="stat-card">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <h4>Time Reclaimed</h4>
-                        <p>Hours returned to your life this week.</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fa-solid fa-brain"></i>
-                        <h4>Mood Trends</h4>
-                        <p>How your emotional state correlates with session frequency.</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <h4>Focus Blocks</h4>
-                        <p>Uninterrupted stretches with zero distractions.</p>
-                    </div>
+                <div class="proxy-phone clean">
+                    <div class="fake-dm"></div>
+                    <div class="fake-dm"></div>
+                    <div class="fake-dm" style="height: 60px;"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- What Sentio is Not -->
-    <section id="philosophy" class="not-section">
-        <div class="content-wrapper center">
-            <h2>What Sentio Is Not</h2>
-            <div class="not-grid">
-                <div class="not-item">
-                    <i class="fa-solid fa-xmark"></i>
-                    <p>Not a strict blocker. It does not say no.</p>
-                </div>
-                <div class="not-item">
-                    <i class="fa-solid fa-xmark"></i>
-                    <p>Not a tracker that shames your screen time.</p>
-                </div>
-                <div class="not-item">
-                    <i class="fa-solid fa-xmark"></i>
-                    <p>Not a dumbphone workaround. Keep your full phone.</p>
-                </div>
-                <div class="not-item">
-                    <i class="fa-solid fa-xmark"></i>
-                    <p>Not a willpower app. We don't assume you lack discipline.</p>
-                </div>
+    <section class="dashboard-section container-wide">
+        <h2 class="fade-in">Your phone finally tells you something useful</h2>
+        <div class="dash-grid">
+            <div class="dash-card fade-in delay-1">
+                <div class="dash-num" data-target="8.4">0.0</div>
+                <div class="dash-title">Time Reclaimed</div>
+                <p class="dash-desc">Hours returned to your life this week</p>
+            </div>
+            <div class="dash-card fade-in delay-2">
+                <div class="dash-num">^</div>
+                <div class="dash-title">Mood Correlation</div>
+                <p class="dash-desc">See exactly when and why you scroll most</p>
+            </div>
+            <div class="dash-card fade-in delay-3">
+                <div class="dash-num" data-target="12">0</div>
+                <div class="dash-title">Focus Blocks</div>
+                <p class="dash-desc">Uninterrupted stretches with zero distractions</p>
+            </div>
+        </div>
+        <p class="dash-footer fade-in">We never show you 'minutes spent'. You're not being punished. You're accumulating your life back.</p>
+    </section>
+
+    <section class="container" style="padding-top: 60px;">
+        <h2 class="fade-in">What Sentio Is Not</h2>
+        <div class="not-list">
+            <div class="not-item fade-in">
+                Not a blocker that says no.
+                <div class="strikethrough"></div>
+            </div>
+            <div class="not-item fade-in">
+                Not a screen time tracker that makes you feel bad.
+                <div class="strikethrough"></div>
+            </div>
+            <div class="not-item fade-in">
+                Not a dumbphone workaround.
+                <div class="strikethrough"></div>
+            </div>
+            <div class="not-item fade-in">
+                Not a willpower app.
+                <div class="strikethrough"></div>
+            </div>
+            <div class="not-item fade-in">
+                Not another thing that assumes you're the problem.
+                <div class="strikethrough"></div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="content-wrapper center">
-            <h2>Ready to feel first?</h2>
-            <p>Join the movement towards intentional digital sovereignty.</p>
-            <div class="cta-group">
-                <button class="btn-primary btn-large cta-trigger">Request Early Access</button>
+    <section class="progress-section container">
+        <h2 class="fade-in">It gets easier. On purpose.</h2>
+        <p class="fade-in delay-1">Sentio isn't static. It tracks your progress over weeks and gradually adjusts — shorter sessions, smarter cooldowns. Think of it like a training plan for your attention. Week one is different from month two.</p>
+        <div class="progress-line fade-in delay-2">
+            <div class="prog-dot"></div>
+            <div class="prog-dot"></div>
+            <div class="prog-dot"></div>
+        </div>
+        <p style="font-size: 14px; opacity: 0.6;" class="fade-in delay-3">Focus window: 15 min → 13 min → 11 min</p>
+    </section>
+
+    <section id="cta" class="cta-section container-wide">
+        <div style="max-width: 600px; margin: 0 auto; z-index: 2;">
+            <h2 style="font-size: 64px;">We're testing with a small group first.</h2>
+            <p>If you've ever looked up and lost an hour you didn't mean to lose — this is for you. Founding members get free access while we build. No credit card. No commitment.</p>
+            
+            <form class="cta-form" id="waitlist-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Name" required class="hover-target">
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required class="hover-target">
+                </div>
+                <button type="submit" class="btn btn-submit hover-target">I'm in.</button>
+            </form>
+            <div class="success-msg" id="form-success">
+                You're in. We'll reach out when your setup is ready.
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <div class="footer-content content-wrapper">
-            <div class="brand">
-                <span class="logo-text">Sentio</span>
-                <p>© 2026 Focus Quest. All rights reserved.</p>
-            </div>
-            <div class="social-links">
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            </div>
-        </div>
+        Sentio © 2026. 
     </footer>
 
-    <!-- Modal Modal -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-header">
-                <h3>Early Access</h3>
-                <p>Secure your spot. $3-5/mo for founding members.</p>
-            </div>
-            <form id="signup-form" name="sentio-waitlist" method="POST" data-netlify="true">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email Address" required>
-                </div>
-                <button type="submit" class="btn-primary btn-full">Submit</button>
-            </form>
-            <div id="success-message" class="hidden">
-                <div class="success-icon"><i class="fa-solid fa-check"></i></div>
-                <h3>You're in.</h3>
-                <p>We'll notify you when your setup is ready.</p>
-            </div>
-        </div>
-    </div>
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const hoverTargets = document.querySelectorAll('a, button, .hover-target, input');
 
-    <script src="script.js"></script>
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // Parallax & Scroll effects
+        const heroTitle = document.querySelector('.hero-title');
+        const nav = document.getElementById('nav');
+        const scrollLine = document.getElementById('scrollLine');
+        const problemSection = document.getElementById('problem');
+        const fakePosts = document.querySelectorAll('.fake-post');
+
+        window.addEventListener('scroll', () => {
+            let offset = window.scrollY;
+            
+            // Hero parallax
+            if (offset < window.innerHeight) {
+                heroTitle.style.transform = `translateY(${offset * 0.3}px)`;
+            }
+
+            // Nav glass
+            if (offset > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+
+            // Fade out scroll line
+            if (offset > 100) scrollLine.style.opacity = '0';
+            else scrollLine.style.opacity = '0.8';
+
+            // Sensory Fade Demo (Mockup 2)
+            const feedContainer = document.getElementById('fakeFeed');
+            if (feedContainer) {
+                const rect = feedContainer.getBoundingClientRect();
+                // Map scroll position within the element to a grayscale value 0-100%
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    let progress = 1 - (rect.bottom / window.innerHeight);
+                    fakePosts.forEach(post => {
+                        post.style.filter = `grayscale(${Math.max(0, Math.min(100, progress * 150))}%)`;
+                        // Fade colors toward sage from original color simulating desaturation
+                        post.style.background = `color-mix(in srgb, #7A9B8A ${progress*100}%, #f09433)`; 
+                    });
+                }
+            }
+        });
+
+        // Intersection Observer for Fades & specific animations
+        const observerOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
+
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Specific trigger for problem glow
+                    if (entry.target.id === 'problem') {
+                        entry.target.classList.add('glow');
+                    }
+
+                    // Number counter
+                    if (entry.target.classList.contains('dash-card')) {
+                        const numEl = entry.target.querySelector('.dash-num');
+                        if (numEl && numEl.dataset.target) {
+                            animateValue(numEl, 0, parseFloat(numEl.dataset.target), 1500);
+                            numEl.removeAttribute('data-target'); // prevent re-run
+                        }
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+        // Number animation function
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const isFloat = end % 1 !== 0;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // Ease out cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = (start + (end - start) * easeOut);
+                obj.innerHTML = isFloat ? current.toFixed(1) : Math.floor(current);
+                if (progress < 1) window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Initial Page Load sequence
+        window.addEventListener('load', () => {
+            const heroEls = document.querySelectorAll('.hero .fade-in');
+            heroEls.forEach(el => el.classList.add('visible'));
+
+            // Intent Demo Typewriter
+            const intentDemo = document.getElementById('intentDemo');
+            const demoText = document.getElementById('demoText');
+            const cursorEl = document.querySelector('.intent-cursor');
+            
+            setTimeout(() => {
+                intentDemo.classList.add('show');
+                
+                setTimeout(() => {
+                    cursorEl.style.opacity = '1';
+                    cursorEl.classList.add('blink');
+                }, 1000);
+
+            }, 1500); // Wait 1.5s as requested before box appears
+
+            // Interaction on intent box
+            let clicked = false;
+            intentDemo.addEventListener('click', () => {
+                if(clicked) return;
+                clicked = true;
+                cursorEl.classList.remove('blink');
+                demoText.innerHTML = '';
+                
+                const finalStr = "That's the question Sentio asks too.";
+                let i = 0;
+                const typeTimer = setInterval(() => {
+                    demoText.innerHTML += finalStr.charAt(i);
+                    i++;
+                    if(i >= finalStr.length) {
+                        clearInterval(typeTimer);
+                        cursorEl.classList.add('blink');
+                        setTimeout(() => {
+                            intentDemo.style.opacity = '0';
+                        }, 2000);
+                    }
+                }, 50);
+            });
+        });
+
+        // Form Submit
+        document.getElementById('waitlist-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.target.style.opacity = 0;
+            setTimeout(() => {
+                e.target.style.display = 'none';
+                const success = document.getElementById('form-success');
+                success.style.display = 'block';
+                setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
+            }, 600);
+            // Add fetch logic here for actual submission
+        });
+
+    </script>
 </body>
-
 </html>
