@@ -635,11 +635,6 @@
                 <a href="#cta" class="btn hover-target">Get early access — it's free</a>
                 <span class="founding-text">Currently testing with a small group of founding members.</span>
             </div>
-            
-            <div class="intent-demo" id="intentDemo">
-                <span class="intent-text" id="demoText">What are you looking for?</span>
-                <span class="intent-cursor"></span>
-            </div>
         </div>
         <div class="scroll-indicator" id="scrollLine"></div>
     </section>
@@ -937,35 +932,6 @@
         window.addEventListener('load', () => {
             const heroEls = document.querySelectorAll('.hero .fade-in');
             heroEls.forEach(el => el.classList.add('visible'));
-
-            // Intent Demo Breathing
-            const intentDemo = document.getElementById('intentDemo');
-            const demoText = document.getElementById('demoText');
-            const breathCircle = document.getElementById('breathCircle');
-            
-            setTimeout(() => {
-                intentDemo.classList.add('show');
-                
-                // Start breath cycle
-                setInterval(() => {
-                    if (breathCircle.classList.contains('inhale')) {
-                        breathCircle.classList.remove('inhale');
-                        demoText.style.opacity = '0';
-                        setTimeout(() => {
-                            demoText.innerText = "Breathe out.";
-                            demoText.style.opacity = '1';
-                        }, 500);
-                    } else {
-                        breathCircle.classList.add('inhale');
-                        demoText.style.opacity = '0';
-                        setTimeout(() => {
-                            demoText.innerText = "Breathe in.";
-                            demoText.style.opacity = '1';
-                        }, 500);
-                    }
-                }, 3500);
-
-            }, 1500); // Wait 1.5s as requested before box appears
         });
 
         // Form Submit
