@@ -1,12 +1,12 @@
 
 import React from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import ProblemSection from './components/ProblemSection';
-import HowItWorksSection from './components/HowItWorksSection';
-import FeaturesSection from './components/FeaturesSection';
-import CTASection from './components/CTASection';
-import Footer from './components/Footer';
+import Header from './Header';
+import HeroSection from './HeroSection';
+import ProblemSection from './ProblemSection';
+import HowItWorksSection from './HowItWorksSection';
+import FeaturesSection from './FeaturesSection';
+import CTASection from './CTASection';
+import Footer from './Footer';
 
 const App: React.FC = () => {
   return (
