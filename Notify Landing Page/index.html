@@ -6,7 +6,7 @@
     <title>Sentio | The moment before the trance</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #141210;
@@ -679,6 +679,117 @@
         }
         .footer-links a:hover { opacity: 1; }
 
+        /* ═══════════════════════════════════════
+           PHONE MOCKUP SYSTEM
+        ═══════════════════════════════════════ */
+        .app-phone {
+            width: 260px; height: 563px;
+            background: #000;
+            border-radius: 40px;
+            border: 1.5px solid rgba(255,255,255,0.12);
+            box-shadow: 0 0 0 5px #1a1917, 0 0 0 6px rgba(255,255,255,0.06), 0 24px 60px rgba(0,0,0,0.6);
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+        .app-phone::before {
+            content: '';
+            position: absolute;
+            top: 12px; left: 50%;
+            transform: translateX(-50%);
+            width: 80px; height: 25px;
+            background: #000;
+            border-radius: 16px;
+            z-index: 10;
+            border: 1.5px solid #1a1917;
+        }
+        .app-phone-screen {
+            width: 100%; height: 100%;
+            background: #141210;
+            display: flex; flex-direction: column;
+            overflow: hidden; position: relative;
+        }
+        .app-phone .sbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 44px 20px 0; font-size: 10px; font-weight: 600;
+            color: #F0EDE8; flex-shrink: 0;
+        }
+        .app-phone .sbar-r { display: flex; gap: 4px; align-items: center; }
+        .app-phone .sbar-r svg { width: 12px; height: 12px; fill: #F0EDE8; }
+
+        /* Vagus Gate — Breathing */
+        .vg-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        .vg-rings { position:relative; width:150px; height:150px; display:flex; align-items:center; justify-content:center; margin-bottom:40px; }
+        .vg-ring { position:absolute; border-radius:50%; border:1px solid rgba(240,237,232,0.12); }
+        .vg-r1 { width:150px; height:150px; animation: vgPulse 4s ease-in-out infinite; }
+        .vg-r2 { width:115px; height:115px; animation: vgPulse 4s ease-in-out infinite 0.5s; }
+        .vg-r3 { width:82px; height:82px; animation: vgPulse 4s ease-in-out infinite 1s; }
+        .vg-core { width:52px; height:52px; background:radial-gradient(circle,rgba(200,151,42,0.35) 0%,rgba(200,151,42,0.05) 100%); border-radius:50%; border:1px solid rgba(200,151,42,0.35); animation: vgCore 4s ease-in-out infinite; }
+        @keyframes vgPulse { 0%,100%{transform:scale(1);opacity:0.3} 50%{transform:scale(1.08);opacity:0.6} }
+        @keyframes vgCore { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+        .vg-label { font-size:11px; font-weight:500; letter-spacing:0.08em; color:rgba(240,237,232,0.5); text-transform:uppercase; margin-bottom:20px; }
+        .vg-intent { font-size:16px; font-weight:300; color:rgba(240,237,232,0.45); text-align:center; padding:0 20px; }
+
+        /* Proxy Routing */
+        .pr-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; }
+        .pr-mini-ring { position:relative; width:60px; height:60px; display:flex; align-items:center; justify-content:center; margin-bottom:28px; }
+        .pr-mini-ring::before { content:''; position:absolute; width:60px; height:60px; border:1px solid rgba(240,237,232,0.1); border-radius:50%; animation:vgPulse 4s ease-in-out infinite; }
+        .pr-mini-core { width:26px; height:26px; background:radial-gradient(circle,rgba(200,151,42,0.3) 0%,rgba(200,151,42,0.04) 100%); border:1px solid rgba(200,151,42,0.35); border-radius:50%; }
+        .pr-q { font-size:14px; font-weight:600; text-align:center; color:#F0EDE8; margin-bottom:6px; }
+        .pr-sub { font-size:10px; text-align:center; color:rgba(240,237,232,0.45); margin-bottom:14px; letter-spacing:0.03em; }
+        .pr-btns { width:100%; padding:0 16px; display:flex; flex-direction:column; gap:6px; }
+        .pr-b { background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:500; color:#F0EDE8; }
+        .pr-b.active { background:rgba(200,151,42,0.15); border-color:rgba(200,151,42,0.3); }
+        .pr-b.dim { color:rgba(240,237,232,0.45); font-weight:400; }
+        .pr-chk { font-size:10px; color:#C8972A; }
+        .pr-chv { font-size:10px; color:rgba(240,237,232,0.22); }
+
+        /* Cooldown Mood */
+        .cd-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; padding:0 20px; }
+        .cd-q { font-size:16px; font-weight:600; text-align:center; color:#F0EDE8; margin-bottom:20px; }
+        .cd-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
+        .cd-mood { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:5px; }
+        .cd-mood.hi { background:rgba(200,151,42,0.12); border-color:rgba(200,151,42,0.3); }
+        .cd-mood .em { font-size:24px; }
+        .cd-mood .ml { font-size:9px; font-weight:500; color:rgba(240,237,232,0.45); letter-spacing:0.03em; }
+        .cd-foot { width:100%; padding:16px 20px 0; display:flex; flex-direction:column; align-items:center; }
+        .cd-foot::before { content:''; display:block; width:100%; height:1px; background:rgba(255,255,255,0.05); margin-bottom:10px; }
+        .cd-timer { display:flex; align-items:center; gap:5px; font-size:10px; color:rgba(240,237,232,0.22); }
+        .cd-timer-dot { width:4px; height:4px; border-radius:50%; background:rgba(240,237,232,0.22); }
+
+        /* Dashboard */
+        .db-scroll { flex:1; overflow:hidden; padding:10px 14px 0; display:flex; flex-direction:column; gap:10px; font-family:'Inter',sans-serif; }
+        .db-title { font-size:18px; font-weight:700; color:#F0EDE8; letter-spacing:-0.3px; padding:0 2px; }
+        .db-banner { background:rgba(200,151,42,0.1); border:1px solid rgba(200,151,42,0.2); border-radius:12px; padding:10px 12px; display:flex; align-items:flex-start; gap:8px; }
+        .db-banner-icon { font-size:14px; flex-shrink:0; }
+        .db-banner-title { font-size:10px; font-weight:600; color:#F0EDE8; line-height:1.4; }
+        .db-banner-sub { font-size:9px; color:rgba(240,237,232,0.45); line-height:1.4; }
+        .db-stats { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .db-stat { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.09); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:1px; }
+        .db-stat-label { font-size:8px; font-weight:500; color:rgba(240,237,232,0.45); letter-spacing:0.04em; text-transform:uppercase; }
+        .db-stat-val { font-size:22px; font-weight:700; color:#F0EDE8; letter-spacing:-0.5px; line-height:1.1; }
+        .db-stat-sub { font-size:8px; color:rgba(240,237,232,0.22); }
+        .db-section-title { font-size:11px; font-weight:600; color:#F0EDE8; padding:2px 2px 0; }
+        .db-proxy-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .db-pcard { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.09); border-radius:12px; padding:10px 11px; display:flex; flex-direction:column; gap:2px; }
+        .db-pcard-app { font-size:11px; font-weight:600; color:#F0EDE8; }
+        .db-pcard-dest { font-size:9px; color:rgba(240,237,232,0.45); }
+        .db-pcard-dest.unset { color:rgba(240,237,232,0.22); font-style:italic; }
+
+        /* Session Timer Phone */
+        .st-body { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+        .st-timer { position:absolute; top:52px; right:16px; background:rgba(0,0,0,0.8); padding:3px 7px; border-radius:4px; font-size:10px; font-family:monospace; border:1px solid #C8972A; color:#F0EDE8; z-index:5; }
+        .st-feed { flex:1; display:flex; flex-direction:column; gap:0; }
+        .st-post { display:flex; flex-direction:column; }
+        .st-post-hdr { display:flex; align-items:center; padding:10px 14px; gap:7px; }
+        .st-post-av { width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,0.1); flex-shrink:0; }
+        .st-post-ln { height:3px; background:rgba(255,255,255,0.2); border-radius:2px; flex:1; }
+        .st-post-img { width:100%; height:120px; background:linear-gradient(135deg,#1a1917 0%,#222 100%); }
+        .st-post-ftr { padding:10px 14px; display:flex; flex-direction:column; gap:5px; }
+        .st-post-fl { height:3px; background:rgba(255,255,255,0.12); border-radius:2px; }
+        .st-post-fl.half { width:55%; }
+
     </style>
 </head>
 <body>
@@ -738,10 +849,20 @@
                         </div>
                     </div>
                     <div class="moment-visual">
-                        <div class="visual-box">
-                            <div class="pulse-ring"></div>
-                            <div class="insta-icon"></div>
-                            <div class="mockup-intent">What are you looking for?</div>
+                        <div class="app-phone">
+                            <div class="app-phone-screen">
+                                <div class="sbar"><span>9:41</span><div class="sbar-r"><svg viewBox="0 0 24 24"><path d="M1 8l2 2a11 11 0 0116 0l2-2A14 14 0 001 8zm5 5l2 2a6 6 0 018 0l2-2a9 9 0 00-12 0zm4 5l3 3 3-3a4 4 0 00-6 0z"/></svg><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M20 11h2v2h-2z"/></svg></div></div>
+                                <div class="vg-body">
+                                    <div class="vg-rings">
+                                        <div class="vg-ring vg-r1"></div>
+                                        <div class="vg-ring vg-r2"></div>
+                                        <div class="vg-ring vg-r3"></div>
+                                        <div class="vg-core"></div>
+                                    </div>
+                                    <div class="vg-label">Breathe in</div>
+                                    <div class="vg-intent">What are you looking for?</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -760,18 +881,23 @@
                         </div>
                     </div>
                     <div class="moment-visual">
-                        <div class="visual-box">
-                            <div class="mockup-timer">0:15</div>
-                            <div class="fake-feed" id="fakeFeed">
-                                <div class="fake-post">
-                                    <div class="post-header"><span class="avatar"></span><span class="line"></span></div>
-                                    <div class="post-image"></div>
-                                    <div class="post-footer"><span class="line"></span><span class="line half"></span></div>
-                                </div>
-                                <div class="fake-post">
-                                    <div class="post-header"><span class="avatar"></span><span class="line"></span></div>
-                                    <div class="post-image"></div>
-                                    <div class="post-footer"><span class="line"></span><span class="line half"></span></div>
+                        <div class="app-phone">
+                            <div class="app-phone-screen">
+                                <div class="sbar"><span>9:41</span><div class="sbar-r"><svg viewBox="0 0 24 24"><path d="M1 8l2 2a11 11 0 0116 0l2-2A14 14 0 001 8zm5 5l2 2a6 6 0 018 0l2-2a9 9 0 00-12 0zm4 5l3 3 3-3a4 4 0 00-6 0z"/></svg><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M20 11h2v2h-2z"/></svg></div></div>
+                                <div class="st-timer">12:47</div>
+                                <div class="st-body">
+                                    <div class="st-feed" id="fakeFeed">
+                                        <div class="st-post fake-post">
+                                            <div class="st-post-hdr"><span class="st-post-av"></span><span class="st-post-ln"></span></div>
+                                            <div class="st-post-img"></div>
+                                            <div class="st-post-ftr"><span class="st-post-fl"></span><span class="st-post-fl half"></span></div>
+                                        </div>
+                                        <div class="st-post fake-post">
+                                            <div class="st-post-hdr"><span class="st-post-av"></span><span class="st-post-ln"></span></div>
+                                            <div class="st-post-img"></div>
+                                            <div class="st-post-ftr"><span class="st-post-fl"></span><span class="st-post-fl half"></span></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -792,13 +918,21 @@
                         </div>
                     </div>
                     <div class="moment-visual">
-                        <div class="visual-box">
-                            <div class="breathing-circle"></div>
-                            <div class="mood-grid">
-                                <div class="mood-btn">Happy</div>
-                                <div class="mood-btn">Okay</div>
-                                <div class="mood-btn">Stressed</div>
-                                <div class="mood-btn">Bored</div>
+                        <div class="app-phone">
+                            <div class="app-phone-screen">
+                                <div class="sbar"><span>10:18</span><div class="sbar-r"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M20 11h2v2h-2z"/></svg></div></div>
+                                <div class="cd-body">
+                                    <div class="cd-q">How are you feeling?</div>
+                                    <div class="cd-grid">
+                                        <div class="cd-mood hi"><span class="em">😊</span><span class="ml">Happy</span></div>
+                                        <div class="cd-mood"><span class="em">😐</span><span class="ml">Okay</span></div>
+                                        <div class="cd-mood"><span class="em">😓</span><span class="ml">Stressed</span></div>
+                                        <div class="cd-mood"><span class="em">😑</span><span class="ml">Bored</span></div>
+                                    </div>
+                                </div>
+                                <div class="cd-foot">
+                                    <div class="cd-timer"><span class="cd-timer-dot"></span>Apps available in 28:12</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -815,24 +949,49 @@
                 <p>Sentio can route you directly to your DMs or your Following feed — bypassing the discovery algorithm entirely. You get the utility without the trap. No competitor does this.</p>
             </div>
             <div class="proxy-cards fade-in delay-1">
-                <div class="proxy-phone noisy">
-                    <div class="grid-feed">
-                        <div class="grid-item red"></div>
-                        <div class="grid-item blue"></div>
-                        <div class="grid-item green"></div>
-                        <div class="grid-item yellow"></div>
-                        <div class="grid-item purple"></div>
-                        <div class="grid-item orange"></div>
+                <div class="app-phone" style="transform:scale(0.85); transform-origin:center;">
+                    <div class="app-phone-screen">
+                        <div class="sbar"><span>9:41</span><div class="sbar-r"><svg viewBox="0 0 24 24"><path d="M1 8l2 2a11 11 0 0116 0l2-2A14 14 0 001 8zm5 5l2 2a6 6 0 018 0l2-2a9 9 0 00-12 0zm4 5l3 3 3-3a4 4 0 00-6 0z"/></svg><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M20 11h2v2h-2z"/></svg></div></div>
+                        <div class="pr-body">
+                            <div class="pr-mini-ring"><div class="pr-mini-core"></div></div>
+                            <div class="pr-q">Where are you going?</div>
+                            <div class="pr-sub">Instagram</div>
+                            <div class="pr-btns">
+                                <div class="pr-b active"><span>Go to DMs</span><span class="pr-chk">✓</span></div>
+                                <div class="pr-b"><span>Following feed</span><span class="pr-chv">›</span></div>
+                                <div class="pr-b dim"><span>Just browse</span><span class="pr-chv">›</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="proxy-arrow">
-                    <i class="fa-solid fa-arrow-right-long"></i>
+                    <span style="font-size:32px;">→</span>
                     <span>Sentio re-routes here</span>
                 </div>
-                <div class="proxy-phone clean">
-                    <div class="fake-dm"><span class="avatar"></span><div class="dm-lines"><span class="line"></span><span class="line half"></span></div></div>
-                    <div class="fake-dm"><span class="avatar"></span><div class="dm-lines"><span class="line"></span><span class="line half"></span></div></div>
-                    <div class="fake-dm"><span class="avatar"></span><div class="dm-lines"><span class="line"></span><span class="line half"></span></div></div>
+                <div class="app-phone" style="transform:scale(0.85); transform-origin:center;">
+                    <div class="app-phone-screen">
+                        <div class="sbar"><span>9:41</span><div class="sbar-r"><svg viewBox="0 0 24 24"><path d="M1 8l2 2a11 11 0 0116 0l2-2A14 14 0 001 8zm5 5l2 2a6 6 0 018 0l2-2a9 9 0 00-12 0zm4 5l3 3 3-3a4 4 0 00-6 0z"/></svg><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M20 11h2v2h-2z"/></svg></div></div>
+                        <div class="db-scroll">
+                            <div class="db-title">Sentio</div>
+                            <div class="db-banner">
+                                <div class="db-banner-icon">↗</div>
+                                <div><div class="db-banner-title">Your focus window this week: 13 min</div><div class="db-banner-sub">Last week it was 15. You're building the muscle.</div></div>
+                            </div>
+                            <div class="db-stats">
+                                <div class="db-stat"><div class="db-stat-label">Time Reclaimed</div><div class="db-stat-val">4.2<span style="font-size:12px;font-weight:400;">h</span></div><div class="db-stat-sub">returned this week</div></div>
+                                <div class="db-stat"><div class="db-stat-label">Focus Blocks</div><div class="db-stat-val">11</div><div class="db-stat-sub">uninterrupted stretches</div></div>
+                                <div class="db-stat"><div class="db-stat-label">Session Quality</div><div class="db-stat-val">74<span style="font-size:12px;font-weight:400;">%</span></div><div class="db-stat-sub">intentional opens</div></div>
+                                <div class="db-stat"><div class="db-stat-label">Protocol Week</div><div class="db-stat-val">3</div><div class="db-stat-sub">13 min window</div></div>
+                            </div>
+                            <div class="db-section-title">Open With Intent</div>
+                            <div class="db-proxy-grid">
+                                <div class="db-pcard"><div class="db-pcard-app">Instagram</div><div class="db-pcard-dest">→ DMs</div></div>
+                                <div class="db-pcard"><div class="db-pcard-app">X (Twitter)</div><div class="db-pcard-dest">→ Following</div></div>
+                                <div class="db-pcard"><div class="db-pcard-app">TikTok</div><div class="db-pcard-dest unset">Choose destination</div></div>
+                                <div class="db-pcard"><div class="db-pcard-app">YouTube</div><div class="db-pcard-dest unset">Choose destination</div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
