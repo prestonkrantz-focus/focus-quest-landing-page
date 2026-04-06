@@ -399,8 +399,8 @@
             position: relative;
         }
         .fake-post {
-            width: 90%; height: 200px;
-            background:  #7A9B8A;
+            width: 90%; height: 210px;
+            background: #111;
             margin: 20px auto;
             border-radius: 8px;
             margin-top: 60px;
@@ -485,14 +485,33 @@
             position: relative;
         }
         .proxy-phone.noisy {
-            background: repeating-linear-gradient(45deg, #222, #222 10px, #1a1a1a 10px, #1a1a1a 20px);
+            background: #080706;
             opacity: 0.6;
         }
+        .grid-feed { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 16px; width: 100%; height: 100%; overflow: hidden; align-content: start; }
+        .grid-item { border-radius: 4px; opacity: 0.8; }
+        .grid-item.red { background: #dc2743; height: 100px; }
+        .grid-item.blue { background: #007bff; height: 80px; }
+        .grid-item.green { background: #7A9B8A; height: 100px; }
+        .grid-item.yellow { background: #C8972A; height: 70px; }
+        .grid-item.purple { background: #6f42c1; height: 90px; }
+        .grid-item.orange { background: #fd7e14; height: 110px; }
         .proxy-phone.clean {
             background: #080706;
             display: flex; flex-direction: column; padding: 20px 10px;
         }
-        .fake-dm { height: 40px; background: rgba(255,255,255,0.05); margin-bottom: 10px; border-radius: 8px; }
+        .fake-dm { display: flex; align-items: center; padding: 12px; gap: 12px; background: rgba(255,255,255,0.03); margin-bottom: 8px; border-radius: 8px; }
+        .fake-dm .avatar { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+        .fake-dm .dm-lines { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .fake-dm .line { height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+        .fake-dm .line.half { width: 60%; }
+        .post-header { display: flex; align-items: center; padding: 12px; gap: 8px; }
+        .post-header .avatar { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+        .post-header .line { height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; flex: 1; }
+        .post-image { width: 100%; height: 110px; background: #222; }
+        .post-footer { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+        .post-footer .line { height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+        .post-footer .line.half { width: 50%; }
         .proxy-arrow { color: var(--accent); font-size: 24px; text-align: center; }
         .proxy-arrow span { display: block; font-size: 12px; margin-top: 8px; font-family: var(--font-body); }
 
@@ -614,7 +633,51 @@
         .btn-submit { width: 100%; margin-top: 32px; cursor: none; }
         .success-msg { display: none; font-size: 20px; color: var(--sage); margin-top: 40px; }
 
-        footer { text-align: center; padding: 40px; font-size: 14px; opacity: 0.4; }
+        /* Testimonial */
+        .testimonial-section {
+            padding: 80px 24px;
+            text-align: center;
+        }
+        .pull-quote {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 5vw, 42px);
+            font-style: italic;
+            color: var(--text);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 0;
+            border-top: 1px solid rgba(200, 151, 42, 0.3);
+            border-bottom: 1px solid rgba(200, 151, 42, 0.3);
+            line-height: 1.4;
+        }
+        .quote-author {
+            margin-top: 32px;
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer { 
+            text-align: center; 
+            padding: 40px 24px; 
+            font-size: 14px; 
+            background: #0d0c0b;
+        }
+        footer .copyright { opacity: 0.5; }
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+        .footer-links a {
+            color: var(--accent);
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .footer-links a:hover { opacity: 1; }
 
     </style>
 </head>
@@ -650,6 +713,13 @@
         </div>
     </section>
 
+    <section class="testimonial-section container-wide">
+        <div class="pull-quote fade-in">
+            "I know I'm doing it. I just can't stop. I'll be sad or bored and just automatically open Instagram."
+            <div class="quote-author">— SMU student, age 21<br><span style="font-size: 13px; opacity: 0.6; font-style: normal; display: block; margin-top: 8px;">From our founding user interviews.</span></div>
+        </div>
+    </section>
+
     <section id="how" class="container-wide">
         <h2 class="fade-in" style="font-size: 48px; text-align: center;">Three moments that change everything</h2>
         
@@ -680,7 +750,7 @@
             <div class="moment-card fade-in">
                 <div class="moment-content">
                     <div class="moment-text">
-                        <span class="moment-label">The Valve + Sensory Fade</span>
+                        <span class="moment-label">THE SESSION TIMER</span>
                         <h3>While you're scrolling</h3>
                         <p>You get a real window of time — enough to catch up, enough to actually use the app. When time gets short, the screen quietly loses color. No alarm. No guilt. Just a natural exit.</p>
                         <div class="feature-tags">
@@ -693,8 +763,16 @@
                         <div class="visual-box">
                             <div class="mockup-timer">0:15</div>
                             <div class="fake-feed" id="fakeFeed">
-                                <div class="fake-post"></div>
-                                <div class="fake-post"></div>
+                                <div class="fake-post">
+                                    <div class="post-header"><span class="avatar"></span><span class="line"></span></div>
+                                    <div class="post-image"></div>
+                                    <div class="post-footer"><span class="line"></span><span class="line half"></span></div>
+                                </div>
+                                <div class="fake-post">
+                                    <div class="post-header"><span class="avatar"></span><span class="line"></span></div>
+                                    <div class="post-image"></div>
+                                    <div class="post-footer"><span class="line"></span><span class="line half"></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -704,11 +782,11 @@
             <div class="moment-card fade-in">
                 <div class="moment-content">
                     <div class="moment-text">
-                        <span class="moment-label">Somatic Reset + Mood Check-In</span>
+                        <span class="moment-label">THE COOLDOWN WINDOW</span>
                         <h3>When time's up</h3>
-                        <p>The cooldown screen belongs to you, not the algorithm. Sixty seconds of guided breathing, then one question about how you're feeling. Over time, Sentio shows you when you scroll most — and why.</p>
+                        <p>The cooldown screen belongs to you, not the algorithm. A two-second breathing pause, then one question about how you're feeling. Over time, Sentio shows you when you scroll most — and why.</p>
                         <div class="feature-tags">
-                            <span>60s breathing prompt</span>
+                            <span>2-second breathing pause</span>
                             <span>Mood tracking</span>
                             <span>Pattern insights</span>
                         </div>
@@ -737,15 +815,24 @@
                 <p>Sentio can route you directly to your DMs or your Following feed — bypassing the discovery algorithm entirely. You get the utility without the trap. No competitor does this.</p>
             </div>
             <div class="proxy-cards fade-in delay-1">
-                <div class="proxy-phone noisy"></div>
+                <div class="proxy-phone noisy">
+                    <div class="grid-feed">
+                        <div class="grid-item red"></div>
+                        <div class="grid-item blue"></div>
+                        <div class="grid-item green"></div>
+                        <div class="grid-item yellow"></div>
+                        <div class="grid-item purple"></div>
+                        <div class="grid-item orange"></div>
+                    </div>
+                </div>
                 <div class="proxy-arrow">
                     <i class="fa-solid fa-arrow-right-long"></i>
                     <span>Sentio re-routes here</span>
                 </div>
                 <div class="proxy-phone clean">
-                    <div class="fake-dm"></div>
-                    <div class="fake-dm"></div>
-                    <div class="fake-dm" style="height: 60px;"></div>
+                    <div class="fake-dm"><span class="avatar"></span><div class="dm-lines"><span class="line"></span><span class="line half"></span></div></div>
+                    <div class="fake-dm"><span class="avatar"></span><div class="dm-lines"><span class="line"></span><span class="line half"></span></div></div>
+                    <div class="fake-dm"><span class="avatar"></span><div class="dm-lines"><span class="line"></span><span class="line half"></span></div></div>
                 </div>
             </div>
         </div>
@@ -831,7 +918,11 @@
     </section>
 
     <footer>
-        Sentio © 2026. 
+        <div class="copyright">© 2026 Sentio. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Use</a>
+        </div>
     </footer>
 
     <script>
@@ -881,8 +972,6 @@
                     let progress = 1 - (rect.bottom / window.innerHeight);
                     fakePosts.forEach(post => {
                         post.style.filter = `grayscale(${Math.max(0, Math.min(100, progress * 150))}%)`;
-                        // Fade colors toward sage from original color simulating desaturation
-                        post.style.background = `color-mix(in srgb, #7A9B8A ${progress*100}%, #f09433)`; 
                     });
                 }
             }
