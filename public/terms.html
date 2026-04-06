@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use — Sentio</title>
+  <meta name="description" content="Sentio's terms of use for the iOS app and website." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #141210;
+      --text:         #F0EDE8;
+      --accent:       #C8972A;
+      --accent-muted: rgba(200, 151, 42, 0.15);
+      --muted:        rgba(240, 237, 232, 0.45);
+      --border:       rgba(240, 237, 232, 0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor-dot {
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      width: 48px; height: 48px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease-out, width 0.2s, height 0.2s, opacity 0.2s;
+      opacity: 0.5;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 40px;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(20, 18, 16, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Page header ── */
+    .page-header {
+      padding: 180px 24px 80px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .page-header .updated {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px 140px;
+    }
+
+    .content section { margin-bottom: 56px; }
+
+    .content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .content p { color: rgba(240, 237, 232, 0.8); margin-bottom: 14px; }
+    .content p:last-child { margin-bottom: 0; }
+
+    .content ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0;
+    }
+    .content ul li {
+      color: rgba(240, 237, 232, 0.8);
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+    .content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 16px;
+      width: 6px; height: 1px;
+      background: var(--accent);
+    }
+
+    .content a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200, 151, 42, 0.3);
+      transition: border-color 0.2s;
+    }
+    .content a:hover { border-color: var(--accent); }
+
+    .highlight-box {
+      background: var(--accent-muted);
+      border: 1px solid rgba(200, 151, 42, 0.25);
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .highlight-box p { color: var(--text); margin: 0; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .copyright { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav id="nav">
+    <a href="/" class="logo">Sentio</a>
+    <div class="nav-links">
+      <a href="/#how">How it Works</a>
+      <a href="/#cta">Request Access</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of Use</h1>
+    <p class="updated">Effective April 6, 2026 &nbsp;·&nbsp; Last updated April 6, 2026</p>
+  </header>
+
+  <main class="content">
+
+    <section>
+      <p>These Terms of Use ("Terms") govern your access to and use of the Sentio iOS application and website at focusquest.site (collectively, the "Service"), operated by Sentio ("we", "us", or "our"). By downloading the app or using the Service, you agree to these Terms.</p>
+      <div class="highlight-box">
+        <p>Sentio is currently in beta. The Service is provided as-is. We appreciate your patience as we build and improve it alongside early users.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>1. Eligibility</h2>
+      <p>You must be at least 13 years old to use Sentio. By using the Service, you represent that you meet this requirement. If you are between 13 and 18, you confirm that your parent or legal guardian has reviewed and agreed to these Terms on your behalf.</p>
+      <p>Sentio uses Apple's Screen Time / FamilyControls framework. Use of those features may be subject to additional Apple terms and parental controls configured on your device.</p>
+    </section>
+
+    <section>
+      <h2>2. Beta Service</h2>
+      <p>Sentio is currently offered as a beta product. This means:</p>
+      <ul>
+        <li>Features may change, be added, or be removed without notice</li>
+        <li>The app may contain bugs or behave unexpectedly</li>
+        <li>Access may be limited, paused, or discontinued at any time</li>
+        <li>Data continuity across beta versions is not guaranteed</li>
+      </ul>
+      <p>We will make reasonable efforts to communicate significant changes to beta users via email.</p>
+    </section>
+
+    <section>
+      <h2>3. Acceptable Use</h2>
+      <p>You agree to use Sentio only for its intended purpose: personal attention regulation. You must not:</p>
+      <ul>
+        <li>Attempt to circumvent, reverse-engineer, or tamper with the Valve Protocol or any other system restriction</li>
+        <li>Use the Service to harm, harass, or defraud any person</li>
+        <li>Attempt to gain unauthorized access to any part of the Service or its infrastructure</li>
+        <li>Use automated scripts, bots, or other tools to interact with the Service in a non-human manner</li>
+        <li>Violate any applicable local, state, national, or international law or regulation</li>
+        <li>Resell, sublicense, or commercially exploit the Service or its content without our written permission</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Intellectual Property</h2>
+      <p>All content within the Service — including the app design, text, graphics, code, branding, and the Sentio name — is owned by or licensed to us and is protected by applicable intellectual property laws. These Terms do not grant you any ownership rights in the Service.</p>
+      <p>You retain ownership of any content you create or save within the app (e.g., archive items, notes). You grant us no rights to that content; it stays on your device.</p>
+    </section>
+
+    <section>
+      <h2>5. Termination and Access</h2>
+      <p>We reserve the right to suspend or terminate your access to the Service at any time, with or without notice, for any reason including but not limited to violation of these Terms or conduct we determine to be harmful to other users or the integrity of the Service.</p>
+      <p>You may stop using the Service at any time by deleting the app. Sections of these Terms that by their nature should survive termination (including Sections 4, 6, 7, and 8) will do so.</p>
+    </section>
+
+    <section>
+      <h2>6. Disclaimers</h2>
+      <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+      <p>Sentio is a personal wellness tool and does not constitute medical advice, mental health treatment, or a substitute for professional care. If you are experiencing a mental health crisis, please contact a qualified professional or emergency services.</p>
+      <p>We do not warrant that the Service will be uninterrupted, error-free, or that any defects will be corrected.</p>
+    </section>
+
+    <section>
+      <h2>7. Limitation of Liability</h2>
+      <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, SENTIO AND ITS OWNERS, EMPLOYEES, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATED TO YOUR USE OF THE SERVICE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+      <p>OUR TOTAL LIABILITY TO YOU FOR ANY CLAIM ARISING OUT OF THESE TERMS OR YOUR USE OF THE SERVICE SHALL NOT EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE TWELVE MONTHS PRECEDING THE CLAIM, OR (B) $100 USD.</p>
+    </section>
+
+    <section>
+      <h2>8. Governing Law and Disputes</h2>
+      <p>These Terms are governed by and construed in accordance with the laws of the State of Texas, without regard to its conflict of law provisions.</p>
+      <p>Any dispute arising from these Terms or the Service shall be resolved exclusively in the state or federal courts located in Texas, and you consent to the personal jurisdiction of those courts.</p>
+    </section>
+
+    <section>
+      <h2>9. Changes to These Terms</h2>
+      <p>We may update these Terms from time to time. When we do, we will revise the "Last updated" date at the top of this page. For material changes, we will notify waitlist and beta users by email at least 14 days before the changes take effect. Continued use of the Service after the effective date constitutes your acceptance of the revised Terms.</p>
+    </section>
+
+    <section>
+      <h2>10. Contact</h2>
+      <p>Questions about these Terms:</p>
+      <ul>
+        <li>Email: <a href="mailto:legal@focusquest.site">legal@focusquest.site</a></li>
+        <li>Website: <a href="https://focusquest.site">focusquest.site</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="copyright">© 2026 Sentio. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Use</a>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Custom cursor
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let ringX = 0, ringY = 0, mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+    });
+
+    (function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+  </script>
+</body>
+</html>

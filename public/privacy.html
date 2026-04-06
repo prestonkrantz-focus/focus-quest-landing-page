@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Sentio</title>
+  <meta name="description" content="Sentio's privacy policy. Your attention data stays on your device." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #141210;
+      --text:         #F0EDE8;
+      --accent:       #C8972A;
+      --accent-muted: rgba(200, 151, 42, 0.15);
+      --muted:        rgba(240, 237, 232, 0.45);
+      --border:       rgba(240, 237, 232, 0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor-dot {
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      width: 48px; height: 48px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease-out, width 0.2s, height 0.2s, opacity 0.2s;
+      opacity: 0.5;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 40px;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(20, 18, 16, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Page header ── */
+    .page-header {
+      padding: 180px 24px 80px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .page-header .updated {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px 140px;
+    }
+
+    .content section { margin-bottom: 56px; }
+
+    .content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .content p { color: rgba(240, 237, 232, 0.8); margin-bottom: 14px; }
+    .content p:last-child { margin-bottom: 0; }
+
+    .content ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0;
+    }
+    .content ul li {
+      color: rgba(240, 237, 232, 0.8);
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+    .content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 16px;
+      width: 6px; height: 1px;
+      background: var(--accent);
+    }
+
+    .content a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200, 151, 42, 0.3);
+      transition: border-color 0.2s;
+    }
+    .content a:hover { border-color: var(--accent); }
+
+    .highlight-box {
+      background: var(--accent-muted);
+      border: 1px solid rgba(200, 151, 42, 0.25);
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .highlight-box p { color: var(--text); margin: 0; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .copyright { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav id="nav">
+    <a href="/" class="logo">Sentio</a>
+    <div class="nav-links">
+      <a href="/#how">How it Works</a>
+      <a href="/#cta">Request Access</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Effective April 6, 2026 &nbsp;·&nbsp; Last updated April 6, 2026</p>
+  </header>
+
+  <main class="content">
+
+    <section>
+      <p>Sentio is built on a single conviction: your attention data is yours. This policy explains, plainly, what we collect, what we never collect, and what happens to each.</p>
+      <div class="highlight-box">
+        <p>The short version: mood and app-usage data never leave your device. We collect only what is strictly necessary to run the waitlist and operate the service. We do not sell, rent, or broker your data — ever.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>1. Information We Collect</h2>
+      <p>We collect two categories of information:</p>
+      <p><strong>Waitlist information.</strong> When you submit the Request Access form on our website, we collect your name and email address. We use these solely to notify you when access opens and to send infrequent product updates. You can unsubscribe at any time using the link in any email we send.</p>
+      <p><strong>Support communications.</strong> If you contact us by email, we retain that correspondence to resolve your inquiry and improve the product.</p>
+    </section>
+
+    <section>
+      <h2>2. Information That Never Leaves Your Device</h2>
+      <p>The following data is generated and stored exclusively on your iPhone. Sentio has no server-side access to any of it:</p>
+      <ul>
+        <li>Mood check-in responses (Happy, Okay, Stressed, Bored)</li>
+        <li>Session records — when you opened a tracked app, how long your active window lasted, cooldown duration</li>
+        <li>Sovereignty Stats — Time Reclaimed, Focus Blocks, Session Quality scores, Mood Trend history</li>
+        <li>Archive items saved via the Capture button</li>
+        <li>Your selected apps and Valve Protocol settings</li>
+        <li>Attention Sets progression state</li>
+      </ul>
+      <p>This data is stored in a SwiftData database inside your device's App Group container and, if you opt in to iCloud sync, in your private iCloud account. At no point is it transmitted to Sentio or any third party.</p>
+    </section>
+
+    <section>
+      <h2>3. Information We Do Not Collect</h2>
+      <p>Sentio never collects, accesses, or processes:</p>
+      <ul>
+        <li>The content of your messages, posts, or browsing</li>
+        <li>Screenshots or recordings of your screen</li>
+        <li>Location data</li>
+        <li>Contacts or address book data</li>
+        <li>Device identifiers for advertising purposes</li>
+        <li>Any data from third-party apps beyond what Apple's Screen Time API exposes to you (which is also never transmitted to us)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Cookies and Tracking</h2>
+      <p>Our website uses no third-party analytics, no advertising pixels, and no tracking cookies. We do not use Google Analytics, Meta Pixel, or any equivalent service. We may review aggregate, anonymous server logs (e.g., total page visits) solely to maintain site uptime.</p>
+      <p>The Sentio iOS app contains no advertising SDKs and performs no behavioral tracking.</p>
+    </section>
+
+    <section>
+      <h2>5. Data Sharing and Sale</h2>
+      <p>We do not sell, rent, trade, license, or otherwise share your personal information with third parties for commercial purposes — full stop. We do not have advertising partners. We do not participate in data brokerage.</p>
+      <p>We may disclose information only in the following limited circumstances:</p>
+      <ul>
+        <li><strong>Service providers.</strong> We may use third-party services (e.g., transactional email to send waitlist notifications). These providers process data only on our behalf and are contractually prohibited from using it for their own purposes.</li>
+        <li><strong>Legal obligation.</strong> If required by a valid legal process (subpoena, court order), we will comply and, where legally permitted, notify you.</li>
+        <li><strong>Business transfer.</strong> If Sentio is acquired or merges with another entity, your information may transfer as part of that transaction. We will notify you and you will have the right to request deletion.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Data Retention</h2>
+      <p>Waitlist email addresses are retained until you unsubscribe or request deletion. All on-device data persists until you delete the app or submit a deletion request.</p>
+    </section>
+
+    <section>
+      <h2>7. Your Rights and Deletion Requests</h2>
+      <p>You can request access to, correction of, or deletion of any personal information we hold about you. To submit a request, email us at <a href="mailto:privacy@focusquest.site">privacy@focusquest.site</a>. We will respond within 30 days.</p>
+      <p>To delete on-device data, simply delete the Sentio app from your iPhone. iCloud data can be removed via Settings → [your name] → iCloud → Manage Storage → Sentio.</p>
+    </section>
+
+    <section>
+      <h2>8. Children's Privacy</h2>
+      <p>Sentio is intended for users aged 13 and older. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with information, please contact us at <a href="mailto:privacy@focusquest.site">privacy@focusquest.site</a> and we will delete it promptly.</p>
+    </section>
+
+    <section>
+      <h2>9. Security</h2>
+      <p>We use industry-standard measures to protect the personal information we hold (primarily waitlist email addresses). On-device data is protected by iOS's built-in encryption and the App Group sandboxing model. No method of transmission or storage is 100% secure; we will notify you if a breach affects your data.</p>
+    </section>
+
+    <section>
+      <h2>10. Changes to This Policy</h2>
+      <p>If we make material changes, we will update the "Last updated" date at the top of this page and notify waitlist subscribers by email. Continued use of Sentio after the effective date constitutes acceptance of the revised policy.</p>
+    </section>
+
+    <section>
+      <h2>11. Contact</h2>
+      <p>Questions or concerns about this policy:</p>
+      <ul>
+        <li>Email: <a href="mailto:privacy@focusquest.site">privacy@focusquest.site</a></li>
+        <li>Website: <a href="https://focusquest.site">focusquest.site</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="copyright">© 2026 Sentio. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Use</a>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Custom cursor
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let ringX = 0, ringY = 0, mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+    });
+
+    (function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+  </script>
+</body>
+</html>
