@@ -1061,12 +1061,13 @@
             <h2 style="font-size: 64px;">We're testing with a small group first.</h2>
             <p>If you've ever looked up and lost an hour you didn't mean to lose — this is for you. Founding members get free access while we build. No credit card. No commitment.</p>
             
-            <form class="cta-form" id="waitlist-form">
+            <form class="cta-form" id="waitlist-form" name="sentio-waitlist" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="sentio-waitlist">
                 <div class="input-group">
-                    <input type="text" placeholder="Name" required class="hover-target">
+                    <input type="text" name="name" placeholder="Name" required class="hover-target">
                 </div>
                 <div class="input-group">
-                    <input type="email" placeholder="Email" required class="hover-target">
+                    <input type="email" name="email" placeholder="Email" required class="hover-target">
                 </div>
                 <button type="submit" class="btn btn-submit hover-target">I'm in.</button>
             </form>
@@ -1188,14 +1189,30 @@
         // Form Submit
         document.getElementById('waitlist-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            e.target.style.opacity = 0;
-            setTimeout(() => {
-                e.target.style.display = 'none';
-                const success = document.getElementById('form-success');
-                success.style.display = 'block';
-                setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
-            }, 600);
-            // Add fetch logic here for actual submission
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(response => {
+                if (response.ok) {
+                    form.style.opacity = 0;
+                    setTimeout(() => {
+                        form.style.display = 'none';
+                        const success = document.getElementById('form-success');
+                        success.style.display = 'block';
+                        setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
+                    }, 600);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(() => {
+                alert('Something went wrong. Please try again.');
+            });
         });
 
     </script>
