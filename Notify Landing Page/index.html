@@ -791,15 +791,7 @@
         .st-post-fl.half { width:55%; }
 
     </style>
-    <!-- MailerLite Universal -->
-    <script>
-        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-        ml('account', '2249623');
-    </script>
-    <!-- End MailerLite Universal -->
+    </style>
 </head>
 <body>
 
@@ -1070,7 +1062,18 @@
             <h2 style="font-size: 64px;">We're testing with a small group first.</h2>
             <p>If you've ever looked up and lost an hour you didn't mean to lose — this is for you. Founding members get free access while we build. No credit card. No commitment.</p>
             
-            <div class="ml-embedded" data-form="oRfc3p"></div>
+            <form class="cta-form" id="waitlist-form">
+                <div class="input-group">
+                    <input type="text" name="name" placeholder="Name" required class="hover-target">
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email" required class="hover-target">
+                </div>
+                <button type="submit" class="btn btn-submit hover-target">I'm in.</button>
+            </form>
+            <div class="success-msg" id="form-success">
+                You're in. We'll reach out when your setup is ready.
+            </div>
         </div>
     </section>
 
@@ -1183,54 +1186,52 @@
             heroEls.forEach(el => el.classList.add('visible'));
         });
 
+        // MailerLite Custom Submission (JSONP)
+        document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const name = form.querySelector('[name="name"]').value;
+            const email = form.querySelector('[name="email"]').value;
+            const btn = form.querySelector('button');
+            const originalBtnText = btn.innerText;
+
+            btn.innerText = 'Joining...';
+            btn.disabled = true;
+
+            // Construct MailerLite JSONP URL
+            const accountId = '2249623';
+            const formId = '184049393692836944';
+            const callbackName = 'ml_callback_' + Math.round(100000 * Math.random());
+            
+            const url = `https://assets.mailerlite.com/jsonp/${accountId}/forms/${formId}/subscribe?` + 
+                        `fields[name]=${encodeURIComponent(name)}&` +
+                        `fields[email]=${encodeURIComponent(email)}&` +
+                        `ml-submit=1&anticsrf=true&ajax=1&callback=${callbackName}`;
+
+            // Create JSONP script
+            window[callbackName] = function(response) {
+                if (response.success || response.data) {
+                    form.style.opacity = 0;
+                    setTimeout(() => {
+                        form.style.display = 'none';
+                        const success = document.getElementById('form-success');
+                        success.style.display = 'block';
+                        setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
+                    }, 600);
+                } else {
+                    btn.innerText = originalBtnText;
+                    btn.disabled = false;
+                    alert('Something went wrong. Please check your email and try again.');
+                }
+                delete window[callbackName];
+                document.head.removeChild(script);
+            };
+
+            const script = document.createElement('script');
+            script.src = url;
+            document.head.appendChild(script);
+        });
+
     </script>
-    
-    <style>
-        /* Aggressive MailerLite Overrides at body end */
-        html body div#mlb2-184049393692836944.ml-form-embedContainer,
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper,
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody,
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { 
-            background-color: transparent !important; 
-            border: none !important; 
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-
-        html body div#mlb2-184049393692836944.ml-form-embedContainer * { 
-            font-family: var(--font-body) !important;
-            border-radius: 0 !important;
-        }
-
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedContent,
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedPermissions,
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedFooter { 
-            display: none !important; 
-        }
-
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .form-control {
-            background-color: transparent !important;
-            border: none !important;
-            border-bottom: 1px solid rgba(240, 237, 232, 0.3) !important;
-            color: #F0EDE8 !important;
-            font-size: 16px !important;
-            padding: 16px 0 !important;
-            width: 100% !important;
-            height: auto !important;
-        }
-
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-button,
-        html body div#mlb2-184049393692836944.ml-form-embedContainer .primary {
-            background-color: #C8972A !important;
-            color: #141210 !important;
-            font-weight: bold !important;
-            padding: 16px !important;
-            border: none !important;
-            cursor: pointer !important;
-            width: 100% !important;
-            height: auto !important;
-            margin-top: 24px !important;
-        }
-    </style>
 </body>
 </html>
