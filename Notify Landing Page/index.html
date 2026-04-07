@@ -790,80 +790,6 @@
         .st-post-fl { height:3px; background:rgba(255,255,255,0.12); border-radius:2px; }
         .st-post-fl.half { width:55%; }
 
-        /* MailerLite Overrides - High Specificity */
-        html body .ml-embedded { margin-top: 48px !important; }
-        
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { 
-            background-color: transparent !important; 
-            border: none !important; 
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedPermissions,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedFooter { 
-            display: none !important; 
-        }
-
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-formControl { 
-            margin-bottom: 16px !important; 
-        }
-
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .form-control {
-            background-color: transparent !important;
-            border: none !important;
-            border-bottom: 1px solid rgba(240, 237, 232, 0.3) !important;
-            border-radius: 0 !important;
-            color: #F0EDE8 !important;
-            font-family: var(--font-body) !important;
-            font-size: 16px !important;
-            padding: 16px 0 !important;
-            width: 100% !important;
-            height: auto !important;
-        }
-
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .form-control::placeholder { 
-            color: rgba(240, 237, 232, 0.4) !important; 
-        }
-        
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-button,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .primary {
-            background-color: #C8972A !important;
-            border: none !important;
-            border-radius: 0 !important;
-            color: #141210 !important;
-            font-family: var(--font-body) !important;
-            font-weight: bold !important;
-            padding: 16px !important;
-            width: 100% !important;
-            margin-top: 24px !important;
-            height: auto !important;
-            cursor: none !important;
-            text-transform: none !important;
-            box-shadow: none !important;
-        }
-
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-button:hover,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .primary:hover { 
-            filter: brightness(1.1) !important; 
-        }
-
-        /* Success Message styling */
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-successBody .ml-form-successContent h4,
-        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-successBody .ml-form-successContent p {
-            color: var(--sage) !important;
-            background-color: transparent !important;
-            font-family: var(--font-display) !important;
-            text-align: center !important;
-            display: block !important;
-            font-size: 20px !important;
-            margin-top: 40px !important;
-            border: none !important;
-        }
-
     </style>
     <!-- MailerLite Universal -->
     <script>
@@ -1257,8 +1183,54 @@
             heroEls.forEach(el => el.classList.add('visible'));
         });
 
-
-
     </script>
+    
+    <style>
+        /* Aggressive MailerLite Overrides at body end */
+        html body div#mlb2-184049393692836944.ml-form-embedContainer,
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper,
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody,
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { 
+            background-color: transparent !important; 
+            border: none !important; 
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        html body div#mlb2-184049393692836944.ml-form-embedContainer * { 
+            font-family: var(--font-body) !important;
+            border-radius: 0 !important;
+        }
+
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedContent,
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedPermissions,
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedFooter { 
+            display: none !important; 
+        }
+
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .form-control {
+            background-color: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid rgba(240, 237, 232, 0.3) !important;
+            color: #F0EDE8 !important;
+            font-size: 16px !important;
+            padding: 16px 0 !important;
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .ml-button,
+        html body div#mlb2-184049393692836944.ml-form-embedContainer .primary {
+            background-color: #C8972A !important;
+            color: #141210 !important;
+            font-weight: bold !important;
+            padding: 16px !important;
+            border: none !important;
+            cursor: pointer !important;
+            width: 100% !important;
+            height: auto !important;
+            margin-top: 24px !important;
+        }
+    </style>
 </body>
 </html>
