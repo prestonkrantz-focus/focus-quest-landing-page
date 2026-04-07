@@ -790,7 +790,58 @@
         .st-post-fl { height:3px; background:rgba(255,255,255,0.12); border-radius:2px; }
         .st-post-fl.half { width:55%; }
 
+        /* MailerLite Overrides */
+        .ml-embedded { margin-top: 48px; }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper { background-color: transparent !important; border: none !important; }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody { padding: 0 !important; }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent { margin-bottom: 0 !important; display: none !important; } /* Hides headers */
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-formControl { margin-bottom: 16px !important; }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-formControl input {
+            background-color: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid rgba(240, 237, 232, 0.3) !important;
+            border-radius: 0 !important;
+            color: #F0EDE8 !important;
+            font-family: var(--font-body) !important;
+            font-size: 16px !important;
+            padding: 16px 0 !important;
+            width: 100% !important;
+        }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-formControl input::placeholder { color: rgba(240, 237, 232, 0.4) !important; }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-button {
+            background-color: #C8972A !important;
+            border: none !important;
+            border-radius: 0 !important;
+            color: #141210 !important;
+            font-family: var(--font-body) !important;
+            font-weight: bold !important;
+            padding: 16px !important;
+            width: 100% !important;
+            margin-top: 32px !important;
+            height: auto !important;
+            cursor: none !important;
+        }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-button:hover { filter: brightness(1.1); }
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedPermissions,
+        #mlb2-2249623.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedFooter { display: none !important; }
+        #mlb2-2249623 .ml-form-successBody .ml-form-successContent h4, 
+        #mlb2-2249623 .ml-form-successBody .ml-form-successContent p { 
+            color: var(--sage) !important; 
+            font-family: var(--font-display) !important;
+            display: block !important;
+            text-align: center;
+        }
+
     </style>
+    <!-- MailerLite Universal -->
+    <script>
+        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '2249623');
+    </script>
+    <!-- End MailerLite Universal -->
 </head>
 <body>
 
@@ -1061,19 +1112,7 @@
             <h2 style="font-size: 64px;">We're testing with a small group first.</h2>
             <p>If you've ever looked up and lost an hour you didn't mean to lose — this is for you. Founding members get free access while we build. No credit card. No commitment.</p>
             
-            <form class="cta-form" id="waitlist-form" name="sentio-waitlist" method="POST" data-netlify="true">
-                <input type="hidden" name="form-name" value="sentio-waitlist">
-                <div class="input-group">
-                    <input type="text" name="name" placeholder="Name" required class="hover-target">
-                </div>
-                <div class="input-group">
-                    <input type="email" name="email" placeholder="Email" required class="hover-target">
-                </div>
-                <button type="submit" class="btn btn-submit hover-target">I'm in.</button>
-            </form>
-            <div class="success-msg" id="form-success">
-                You're in. We'll reach out when your setup is ready.
-            </div>
+            <div class="ml-embedded" data-form="oRfc3p"></div>
         </div>
     </section>
 
@@ -1186,34 +1225,7 @@
             heroEls.forEach(el => el.classList.add('visible'));
         });
 
-        // Form Submit
-        document.getElementById('waitlist-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            
-            fetch('/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(response => {
-                if (response.ok) {
-                    form.style.opacity = 0;
-                    setTimeout(() => {
-                        form.style.display = 'none';
-                        const success = document.getElementById('form-success');
-                        success.style.display = 'block';
-                        setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
-                    }, 600);
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            })
-            .catch(() => {
-                alert('Something went wrong. Please try again.');
-            });
-        });
+
 
     </script>
 </body>
