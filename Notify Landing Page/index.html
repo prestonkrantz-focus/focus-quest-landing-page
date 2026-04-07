@@ -790,27 +790,29 @@
         .st-post-fl { height:3px; background:rgba(255,255,255,0.12); border-radius:2px; }
         .st-post-fl.half { width:55%; }
 
-        /* MailerLite Overrides */
-        .ml-embedded { margin-top: 48px !important; }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper { 
+        /* MailerLite Overrides - High Specificity */
+        html body .ml-embedded { margin-top: 48px !important; }
+        
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { 
             background-color: transparent !important; 
             border: none !important; 
             box-shadow: none !important;
+            padding: 0 !important;
         }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody,
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { 
-            padding: 0 !important; 
-            background-color: transparent !important;
-        }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent,
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedPermissions,
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedFooter { 
+
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedPermissions,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedFooter { 
             display: none !important; 
         }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-formControl { 
+
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-form-formControl { 
             margin-bottom: 16px !important; 
         }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .form-control {
+
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .form-control {
             background-color: transparent !important;
             border: none !important;
             border-bottom: 1px solid rgba(240, 237, 232, 0.3) !important;
@@ -822,10 +824,13 @@
             width: 100% !important;
             height: auto !important;
         }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .form-control::placeholder { color: rgba(240, 237, 232, 0.4) !important; }
+
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .form-control::placeholder { 
+            color: rgba(240, 237, 232, 0.4) !important; 
+        }
         
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-button,
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .primary {
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-button,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .primary {
             background-color: #C8972A !important;
             border: none !important;
             border-radius: 0 !important;
@@ -840,12 +845,15 @@
             text-transform: none !important;
             box-shadow: none !important;
         }
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-button:hover,
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .primary:hover { filter: brightness(1.1) !important; }
+
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .ml-button:hover,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-embedWrapper .primary:hover { 
+            filter: brightness(1.1) !important; 
+        }
 
         /* Success Message styling */
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-successBody .ml-form-successContent h4,
-        #mlb2-184049393692836944.ml-form-embedContainer .ml-form-successBody .ml-form-successContent p {
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-successBody .ml-form-successContent h4,
+        html body #mlb2-184049393692836944.ml-form-embedContainer .ml-form-successBody .ml-form-successContent p {
             color: var(--sage) !important;
             background-color: transparent !important;
             font-family: var(--font-display) !important;
@@ -853,6 +861,7 @@
             display: block !important;
             font-size: 20px !important;
             margin-top: 40px !important;
+            border: none !important;
         }
 
     </style>
