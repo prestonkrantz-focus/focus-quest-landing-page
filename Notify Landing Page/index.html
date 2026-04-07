@@ -1062,15 +1062,21 @@
             <h2 style="font-size: 64px;">We're testing with a small group first.</h2>
             <p>If you've ever looked up and lost an hour you didn't mean to lose — this is for you. Founding members get free access while we build. No credit card. No commitment.</p>
             
-            <form class="cta-form" id="waitlist-form">
+            <form class="cta-form" id="waitlist-form" action="https://assets.mailerlite.com/forms/184049393692836944/subscribe" method="POST" target="ml_frame">
                 <div class="input-group">
-                    <input type="text" name="name" placeholder="Name" required class="hover-target">
+                    <input type="text" name="fields[name]" placeholder="Name" required class="hover-target">
                 </div>
                 <div class="input-group">
-                    <input type="email" name="email" placeholder="Email" required class="hover-target">
+                    <input type="email" name="fields[email]" placeholder="Email" required class="hover-target">
                 </div>
+                <!-- Hidden fields for MailerLite -->
+                <input type="hidden" name="ml-submit" value="1">
+                <input type="hidden" name="anticsrf" value="true">
+                
                 <button type="submit" class="btn btn-submit hover-target">I'm in.</button>
             </form>
+            <iframe name="ml_frame" style="display:none;"></iframe>
+            
             <div class="success-msg" id="form-success">
                 You're in. We'll reach out when your setup is ready.
             </div>
@@ -1186,50 +1192,24 @@
             heroEls.forEach(el => el.classList.add('visible'));
         });
 
-        // MailerLite Custom Submission (JSONP)
+        // MailerLite Submission Handler
         document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-            e.preventDefault();
             const form = this;
-            const name = form.querySelector('[name="name"]').value;
-            const email = form.querySelector('[name="email"]').value;
             const btn = form.querySelector('button');
-            const originalBtnText = btn.innerText;
-
+            
             btn.innerText = 'Joining...';
             btn.disabled = true;
 
-            // Construct MailerLite JSONP URL
-            const accountId = '2249623';
-            const formId = '184049393692836944';
-            const callbackName = 'ml_callback_' + Math.round(100000 * Math.random());
-            
-            const url = `https://assets.mailerlite.com/jsonp/${accountId}/forms/${formId}/subscribe?` + 
-                        `fields[name]=${encodeURIComponent(name)}&` +
-                        `fields[email]=${encodeURIComponent(email)}&` +
-                        `ml-submit=1&anticsrf=true&ajax=1&callback=${callbackName}`;
-
-            // Create JSONP script
-            window[callbackName] = function(response) {
-                if (response.success || response.data) {
-                    form.style.opacity = 0;
-                    setTimeout(() => {
-                        form.style.display = 'none';
-                        const success = document.getElementById('form-success');
-                        success.style.display = 'block';
-                        setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
-                    }, 600);
-                } else {
-                    btn.innerText = originalBtnText;
-                    btn.disabled = false;
-                    alert('Something went wrong. Please check your email and try again.');
-                }
-                delete window[callbackName];
-                document.head.removeChild(script);
-            };
-
-            const script = document.createElement('script');
-            script.src = url;
-            document.head.appendChild(script);
+            // Show success message almost immediately (iframe handles the actual POST)
+            setTimeout(() => {
+                form.style.opacity = 0;
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    const success = document.getElementById('form-success');
+                    success.style.display = 'block';
+                    setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
+                }, 600);
+            }, 1000);
         });
 
     </script>
