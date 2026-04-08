@@ -792,6 +792,15 @@
 
     </style>
     </style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2249623');
+</script>
+<!-- End MailerLite Universal -->
 </head>
 <body>
 
@@ -1062,20 +1071,15 @@
             <h2 style="font-size: 64px;">We're testing with a small group first.</h2>
             <p>If you've ever looked up and lost an hour you didn't mean to lose — this is for you. Founding members get free access while we build. No credit card. No commitment.</p>
             
-            <form class="cta-form" id="waitlist-form" action="https://assets.mailerlite.com/forms/184049393692836944/subscribe" method="POST" target="ml_frame">
+            <form class="cta-form" id="waitlist-form">
                 <div class="input-group">
-                    <input type="text" name="fields[name]" placeholder="Name" required class="hover-target">
+                    <input type="text" name="name" placeholder="Name" required class="hover-target">
                 </div>
                 <div class="input-group">
-                    <input type="email" name="fields[email]" placeholder="Email" required class="hover-target">
+                    <input type="email" name="email" placeholder="Email" required class="hover-target">
                 </div>
-                <!-- Hidden fields for MailerLite -->
-                <input type="hidden" name="ml-submit" value="1">
-                <input type="hidden" name="anticsrf" value="true">
-                
                 <button type="submit" class="btn btn-submit hover-target">I'm in.</button>
             </form>
-            <iframe name="ml_frame" style="display:none;"></iframe>
             
             <div class="success-msg" id="form-success">
                 You're in. We'll reach out when your setup is ready.
@@ -1192,24 +1196,43 @@
             heroEls.forEach(el => el.classList.add('visible'));
         });
 
-        // MailerLite Submission Handler
-        document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+        // Waitlist Submission Handler
+        document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
             const form = this;
             const btn = form.querySelector('button');
-            
+            const name  = form.querySelector('input[name="name"]').value.trim();
+            const email = form.querySelector('input[name="email"]').value.trim();
+
             btn.innerText = 'Joining...';
             btn.disabled = true;
 
-            // Show success message almost immediately (iframe handles the actual POST)
-            setTimeout(() => {
-                form.style.opacity = 0;
-                setTimeout(() => {
-                    form.style.display = 'none';
-                    const success = document.getElementById('form-success');
-                    success.style.display = 'block';
-                    setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
-                }, 600);
-            }, 1000);
+            try {
+                const body = new URLSearchParams({ name, email }).toString();
+                const res = await fetch('/.netlify/functions/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body
+                });
+
+                if (res.ok) {
+                    form.style.opacity = 0;
+                    setTimeout(() => {
+                        form.style.display = 'none';
+                        const success = document.getElementById('form-success');
+                        success.style.display = 'block';
+                        setTimeout(() => success.classList.add('fade-in', 'visible'), 50);
+                    }, 600);
+                } else {
+                    btn.innerText = "I'm in.";
+                    btn.disabled = false;
+                    alert('Something went wrong — please try again.');
+                }
+            } catch (err) {
+                btn.innerText = "I'm in.";
+                btn.disabled = false;
+                alert('Connection error — please try again.');
+            }
         });
 
     </script>
