@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>cove — otto holds your phone for you</title>
-<meta name="description" content="Cove is a screen-time app with a sea otter. Otto holds your phone when you've been on TikTok too long. DMs stay open. Free, on-device. iOS, spring 2026.">
-<meta property="og:title" content="cove — otto holds your phone for you">
-<meta property="og:description" content="15 min of tiktok, then otto takes the phone for 30. dms stay open. you stop getting cooked.">
+<title>cove — an otter holds your phone for you</title>
+<meta name="description" content="Cove is a screen-time app with a small sea otter. He holds your phone when you've been on TikTok too long. DMs stay open. Free, on-device. iOS, spring 2026.">
+<meta property="og:title" content="cove — an otter holds your phone for you">
+<meta property="og:description" content="15 minutes of TikTok, then the otter takes the phone for 30. DMs stay open. You stop getting cooked.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,20 +18,17 @@
     --ocean:#4F90B4;
     --ocean-deep:#3A7895;
     --wash:#DCE6EC;
-    --wash-tint:rgba(220,230,236,.5);
     --line:rgba(14,28,42,.09);
     --muted:rgba(14,28,42,.52);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
-    background:var(--bg);
-    color:var(--ink);
+    background:var(--bg);color:var(--ink);
     font-family:'Instrument Sans',ui-sans-serif,system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
     font-feature-settings:"ss01";
-    line-height:1.5;
-    overflow-x:hidden;
+    line-height:1.5;overflow-x:hidden;
   }
   .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
 
@@ -62,8 +59,8 @@
   .nav-links a:hover{opacity:1}
   .nav-cta{
     background:var(--ink);color:var(--bg)!important;opacity:1!important;
-    padding:8px 18px;border-radius:100px;
-    font-size:13px;transition:background .2s,transform .15s!important;
+    padding:8px 18px;border-radius:100px;font-size:13px;
+    transition:background .2s,transform .15s!important;
   }
   .nav-cta:hover{background:#1a3347;transform:translateY(-1px)!important}
 
@@ -86,22 +83,22 @@
     content:"";display:block;width:16px;height:1px;background:currentColor;opacity:.5;
   }
 
-  /* ── OTTO SVG ── */
-  .otto-wrap{
-    width:min(380px,68vw);margin-bottom:20px;
+  /* ── OTTER ── */
+  .otter-wrap{
+    width:min(400px,72vw);margin-bottom:20px;
     opacity:0;animation:up .8s ease .2s forwards;
   }
-  .otto-wrap svg{width:100%;height:auto;display:block}
-  .otto-body{animation:bob 5s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-  @media(prefers-reduced-motion:reduce){.otto-body{animation:none}}
+  .otter-wrap svg{width:100%;height:auto;display:block}
+  .otter-bob{animation:bob 5s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media(prefers-reduced-motion:reduce){.otter-bob{animation:none}}
 
   /* ── HERO TYPE ── */
   .hero-mark{
     font-family:'Instrument Serif',serif;font-style:italic;
     font-size:clamp(72px,13vw,200px);
     font-weight:400;line-height:.85;letter-spacing:-.05em;
-    margin-bottom:16px;
+    margin-bottom:14px;
     opacity:0;animation:up .7s ease .35s forwards;
   }
   .hero-mark .dot{
@@ -111,15 +108,15 @@
   }
   .hero-line{
     font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(22px,3.5vw,46px);
+    font-size:clamp(20px,3.2vw,44px);
     font-weight:400;line-height:1.1;letter-spacing:-.02em;
-    max-width:640px;margin-bottom:14px;
+    max-width:640px;margin-bottom:12px;
     opacity:0;animation:up .7s ease .5s forwards;
   }
   .hero-line .ocean{color:var(--ocean)}
   .hero-sub{
     font-size:clamp(15px,1.8vw,18px);
-    color:var(--muted);line-height:1.55;letter-spacing:-.005em;
+    color:var(--muted);line-height:1.6;letter-spacing:-.005em;
     max-width:480px;margin-bottom:36px;
     opacity:0;animation:up .7s ease .62s forwards;
   }
@@ -127,8 +124,7 @@
   /* ── FORM ── */
   .form-block{opacity:0;animation:up .7s ease .74s forwards}
   .form{
-    display:flex;gap:6px;
-    background:#fff;padding:5px;
+    display:flex;gap:6px;background:#fff;padding:5px;
     border-radius:100px;border:1px solid var(--line);
     width:min(430px,100%);
     box-shadow:0 2px 6px rgba(14,28,42,.05);
@@ -149,7 +145,7 @@
   .form button:hover{background:#1a3347;transform:translateY(-1px)}
   .form button:disabled{opacity:.55;cursor:default;transform:none}
   .form-success{
-    display:none;padding:12px 4px;
+    display:none;padding:14px 4px;
     font-family:'Instrument Serif',serif;font-style:italic;
     font-size:20px;color:var(--ocean);letter-spacing:-.01em;
   }
@@ -161,46 +157,39 @@
   .hero-foot span+span::before{content:"·";margin:0 10px;color:var(--muted)}
 
   /* ── WAVE ── */
-  .wave-wrap{
-    position:absolute;left:0;right:0;bottom:-1px;
-    height:100px;pointer-events:none;
-  }
+  .wave-wrap{position:absolute;left:0;right:0;bottom:-1px;height:100px;pointer-events:none}
   .wave-svg{width:100%;height:100%;display:block}
   .w1{animation:drift 24s linear infinite}
   .w2{animation:drift 32s linear infinite reverse}
   @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-800px)}}
   @media(prefers-reduced-motion:reduce){.w1,.w2{animation:none}}
 
-  /* ── ENTRANCE ANIMATION ── */
+  /* ── ENTRANCE ── */
   @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
   /* ── SCROLL REVEAL ── */
-  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
   .reveal.in{opacity:1;transform:none}
 
   /* ── SECTIONS ── */
   section{padding:200px 0 180px;border-top:1px solid var(--line)}
   .section-label{
     font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-    margin-bottom:32px;
-    display:flex;align-items:center;gap:12px;
+    margin-bottom:32px;display:flex;align-items:center;gap:12px;
   }
-  .section-label::before{
-    content:"";display:block;width:20px;height:1px;background:var(--ocean);
-  }
+  .section-label::before{content:"";display:block;width:20px;height:1px;background:var(--ocean)}
   .display{
     font-family:'Instrument Serif',serif;font-style:italic;
     font-size:clamp(38px,5.5vw,70px);
-    font-weight:400;letter-spacing:-.03em;line-height:1.02;
-    max-width:780px;
+    font-weight:400;letter-spacing:-.03em;line-height:1.02;max-width:780px;
   }
   .display .ocean{color:var(--ocean)}
   .lede{
-    font-size:17px;line-height:1.65;color:var(--muted);
+    font-size:17px;line-height:1.7;color:var(--muted);
     max-width:560px;margin-top:24px;letter-spacing:-.005em;
   }
 
-  /* ── THREE STEPS ── */
+  /* ── STEPS ── */
   .steps{
     display:grid;grid-template-columns:repeat(3,1fr);
     gap:1px;background:var(--line);
@@ -210,26 +199,23 @@
   .step{
     background:var(--bg);padding:44px 32px;
     display:flex;flex-direction:column;gap:14px;min-height:290px;
-    transition:background .25s,transform .2s;
-    cursor:default;
+    transition:background .25s;cursor:default;
   }
   .step:hover{background:#EDEAE2}
   .step-num{
     font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:20px;color:var(--ocean);letter-spacing:-.02em;
+    font-size:20px;color:var(--ocean);
   }
   .step-name{
     font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:32px;letter-spacing:-.02em;line-height:1.05;font-weight:400;
+    font-size:30px;letter-spacing:-.02em;line-height:1.05;font-weight:400;
   }
-  .step-desc{font-size:15px;line-height:1.6;color:var(--muted);margin-top:auto}
+  .step-desc{font-size:15px;line-height:1.65;color:var(--muted);margin-top:auto}
 
   /* ── MANIFESTO ── */
   .manifesto{
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding:180px 32px;
-    text-align:center;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:180px 32px;text-align:center;
   }
   .manifesto-text{
     font-family:'Instrument Serif',serif;font-style:italic;
@@ -246,73 +232,68 @@
   /* ── CONTRAST ── */
   .contrast-grid{
     display:grid;grid-template-columns:1fr 1fr;
-    gap:0;margin-top:48px;
-    border:1px solid var(--line);border-radius:10px;overflow:hidden;
+    margin-top:48px;border:1px solid var(--line);border-radius:10px;overflow:hidden;
   }
   .col{padding:44px 36px}
   .col+.col{border-left:1px solid var(--line);background:rgba(79,144,180,.04)}
   .col h4{
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-    margin-bottom:28px;font-weight:500;
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:28px;font-weight:500;
   }
   .col ul{list-style:none}
-  .col li{
-    padding:13px 0;border-bottom:1px solid var(--line);
-    font-size:16px;line-height:1.45;
-  }
+  .col li{padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.45}
   .col li:last-child{border-bottom:0}
   .col.them li{
-    color:var(--muted);
-    text-decoration:line-through;
-    text-decoration-color:rgba(14,28,42,.18);
-    text-decoration-thickness:1px;
+    color:var(--muted);text-decoration:line-through;
+    text-decoration-color:rgba(14,28,42,.18);text-decoration-thickness:1px;
   }
   .col.us li::before{
-    content:"·";color:var(--ocean);
-    margin-right:10px;font-size:20px;
-    line-height:0;vertical-align:middle;
+    content:"·";color:var(--ocean);margin-right:10px;
+    font-size:20px;line-height:0;vertical-align:middle;
   }
 
   /* ── PRIVACY BAND ── */
   .privacy-band{
-    background:var(--wash);
-    border-top:1px solid var(--line);
-    padding:100px 32px;
-    text-align:center;
+    background:var(--wash);border-top:1px solid var(--line);
+    padding:100px 32px;text-align:center;
   }
   .privacy-band h3{
     font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(26px,3.5vw,42px);
-    font-weight:400;letter-spacing:-.025em;line-height:1.2;
+    font-size:clamp(26px,3.5vw,42px);font-weight:400;letter-spacing:-.025em;line-height:1.2;
     max-width:560px;margin:0 auto 18px;
   }
-  .privacy-band p{
-    font-size:16px;color:var(--muted);
-    max-width:480px;margin:0 auto;line-height:1.6;
+  .privacy-band p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.6}
+
+  /* ── NAMING SECTION ── */
+  .naming{
+    text-align:center;padding:160px 32px 140px;
+    border-top:1px solid var(--line);
   }
+  .naming-otter{width:min(200px,48vw);margin:0 auto 32px}
+  .naming-otter svg{width:100%;height:auto;display:block}
+  .naming h2{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(28px,4vw,52px);font-weight:400;letter-spacing:-.03em;
+    line-height:1.1;margin-bottom:16px;
+  }
+  .naming p{font-size:17px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.6}
 
   /* ── FINAL CTA ── */
-  .final{
-    text-align:center;
-    padding:180px 32px;
-  }
+  .final{text-align:center;padding:180px 32px;border-top:1px solid var(--line)}
   .final .section-label{justify-content:center}
-  .final .otto-wrap{margin:0 auto 24px}
+  .final .otter-wrap{margin:0 auto 20px}
   .final h2{
     font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(40px,7vw,96px);
-    font-weight:400;letter-spacing:-.04em;line-height:.95;
-    margin-bottom:28px;
+    font-size:clamp(40px,7vw,96px);font-weight:400;letter-spacing:-.04em;
+    line-height:.95;margin-bottom:24px;
   }
-  .final h2 em{font-style:italic}
   .final .hero-sub{margin:0 auto 32px;opacity:1;animation:none}
   .final .form-block{margin:0 auto;opacity:1;animation:none}
-  .final .hero-foot{opacity:1;animation:none}
+  .final .hero-foot{opacity:1;animation:none;justify-content:center}
 
   /* ── FOOTER ── */
   footer{
-    border-top:1px solid var(--line);
-    padding:40px 32px;
+    border-top:1px solid var(--line);padding:40px 32px;
     display:flex;justify-content:space-between;align-items:center;
     flex-wrap:wrap;gap:20px;
     font-size:13px;color:var(--muted);
@@ -329,6 +310,7 @@
     .nav-links a:not(.nav-cta){display:none}
     section{padding:110px 0 100px}
     .manifesto{padding:110px 32px}
+    .naming{padding:100px 32px 80px}
     .final{padding:110px 32px}
     .privacy-band{padding:70px 32px}
     .steps{grid-template-columns:1fr}
@@ -336,7 +318,7 @@
     .col+.col{border-left:0;border-top:1px solid var(--line)}
     .form{flex-direction:column;border-radius:14px;padding:8px;gap:6px}
     .form button{width:100%;border-radius:10px}
-    footer{flex-direction:column;align-items:flex-start;gap:16px}
+    footer{flex-direction:column;align-items:flex-start;gap:14px}
   }
 </style>
 </head>
@@ -358,68 +340,117 @@
 <header class="hero">
   <div class="hero-eyebrow">ios · spring 2026</div>
 
-  <!-- otto — floating otter holding a phone -->
-  <div class="otto-wrap">
-    <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" aria-label="otto the sea otter floating on his back, holding a phone">
-      <g class="otto-body">
-        <!-- water shadow -->
-        <ellipse cx="180" cy="200" rx="148" ry="8" fill="#C8D8E2" opacity=".55"/>
-        <!-- body -->
-        <ellipse cx="180" cy="135" rx="130" ry="46" fill="#4F90B4"/>
-        <!-- belly -->
-        <ellipse cx="180" cy="132" rx="106" ry="35" fill="#F4F2EC"/>
-        <!-- tail -->
-        <path d="M302 148 Q348 118 326 178 Q312 162 304 156 Z" fill="#4F90B4"/>
-        <!-- back paws -->
-        <ellipse cx="274" cy="96" rx="16" ry="10" fill="#3A7895" transform="rotate(-22 274 96)"/>
-        <ellipse cx="248" cy="90" rx="16" ry="10" fill="#3A7895" transform="rotate(-32 248 90)"/>
-        <!-- head -->
-        <ellipse cx="64" cy="112" rx="40" ry="37" fill="#4F90B4"/>
-        <!-- ears -->
-        <ellipse cx="44" cy="85" rx="8" ry="6" fill="#3A7895" transform="rotate(-22 44 85)"/>
-        <ellipse cx="84" cy="84" rx="8" ry="6" fill="#3A7895" transform="rotate(22 84 84)"/>
-        <!-- snout -->
-        <ellipse cx="64" cy="122" rx="26" ry="20" fill="#F4F2EC"/>
-        <!-- eyes (closed, calm) -->
-        <path d="M50 110 Q56 105 62 110" stroke="#0E1C2A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-        <path d="M66 110 Q72 105 78 110" stroke="#0E1C2A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-        <!-- nose -->
-        <ellipse cx="64" cy="124" rx="3.5" ry="2.5" fill="#0E1C2A"/>
-        <!-- mouth -->
-        <path d="M58 131 Q64 135 70 131" stroke="#0E1C2A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <!-- whiskers left -->
-        <line x1="42" y1="126" x2="26" y2="123" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <line x1="42" y1="130" x2="26" y2="133" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <!-- whiskers right -->
-        <line x1="86" y1="126" x2="102" y2="123" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <line x1="86" y1="130" x2="102" y2="133" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <!-- phone (dark, on belly) -->
-        <rect x="150" y="102" width="60" height="44" rx="7" fill="#0E1C2A"/>
-        <rect x="154" y="106" width="52" height="36" rx="5" fill="#DCE6EC"/>
-        <!-- screen glow lines -->
-        <rect x="160" y="112" width="40" height="3.5" rx="1.5" fill="#4F90B4" opacity=".5"/>
-        <rect x="160" y="119" width="28" height="3.5" rx="1.5" fill="#4F90B4" opacity=".3"/>
-        <rect x="160" y="126" width="34" height="3.5" rx="1.5" fill="#4F90B4" opacity=".2"/>
-        <!-- paws holding phone sides -->
-        <ellipse cx="142" cy="118" rx="13" ry="9" fill="#3A7895"/>
-        <ellipse cx="218" cy="118" rx="13" ry="9" fill="#3A7895"/>
-      </g>
+  <!--
+    THE OTTER — calm state
+    Brown chibi sea otter, floating on back, holding phone.
+    Character bible: #8B6F47 body, #F4F2EC belly, #0E1C2A outline.
+    Replace with generated PNG once Midjourney assets land.
+  -->
+  <div class="otter-wrap">
+    <svg class="otter-bob" viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg"
+         aria-label="a small brown sea otter floating on his back, holding a phone, eyes closed peacefully">
+
+      <!-- water -->
+      <ellipse cx="220" cy="264" rx="185" ry="11" fill="#4F90B4" opacity=".3"/>
+
+      <!-- body — warm brown -->
+      <ellipse cx="228" cy="170" rx="148" ry="54"
+               fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
+
+      <!-- belly — cream -->
+      <ellipse cx="228" cy="163" rx="118" ry="40" fill="#F4F2EC"/>
+
+      <!-- tail -->
+      <path d="M362 182 Q414 148 392 218 Q376 199 366 191 Z"
+            fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8" stroke-linejoin="round"/>
+
+      <!-- back paws (peeking up) -->
+      <ellipse cx="326" cy="116" rx="22" ry="13"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(-22 326 116)"/>
+      <ellipse cx="298" cy="108" rx="22" ry="13"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(-32 298 108)"/>
+
+      <!-- HEAD — big, chibi (r=72) -->
+      <circle cx="86" cy="128" r="72"
+              fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
+
+      <!-- ears -->
+      <ellipse cx="54" cy="67" rx="13" ry="9"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(-15 54 67)"/>
+      <ellipse cx="112" cy="63" rx="13" ry="9"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(15 112 63)"/>
+
+      <!-- face cream patch -->
+      <ellipse cx="86" cy="142" rx="42" ry="32" fill="#F4F2EC"/>
+
+      <!-- eyes CLOSED — large curved arcs (chibi = eyes take up 1/3 face) -->
+      <path d="M56 120 Q70 110 84 120"
+            stroke="#0E1C2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M88 120 Q102 110 116 120"
+            stroke="#0E1C2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+
+      <!-- cheek blush (very subtle, below eyes) -->
+      <ellipse cx="54" cy="132" rx="10" ry="6" fill="#E8A598" opacity=".35"/>
+      <ellipse cx="118" cy="132" rx="10" ry="6" fill="#E8A598" opacity=".35"/>
+
+      <!-- nose -->
+      <ellipse cx="86" cy="143" rx="5.5" ry="3.8" fill="#0E1C2A"/>
+
+      <!-- smile -->
+      <path d="M76 154 Q86 160 96 154"
+            stroke="#0E1C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+      <!-- whiskers left -->
+      <line x1="54" y1="142" x2="26" y2="138"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <line x1="54" y1="150" x2="26" y2="154"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+
+      <!-- whiskers right -->
+      <line x1="118" y1="142" x2="146" y2="138"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <line x1="118" y1="150" x2="146" y2="154"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+
+      <!-- front paws (holding phone sides) -->
+      <ellipse cx="168" cy="154" rx="20" ry="12"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
+      <ellipse cx="258" cy="154" rx="20" ry="12"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
+
+      <!-- phone -->
+      <rect x="180" y="132" width="66" height="50" rx="8"
+            fill="#0E1C2A"/>
+      <rect x="185" y="137" width="56" height="40" rx="5"
+            fill="#F4F2EC"/>
+      <!-- screen lines -->
+      <rect x="192" y="144" width="42" height="4.5" rx="2"
+            fill="#4F90B4" opacity=".45"/>
+      <rect x="192" y="153" width="30" height="4.5" rx="2"
+            fill="#4F90B4" opacity=".3"/>
+      <rect x="192" y="162" width="36" height="4.5" rx="2"
+            fill="#4F90B4" opacity=".18"/>
     </svg>
   </div>
 
   <h1 class="hero-mark">cove<span class="dot"></span></h1>
-  <p class="hero-line">otto holds your phone <span class="ocean">for you</span>.</p>
-  <p class="hero-sub">15 min of tiktok, then otto takes the phone for 30. dms stay open. you stop getting cooked.</p>
+  <p class="hero-line">an otter holds your phone <span class="ocean">for you</span>.</p>
+  <p class="hero-sub">15 minutes of tiktok, then the otter takes the phone for 30. dms stay open. you stop getting cooked.</p>
 
   <div class="form-block" id="hero-form-wrap">
     <form class="form" id="hero-form"
-      action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
-      method="POST" target="ml-frame" novalidate>
+          action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
+          method="POST" target="ml-frame" novalidate>
       <input type="hidden" name="ml-submit" value="1">
-      <input type="email" name="fields[email]" placeholder="your@email.com" required autocomplete="email">
+      <input type="email" name="fields[email]" placeholder="your@email.com"
+             required autocomplete="email">
       <button type="submit" id="hero-btn">join the waitlist</button>
     </form>
-    <div class="form-success" id="hero-success">you're in. otto's getting his floaties on.</div>
+    <div class="form-success" id="hero-success">you're in. the otter's getting his floaties on.</div>
   </div>
 
   <div class="hero-foot">
@@ -431,12 +462,16 @@
   <div class="wave-wrap">
     <svg class="wave-svg" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
       <g class="w1">
-        <path d="M0,56 Q180,32 360,56 T720,56 T1080,56 T1440,56 L1440,100 L0,100 Z" fill="rgba(79,144,180,.13)"/>
-        <path d="M-800,56 Q-620,32 -440,56 T-80,56 T280,56 L280,100 L-800,100 Z" fill="rgba(79,144,180,.13)"/>
+        <path d="M0,56 Q180,32 360,56 T720,56 T1080,56 T1440,56 L1440,100 L0,100 Z"
+              fill="rgba(79,144,180,.13)"/>
+        <path d="M-800,56 Q-620,32 -440,56 T-80,56 T280,56 L280,100 L-800,100 Z"
+              fill="rgba(79,144,180,.13)"/>
       </g>
       <g class="w2">
-        <path d="M0,74 Q240,56 480,74 T960,74 T1440,74 L1440,100 L0,100 Z" fill="rgba(79,144,180,.22)"/>
-        <path d="M-800,74 Q-560,56 -320,74 T160,74 T640,74 L640,100 L-800,100 Z" fill="rgba(79,144,180,.22)"/>
+        <path d="M0,74 Q240,56 480,74 T960,74 T1440,74 L1440,100 L0,100 Z"
+              fill="rgba(79,144,180,.22)"/>
+        <path d="M-800,74 Q-560,56 -320,74 T160,74 T640,74 L640,100 L-800,100 Z"
+              fill="rgba(79,144,180,.22)"/>
       </g>
     </svg>
   </div>
@@ -446,7 +481,7 @@
 <section id="why" class="wrap">
   <div class="section-label reveal">what it is</div>
   <h2 class="display reveal">your brainrot, <span class="ocean">on a timer</span>.</h2>
-  <p class="lede reveal">tiktok, reels, and shorts aren't designed to entertain you for two minutes — they're designed to put you in a trance. within the first fifteen minutes of scrolling, you stop choosing what to watch. you "wake up" forty-five minutes later and don't remember most of it. that's the trance. it's not a willpower problem. it's a chemical loop your phone is built to trigger. otto ends the session before that happens.</p>
+  <p class="lede reveal">tiktok, reels, and shorts aren't designed to entertain you for two minutes — they're designed to put you in a trance. within the first fifteen minutes of scrolling, you stop choosing what to watch. you "wake up" forty-five minutes later and don't remember most of it. that's the trance. it's not a willpower problem. it's a chemical loop your phone is built to trigger. the otter ends the session before that happens.</p>
 </section>
 
 <!-- ── HOW IT WORKS ── -->
@@ -458,17 +493,17 @@
     <div class="step reveal">
       <div class="step-num">i.</div>
       <div class="step-name">pick the apps.</div>
-      <div class="step-desc">tiktok, reels, shorts, snap — whatever's cooking your brain. otto holds the apps you choose. he doesn't ask why.</div>
+      <div class="step-desc">tiktok, reels, shorts, snap — whatever's cooking your brain. the otter holds the apps you choose. he doesn't ask why.</div>
     </div>
     <div class="step reveal">
       <div class="step-num">ii.</div>
-      <div class="step-name">scroll for 15. then otto takes it.</div>
+      <div class="step-name">scroll for 15. then he takes it.</div>
       <div class="step-desc">the screen fades to grey. the apps lock. dms stay open the whole time — cove routes you straight to your inbox.</div>
     </div>
     <div class="step reveal">
       <div class="step-num">iii.</div>
-      <div class="step-name">wait 30. otto claps. window opens.</div>
-      <div class="step-desc">no ignore button. no bypass. just otto, floating on his back, holding your phone until your nervous system catches up.</div>
+      <div class="step-name">wait 30. he claps. window opens.</div>
+      <div class="step-desc">no ignore button. no bypass. just the otter, floating on his back, holding your phone until your nervous system catches up.</div>
     </div>
   </div>
 </section>
@@ -478,7 +513,7 @@
   <p class="manifesto-text reveal">
     you're not <span>broken</span>.<br>
     you're just <span>cooked</span>.<br>
-    <span>otto's got it</span>.
+    <span>the otter's got it</span>.
   </p>
   <div class="manifesto-sig reveal">— the cove rule</div>
 </div>
@@ -506,7 +541,7 @@
       <ul>
         <li>one otter. one meter. that's it.</li>
         <li>free, forever. no premium tier.</li>
-        <li>private — otto can't see anything</li>
+        <li>private — the otter can't see anything</li>
         <li>soft fade. dms always open.</li>
         <li>no charts. no scoreboard.</li>
         <li>treats you like a person</li>
@@ -517,65 +552,162 @@
 
 <!-- ── PRIVACY BAND ── -->
 <div class="privacy-band">
-  <h3 class="reveal">otto can't see what you scroll.</h3>
-  <p class="reveal">everything stays on your phone. no telemetry, no analytics, no profile. otto holds the apps — he doesn't watch what's on them.</p>
+  <h3 class="reveal">the otter can't see what you scroll.</h3>
+  <p class="reveal">everything stays on your phone. no telemetry, no analytics, no profile. the otter holds the apps — he doesn't watch what's on them.</p>
+</div>
+
+<!-- ── NAMING SECTION ── -->
+<div class="naming">
+
+  <!-- alert state otter — sitting up, looking at viewer, small -->
+  <div class="naming-otter reveal">
+    <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg"
+         aria-label="the sea otter sitting up alert, looking at you">
+      <!-- body -->
+      <ellipse cx="100" cy="170" rx="70" ry="52"
+               fill="#8B6F47" stroke="#0E1C2A" stroke-width="2.8"/>
+      <!-- belly -->
+      <ellipse cx="100" cy="165" rx="52" ry="38" fill="#F4F2EC"/>
+      <!-- tail -->
+      <path d="M164 185 Q192 168 180 208 Q170 196 165 190 Z"
+            fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- HEAD — chibi big -->
+      <circle cx="100" cy="90" r="66"
+              fill="#8B6F47" stroke="#0E1C2A" stroke-width="2.8"/>
+      <!-- ears -->
+      <ellipse cx="56" cy="38" rx="11" ry="8"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"
+               transform="rotate(-12 56 38)"/>
+      <ellipse cx="144" cy="38" rx="11" ry="8"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"
+               transform="rotate(12 144 38)"/>
+      <!-- face patch -->
+      <ellipse cx="100" cy="102" rx="38" ry="28" fill="#F4F2EC"/>
+      <!-- eyes OPEN — big solid circles with catch-lights -->
+      <circle cx="78" cy="88" r="14" fill="#0E1C2A"/>
+      <circle cx="122" cy="88" r="14" fill="#0E1C2A"/>
+      <circle cx="82" cy="84" r="5" fill="white"/>
+      <circle cx="126" cy="84" r="5" fill="white"/>
+      <!-- nose -->
+      <ellipse cx="100" cy="104" rx="5" ry="3.5" fill="#0E1C2A"/>
+      <!-- neutral mouth -->
+      <path d="M93 113 Q100 116 107 113"
+            stroke="#0E1C2A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- whiskers -->
+      <line x1="68" y1="102" x2="44" y2="98"
+            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+      <line x1="68" y1="109" x2="44" y2="113"
+            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+      <line x1="132" y1="102" x2="156" y2="98"
+            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+      <line x1="132" y1="109" x2="156" y2="113"
+            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+      <!-- paws on lap -->
+      <ellipse cx="76" cy="152" rx="18" ry="12"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"/>
+      <ellipse cx="124" cy="152" rx="18" ry="12"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"/>
+    </svg>
+  </div>
+
+  <h2 class="reveal">name him whatever you want.</h2>
+  <p class="reveal">or don't. he's your otter.</p>
+  <p class="reveal" style="margin-top:12px;font-size:15px">during setup, cove asks if you want to give him a name. jeff, dave, greg — whatever. after that, it's "jeff's holding your phone." if you skip it, it's just the otter. either way, he floats.</p>
 </div>
 
 <!-- ── FINAL CTA ── -->
 <section class="final" id="waitlist">
   <div class="section-label reveal">join the waitlist</div>
 
-  <div class="otto-wrap reveal">
-    <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" aria-label="otto the sea otter">
-      <g class="otto-body">
-        <ellipse cx="180" cy="200" rx="148" ry="8" fill="#C8D8E2" opacity=".55"/>
-        <ellipse cx="180" cy="135" rx="130" ry="46" fill="#4F90B4"/>
-        <ellipse cx="180" cy="132" rx="106" ry="35" fill="#F4F2EC"/>
-        <path d="M302 148 Q348 118 326 178 Q312 162 304 156 Z" fill="#4F90B4"/>
-        <ellipse cx="274" cy="96" rx="16" ry="10" fill="#3A7895" transform="rotate(-22 274 96)"/>
-        <ellipse cx="248" cy="90" rx="16" ry="10" fill="#3A7895" transform="rotate(-32 248 90)"/>
-        <ellipse cx="64" cy="112" rx="40" ry="37" fill="#4F90B4"/>
-        <ellipse cx="44" cy="85" rx="8" ry="6" fill="#3A7895" transform="rotate(-22 44 85)"/>
-        <ellipse cx="84" cy="84" rx="8" ry="6" fill="#3A7895" transform="rotate(22 84 84)"/>
-        <ellipse cx="64" cy="122" rx="26" ry="20" fill="#F4F2EC"/>
-        <!-- happy state — eyes open, animated -->
-        <circle cx="54" cy="110" r="4" fill="#0E1C2A"/>
-        <circle cx="74" cy="110" r="4" fill="#0E1C2A"/>
-        <circle cx="55.5" cy="108.5" r="1.5" fill="white"/>
-        <circle cx="75.5" cy="108.5" r="1.5" fill="white"/>
-        <!-- big grin -->
-        <path d="M52 128 Q64 136 76 128" stroke="#0E1C2A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-        <ellipse cx="64" cy="124" rx="3.5" ry="2.5" fill="#0E1C2A"/>
-        <line x1="42" y1="126" x2="26" y2="123" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <line x1="42" y1="130" x2="26" y2="133" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <line x1="86" y1="126" x2="102" y2="123" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <line x1="86" y1="130" x2="102" y2="133" stroke="#0E1C2A" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
-        <rect x="150" y="102" width="60" height="44" rx="7" fill="#0E1C2A"/>
-        <rect x="154" y="106" width="52" height="36" rx="5" fill="#DCE6EC"/>
-        <rect x="160" y="112" width="40" height="3.5" rx="1.5" fill="#4F90B4" opacity=".5"/>
-        <rect x="160" y="119" width="28" height="3.5" rx="1.5" fill="#4F90B4" opacity=".3"/>
-        <rect x="160" y="126" width="34" height="3.5" rx="1.5" fill="#4F90B4" opacity=".2"/>
-        <ellipse cx="142" cy="118" rx="13" ry="9" fill="#3A7895"/>
-        <ellipse cx="218" cy="118" rx="13" ry="9" fill="#3A7895"/>
-      </g>
+  <!-- happy state otter — eyes open, smiling -->
+  <div class="otter-wrap reveal">
+    <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg"
+         aria-label="the sea otter floating happily, eyes open, ready to hand the phone back">
+      <!-- water -->
+      <ellipse cx="220" cy="264" rx="185" ry="11" fill="#4F90B4" opacity=".3"/>
+      <!-- body -->
+      <ellipse cx="228" cy="170" rx="148" ry="54"
+               fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
+      <!-- belly -->
+      <ellipse cx="228" cy="163" rx="118" ry="40" fill="#F4F2EC"/>
+      <!-- tail -->
+      <path d="M362 182 Q414 148 392 218 Q376 199 366 191 Z"
+            fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8" stroke-linejoin="round"/>
+      <!-- back paws -->
+      <ellipse cx="326" cy="116" rx="22" ry="13"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(-22 326 116)"/>
+      <ellipse cx="298" cy="108" rx="22" ry="13"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(-32 298 108)"/>
+      <!-- HEAD -->
+      <circle cx="86" cy="128" r="72"
+              fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
+      <!-- ears -->
+      <ellipse cx="54" cy="67" rx="13" ry="9"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(-15 54 67)"/>
+      <ellipse cx="112" cy="63" rx="13" ry="9"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
+               transform="rotate(15 112 63)"/>
+      <!-- face patch -->
+      <ellipse cx="86" cy="142" rx="42" ry="32" fill="#F4F2EC"/>
+      <!-- eyes OPEN + happy (upward curve) -->
+      <circle cx="66" cy="120" r="16" fill="#0E1C2A"/>
+      <circle cx="106" cy="120" r="16" fill="#0E1C2A"/>
+      <circle cx="70" cy="114" r="6" fill="white"/>
+      <circle cx="110" cy="114" r="6" fill="white"/>
+      <!-- happy cheek blush -->
+      <ellipse cx="48" cy="136" rx="13" ry="8" fill="#E8A598" opacity=".55"/>
+      <ellipse cx="124" cy="136" rx="13" ry="8" fill="#E8A598" opacity=".55"/>
+      <!-- big smile with teeth -->
+      <path d="M70 154 Q86 164 102 154"
+            stroke="#0E1C2A" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <!-- nose -->
+      <ellipse cx="86" cy="143" rx="5.5" ry="3.8" fill="#0E1C2A"/>
+      <!-- whiskers -->
+      <line x1="54" y1="142" x2="26" y2="138"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <line x1="54" y1="150" x2="26" y2="154"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <line x1="118" y1="142" x2="146" y2="138"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <line x1="118" y1="150" x2="146" y2="154"
+            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <!-- sparkles (happy state) -->
+      <text x="155" y="76" font-size="20" fill="#0E1C2A" opacity=".5">✦</text>
+      <text x="22" y="82" font-size="14" fill="#0E1C2A" opacity=".35">✦</text>
+      <text x="140" y="46" font-size="10" fill="#4F90B4" opacity=".6">✦</text>
+      <!-- paws holding phone -->
+      <ellipse cx="168" cy="154" rx="20" ry="12"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
+      <ellipse cx="258" cy="154" rx="20" ry="12"
+               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
+      <!-- phone -->
+      <rect x="180" y="132" width="66" height="50" rx="8" fill="#0E1C2A"/>
+      <rect x="185" y="137" width="56" height="40" rx="5" fill="#F4F2EC"/>
+      <rect x="192" y="144" width="42" height="4.5" rx="2" fill="#4F90B4" opacity=".45"/>
+      <rect x="192" y="153" width="30" height="4.5" rx="2" fill="#4F90B4" opacity=".3"/>
+      <rect x="192" y="162" width="36" height="4.5" rx="2" fill="#4F90B4" opacity=".18"/>
     </svg>
   </div>
 
-  <h2 class="reveal">let otto <em>hold it</em>.</h2>
+  <h2 class="reveal">let <em>the otter</em> hold it.</h2>
   <p class="hero-sub reveal" style="max-width:400px;margin:0 auto 32px">we'll email when it's on the app store. probably late spring.</p>
 
   <div class="form-block reveal" id="final-form-wrap">
     <form class="form" id="final-form"
-      action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
-      method="POST" target="ml-frame" novalidate>
+          action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
+          method="POST" target="ml-frame" novalidate>
       <input type="hidden" name="ml-submit" value="1">
-      <input type="email" name="fields[email]" placeholder="your@email.com" required autocomplete="email">
+      <input type="email" name="fields[email]" placeholder="your@email.com"
+             required autocomplete="email">
       <button type="submit" id="final-btn">join the waitlist</button>
     </form>
-    <div class="form-success" id="final-success">you're in. otto's getting his floaties on.</div>
+    <div class="form-success" id="final-success">you're in. the otter's getting his floaties on.</div>
   </div>
 
-  <div class="hero-foot" style="justify-content:center;opacity:1">
+  <div class="hero-foot">
     <span>ios first</span>
     <span>spring 2026</span>
   </div>
@@ -590,11 +722,11 @@
     <a href="#">press</a>
     <a href="mailto:hello@usecove.app">hello@usecove.app</a>
   </div>
-  <div>© 2026 · otto's holding it.</div>
+  <div>© 2026 · 🦦 the otter's holding it.</div>
 </footer>
 
 <script>
-  /* ── Nav scroll class ── */
+  /* ── Sticky nav ── */
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 10);
@@ -609,7 +741,7 @@
         io.unobserve(e.target);
       }
     });
-  }, {threshold: 0.1, rootMargin: '0px 0px -36px 0px'});
+  }, {threshold:0.1, rootMargin:'0px 0px -36px 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   /* ── MailerLite form wiring ── */
@@ -618,16 +750,13 @@
     const btn  = document.getElementById(btnId);
     const ok   = document.getElementById(successId);
     if (!form) return;
-
     form.addEventListener('submit', () => {
       if (!form.querySelector('input[type="email"]').value) return;
       btn.textContent = 'joining…';
       btn.disabled = true;
-
       const frame = document.getElementById('ml-frame');
       const tid = setTimeout(showOk, 3000);
       frame.addEventListener('load', () => { clearTimeout(tid); showOk(); }, {once:true});
-
       function showOk() {
         form.style.display = 'none';
         ok.style.display = 'block';
