@@ -1,1165 +1,509 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentio — Reclaim your attention</title>
-  <meta name="description" content="Sentio doesn't block your apps. It regulates you. The attention protocol built for people who are done losing hours they didn't choose to lose." />
-  <meta name="theme-color" content="#14120E" />
-  <meta property="og:title" content="Sentio — Reclaim your attention" />
-  <meta property="og:description" content="Not a blocker. An attention protocol." />
-  <meta property="og:type" content="website" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cove — a quiet place to put your scroll</title>
+<meta name="description" content="Cove is the pause between scrolls. One feature, done warmly. Free, on-device, no streaks, no leaderboards. iOS, spring 2026.">
+<meta property="og:title" content="cove — a quiet place to put your scroll">
+<meta property="og:description" content="A five-second breath. A soft close. A place that doesn't shame you.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F2EC;
+    --ink:#0E1C2A;
+    --ocean:#4F90B4;
+    --wash:#DCE6EC;
+    --line:rgba(14,28,42,.10);
+    --muted:rgba(14,28,42,.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Instrument Sans',ui-sans-serif,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"ss01";
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  /* ── NAV ── */
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 28px;
+    position:fixed;top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(244,242,236,.88);
+    backdrop-filter:saturate(160%) blur(12px);
+    -webkit-backdrop-filter:saturate(160%) blur(12px);
+    border-bottom:1px solid transparent;
+    transition:border-color .4s;
+  }
+  nav.scrolled{border-bottom-color:var(--line)}
+  .mark{font-family:'Instrument Serif',serif;font-style:italic;font-size:24px;letter-spacing:-.02em;line-height:1;color:var(--ink);text-decoration:none}
+  .mark .dot{display:inline-block;width:5px;height:5px;background:var(--ocean);border-radius:50%;vertical-align:baseline;margin-left:2px;transform:translateY(-3px)}
+  nav .links{display:flex;gap:28px;align-items:center;font-size:14px;letter-spacing:-.005em}
+  nav .links a{color:var(--ink);text-decoration:none;opacity:.65;transition:opacity .2s}
+  nav .links a:hover{opacity:1}
+  .btn{
+    background:var(--ink);color:var(--bg);
+    padding:9px 18px;border-radius:100px;
+    text-decoration:none;font-size:13px;letter-spacing:-.005em;
+    transition:transform .15s ease,background .2s;
+    display:inline-block;
+  }
+  .btn:hover{transform:translateY(-1px);background:#1a3347}
+  nav .btn{opacity:1!important}
 
-  <!-- MailerLite Universal -->
-  <script>
-      (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-      .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-      n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-      (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-      ml('account', '2249623');
-  </script>
-  <!-- End MailerLite Universal -->
+  /* ── HERO ── */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:120px 28px 80px;
+    position:relative;overflow:hidden;
+  }
+  .eyebrow{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:40px;
+    display:flex;align-items:center;gap:12px;
+    opacity:0;transform:translateY(8px);
+    animation:fadeUp .7s ease .1s forwards;
+  }
+  .eyebrow::before,.eyebrow::after{content:"";display:block;width:20px;height:1px;background:currentColor;opacity:.5}
+  h1{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(88px,16vw,240px);
+    font-weight:400;line-height:.85;letter-spacing:-.05em;
+    margin-bottom:28px;
+    opacity:0;transform:translateY(12px);
+    animation:fadeUp .8s ease .25s forwards;
+  }
+  h1 .dot{display:inline-block;width:.14em;height:.14em;background:var(--ocean);border-radius:50%;vertical-align:baseline;margin-left:.04em;transform:translateY(.06em)}
+  .tagline{
+    font-size:clamp(18px,2.2vw,24px);
+    line-height:1.4;letter-spacing:-.01em;
+    color:var(--ink);
+    max-width:520px;margin-bottom:44px;
+    opacity:0;transform:translateY(8px);
+    animation:fadeUp .7s ease .4s forwards;
+  }
+  .tagline em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--ocean)}
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── FORM ── */
+  .form-wrap{
+    opacity:0;transform:translateY(8px);
+    animation:fadeUp .7s ease .55s forwards;
+  }
+  .form{
+    display:flex;gap:8px;
+    background:#fff;
+    padding:5px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    width:min(440px,100%);
+    box-shadow:0 1px 4px rgba(14,28,42,.06);
+  }
+  .form input[type="email"]{
+    flex:1;border:0;background:transparent;outline:none;
+    padding:10px 16px;
+    font:inherit;font-size:15px;color:var(--ink);
+    letter-spacing:-.005em;min-width:0;
+  }
+  .form input::placeholder{color:var(--muted)}
+  .form button{
+    border:0;background:var(--ink);color:var(--bg);
+    padding:10px 22px;border-radius:100px;
+    font:inherit;font-size:14px;letter-spacing:-.005em;
+    cursor:pointer;transition:transform .15s ease,background .2s;
+    white-space:nowrap;flex-shrink:0;
+  }
+  .form button:hover{transform:translateY(-1px);background:#1a3347}
+  .form button:disabled{opacity:.6;cursor:default;transform:none}
+  .hero-foot{
+    margin-top:20px;font-size:12px;color:var(--muted);letter-spacing:.04em;
+    display:flex;gap:0;align-items:center;
+    opacity:0;animation:fadeUp .7s ease .7s forwards;
+  }
+  .hero-foot span+span::before{content:"·";margin:0 10px;color:var(--muted)}
 
-    :root {
-      --bg:           #14120E;
-      --surface:      #1E1B14;
-      --surface-hi:   #272318;
-      --text:         #EDE8DF;
-      --muted:        rgba(237,232,223,0.45);
-      --dim:          rgba(237,232,223,0.2);
-      --amber:        #C8943A;
-      --amber-dim:    rgba(200,148,58,0.14);
-      --border:       rgba(255,255,255,0.07);
-      --serif:        'Cormorant Garamond', Georgia, serif;
-      --sans:         'DM Sans', system-ui, sans-serif;
-    }
+  /* ── WAVE ── */
+  .wave-wrap{position:absolute;left:0;right:0;bottom:-1px;height:110px;pointer-events:none}
+  .wave-svg{width:100%;height:100%;display:block}
+  .w1{animation:drift 26s linear infinite}
+  .w2{animation:drift 34s linear infinite reverse}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-800px)}}
+  @media(prefers-reduced-motion:reduce){.w1,.w2{animation:none}}
 
-    html { scroll-behavior: smooth; }
+  /* ── SCROLL REVEAL ── */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+  .reveal.in{opacity:1;transform:none}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 17px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-      background-attachment: fixed;
-    }
+  /* ── HERO ANIM ── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-    /* ── Scroll progress ── */
-    .scroll-progress {
-      position: fixed; top: 0; left: 0; height: 2px;
-      background: linear-gradient(90deg, var(--amber), rgba(200,148,58,.5));
-      z-index: 10000; width: 0%;
-      pointer-events: none;
-    }
+  /* ── SECTIONS ── */
+  section{padding:120px 0;border-top:1px solid var(--line)}
+  .section-eyebrow{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:28px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .section-eyebrow::before{content:"";display:block;width:24px;height:1px;background:var(--ocean)}
+  .display{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(38px,5vw,66px);
+    font-weight:400;letter-spacing:-.03em;line-height:1.05;
+    max-width:720px;
+  }
+  .display .ocean{color:var(--ocean)}
+  .lede{
+    font-size:18px;line-height:1.6;color:var(--muted);
+    max-width:540px;margin-top:24px;letter-spacing:-.005em;
+  }
 
-    /* ── Custom cursor ── */
-    .cursor-dot  { width:10px;height:10px;background:var(--amber);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s; }
-    .cursor-ring { width:44px;height:44px;border:1.5px solid var(--amber);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .08s,top .08s,width .2s,height .2s,opacity .2s; }
+  /* ── THREE BEATS ── */
+  .beats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:56px;
+    border-radius:12px;overflow:hidden;
+  }
+  .beat{
+    background:var(--bg);padding:44px 32px;
+    display:flex;flex-direction:column;gap:14px;
+    min-height:280px;
+    transition:background .3s;
+  }
+  .beat:hover{background:#f0ede5}
+  .beat .num{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:20px;color:var(--ocean);letter-spacing:-.02em;
+  }
+  .beat .name{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:34px;letter-spacing:-.02em;line-height:1;font-weight:400;
+  }
+  .beat .desc{font-size:15px;line-height:1.55;color:var(--muted);margin-top:auto}
 
-    @media (hover: none) {
-      .cursor-dot, .cursor-ring { display: none; }
-    }
+  /* ── MANIFESTO ── */
+  .manifesto{
+    text-align:center;
+    padding:140px 28px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .manifesto p{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(26px,4vw,46px);
+    line-height:1.28;letter-spacing:-.02em;
+    max-width:800px;margin:0 auto;font-weight:400;
+  }
+  .manifesto p span{color:var(--ocean)}
+  .manifesto .sig{
+    font-family:'Instrument Sans',sans-serif;font-style:normal;
+    font-size:11px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;
+    margin-top:52px;
+  }
 
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px;
-      z-index: 100;
-      background: linear-gradient(var(--bg) 60%, transparent);
-      transition: background .4s, backdrop-filter .4s;
-    }
-    nav.scrolled {
-      background: rgba(20,18,14,0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-    .nav-logo { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--text); letter-spacing: .02em; text-decoration: none; }
-    .nav-links { display: flex; gap: 36px; }
-    .nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; letter-spacing: .03em; transition: color .2s; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      font-size: 13px; font-weight: 500;
-      color: #14120E;
-      background: var(--amber);
-      padding: 9px 22px; border-radius: 100px;
-      text-decoration: none; letter-spacing: .03em;
-      transition: opacity .2s;
-    }
-    .nav-cta:hover { opacity: .82; }
+  /* ── CONTRAST ── */
+  .contrast-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    margin-top:48px;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  }
+  .col{padding:44px 36px}
+  .col + .col{border-left:1px solid var(--line)}
+  .col h4{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:28px;font-weight:500;
+  }
+  .col ul{list-style:none}
+  .col li{
+    padding:14px 0;border-bottom:1px solid var(--line);
+    font-size:16px;line-height:1.4;
+  }
+  .col li:last-child{border-bottom:0}
+  .col.them li{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(14,28,42,.2);text-decoration-thickness:1px}
+  .col.us li::before{content:"·";color:var(--ocean);margin-right:10px;font-size:18px;line-height:0;vertical-align:middle}
 
-    /* ── Hamburger ── */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 8px;
-      z-index: 110;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px; height: 1.5px;
-      background: var(--text);
-      transition: transform .3s, opacity .2s;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  /* ── PRIVACY ── */
+  .privacy{
+    background:var(--wash);padding:80px 28px;
+    text-align:center;
+    border-top:1px solid var(--line);
+  }
+  .privacy h3{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(26px,3vw,40px);
+    font-weight:400;letter-spacing:-.02em;
+    max-width:580px;margin:0 auto 18px;line-height:1.2;
+  }
+  .privacy p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.6}
 
-    /* ── Mobile menu overlay ── */
-    .mobile-menu {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(20,18,14,0.97);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      z-index: 105;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 32px;
-      opacity: 0;
-      transition: opacity .3s;
-    }
-    .mobile-menu.open { display: flex; opacity: 1; }
-    .mobile-menu a {
-      font-family: var(--serif); font-size: 28px; font-weight: 300;
-      color: var(--text); text-decoration: none;
-      transition: color .2s;
-    }
-    .mobile-menu a:hover { color: var(--amber); }
+  /* ── FINAL CTA ── */
+  .final{
+    text-align:center;
+    padding:140px 28px;
+  }
+  .final h2{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(56px,9vw,120px);
+    font-weight:400;letter-spacing:-.04em;line-height:.9;
+    margin-bottom:36px;
+  }
+  .final h2 .dot{display:inline-block;width:.13em;height:.13em;background:var(--ocean);border-radius:50%;vertical-align:baseline;margin-left:.04em;transform:translateY(.06em)}
+  .final .tagline{margin:0 auto 40px;animation:none;opacity:1;transform:none}
+  .final .form{margin:0 auto}
+  .final .form-wrap{margin:0 auto;animation:none;opacity:1;transform:none}
 
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 140px 24px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(200,148,58,.12) 0%, transparent 65%);
-      pointer-events: none;
-    }
+  /* ── FOOTER ── */
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 28px;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:20px;
+    font-size:13px;color:var(--muted);letter-spacing:-.005em;
+  }
+  footer .links{display:flex;gap:24px}
+  footer a{color:var(--muted);text-decoration:none;transition:color .2s}
+  footer a:hover{color:var(--ink)}
 
-    /* Hero entrance animations */
-    .hero-pill, .hero h1, .hero-sub, .hero-actions, .phone-showcase {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity .8s cubic-bezier(.215,.61,.355,1), transform .8s cubic-bezier(.215,.61,.355,1);
-    }
-    .hero-pill.loaded       { opacity: 1; transform: translateY(0); transition-delay: .1s; }
-    .hero h1.loaded         { opacity: 1; transform: translateY(0); transition-delay: .25s; }
-    .hero-sub.loaded        { opacity: 1; transform: translateY(0); transition-delay: .4s; }
-    .hero-actions.loaded    { opacity: 1; transform: translateY(0); transition-delay: .55s; }
-    .phone-showcase.loaded  { opacity: 1; transform: translateY(0); transition-delay: .7s; }
+  /* ── HIDDEN IFRAME for MailerLite ── */
+  #ml-frame{display:none;width:0;height:0;border:none}
 
-    .hero-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 11px; font-weight: 500; letter-spacing: 2px;
-      color: var(--amber); text-transform: uppercase;
-      border: 1px solid var(--amber-dim); background: var(--amber-dim);
-      padding: 6px 14px; border-radius: 100px;
-      margin-bottom: 32px;
-    }
-    .hero-pill span { width: 5px; height: 5px; background: var(--amber); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+  /* ── SUCCESS STATE ── */
+  .form-success{
+    display:none;
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:20px;color:var(--ocean);
+    padding:16px 24px;
+    letter-spacing:-.01em;
+  }
 
-    .hero h1 {
-      font-family: var(--serif); font-weight: 300; font-size: clamp(52px, 8vw, 88px);
-      line-height: 1.07; letter-spacing: -.01em;
-      color: var(--text); margin-bottom: 24px;
-      max-width: 860px;
-    }
-    .hero h1 em { font-style: italic; color: var(--amber); }
-
-    .hero-sub {
-      font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); max-width: 520px;
-      line-height: 1.65; margin: 0 auto 48px;
-    }
-
-    .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 72px; }
-    .btn-primary {
-      font-size: 15px; font-weight: 500;
-      color: #14120E; background: var(--amber);
-      padding: 15px 34px; border-radius: 14px;
-      text-decoration: none; transition: opacity .2s, transform .15s;
-      letter-spacing: .01em; border: none; cursor: pointer;
-      font-family: var(--sans);
-    }
-    .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
-    .btn-ghost {
-      font-size: 15px; font-weight: 400;
-      color: var(--muted); background: transparent;
-      padding: 15px 28px; border-radius: 14px;
-      text-decoration: none; border: 1px solid var(--border);
-      transition: color .2s, border-color .2s;
-    }
-    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,.18); }
-
-    /* ── Phone mockup ── */
-    .phone-showcase {
-      display: flex; gap: 24px; justify-content: center; align-items: flex-end;
-      flex-wrap: wrap;
-    }
-    .phone-wrap {
-      position: relative;
-      transition: transform .4s ease;
-    }
-    .phone-wrap:hover { transform: translateY(-8px); }
-    .phone-wrap.primary { animation: phoneFloat 6s ease-in-out infinite; }
-    .phone-wrap.secondary { transform: scale(0.88) translateY(24px); opacity: .72; }
-    .phone-wrap.secondary:hover { transform: scale(0.88) translateY(14px); opacity:.9; }
-
-    @keyframes phoneFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .phone-frame {
-      width: 220px; height: 460px;
-      background: var(--surface);
-      border-radius: 38px;
-      border: 1.5px solid rgba(255,255,255,.12);
-      overflow: hidden;
-      position: relative;
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,.6),
-        0 40px 80px rgba(0,0,0,.7),
-        0 0 40px rgba(200,148,58,.06);
-    }
-    .phone-frame::before {
-      content: '';
-      position: absolute; top: 12px; left: 50%;
-      transform: translateX(-50%);
-      width: 80px; height: 26px;
-      background: #000; border-radius: 20px;
-      z-index: 10;
-    }
-    .phone-frame::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(200,148,58,.04) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .screen { width: 100%; height: 100%; position: relative; overflow: hidden; }
-    /* Screen sheen */
-    .screen::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 25%;
-      background: linear-gradient(to bottom, rgba(255,255,255,.025), transparent);
-      pointer-events: none; z-index: 2;
-    }
-
-    /* ── Screen: Dashboard ── */
-    .screen-dashboard {
-      background: #14120E;
-      padding: 58px 18px 20px;
-      font-family: var(--sans);
-    }
-    .s-label { font-size: 8px; font-weight: 600; letter-spacing: 2.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 16px; display: block; }
-    .s-title { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--text); line-height: 1.15; margin-bottom: 14px; }
-    .s-countdown {
-      font-size: 38px; font-weight: 100; font-variant-numeric: tabular-nums;
-      color: var(--text); letter-spacing: -1px; margin-bottom: 12px;
-      font-family: var(--sans);
-    }
-    .s-bar { height: 1px; background: rgba(200,148,58,.3); margin-bottom: 12px; border-radius: 1px; width: 60%; }
-    .s-sub { font-size: 10px; color: var(--muted); margin-bottom: 24px; }
-    .s-section-label { font-size: 7px; font-weight: 600; letter-spacing: 2px; color: rgba(237,232,223,.35); text-transform: uppercase; margin-bottom: 8px; display: block; }
-    .s-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
-    .s-card {
-      background: #1E1B14; border: 1px solid rgba(255,255,255,.07);
-      border-radius: 10px; padding: 10px 10px 8px;
-    }
-    .s-card-label { font-size: 6px; font-weight: 600; letter-spacing: 1.5px; color: rgba(237,232,223,.25); text-transform: uppercase; display: block; margin-bottom: 4px; }
-    .s-card-value { font-family: var(--serif); font-size: 20px; font-weight: 300; color: var(--text); }
-    .s-intent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .s-intent-card {
-      background: #1E1B14; border: 1px solid rgba(255,255,255,.07);
-      border-radius: 10px; padding: 10px;
-    }
-    .s-app-name { font-size: 9px; font-weight: 500; color: var(--text); display: block; margin-bottom: 2px; }
-    .s-app-dest { font-size: 7px; color: var(--amber); }
-
-    /* ── Screen: Cooldown ── */
-    .screen-cooldown {
-      background: #14120E;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 20px;
-      height: 100%;
-    }
-    .breath-ring {
-      width: 110px; height: 110px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(200,148,58,.45);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-      margin-bottom: 24px;
-      animation: breathe 4s ease-in-out infinite;
-    }
-    @keyframes breathe { 0%,100%{transform:scale(.85);opacity:.6}50%{transform:scale(1);opacity:1} }
-    .breath-ring::before {
-      content:''; position:absolute; inset:-16px; border-radius:50%;
-      border: 1px solid rgba(200,148,58,.1);
-      animation: breathe 4s ease-in-out infinite;
-    }
-    .breath-inner { width: 60px; height: 60px; background: rgba(200,148,58,.05); border-radius: 50%; }
-    .s-mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
-    .s-mood-card {
-      background: #1E1B14; border: 1px solid rgba(255,255,255,.07);
-      border-radius: 10px; padding: 10px;
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-    }
-    .s-mood-emoji { font-size: 20px; }
-    .s-mood-label { font-size: 7px; color: rgba(237,232,223,.4); font-weight: 500; }
-    .s-mood-title { font-family: var(--serif); font-size: 18px; font-weight: 300; color: var(--text); text-align: center; margin-bottom: 14px; }
-    .s-cooldown-footer { font-size: 8px; color: rgba(237,232,223,.25); margin-top: 20px; display: flex; align-items: center; gap: 5px; }
-    .s-cooldown-dot { width: 4px; height: 4px; background: rgba(200,148,58,.5); border-radius: 50%; }
-
-    /* ── Screen: Vagus ── */
-    .screen-vagus {
-      background: #14120E;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 20px;
-      height: 100%;
-    }
-    .vagus-ring {
-      width: 130px; height: 130px; border-radius: 50%;
-      border: 1.5px solid rgba(200,148,58,.5);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-      animation: breathe 3.5s ease-in-out infinite;
-      margin-bottom: 36px;
-    }
-    .vagus-ring::before {
-      content:''; position:absolute; inset:-20px; border-radius:50%;
-      border: 1px solid rgba(200,148,58,.08);
-    }
-    .vagus-glow { position:absolute; inset:-30px; border-radius:50%; background: radial-gradient(circle, rgba(200,148,58,.08) 0%, transparent 70%); }
-    .vagus-inner { width: 70px; height: 70px; background: rgba(200,148,58,.05); border-radius: 50%; }
-    .vagus-phase { font-size: 9px; font-weight: 300; color: rgba(237,232,223,.4); letter-spacing: 3px; margin-bottom: 16px; }
-    .vagus-question { font-family: var(--serif); font-size: 18px; font-weight: 300; color: rgba(237,232,223,.6); text-align: center; line-height: 1.3; }
-
-    /* ── Divider ── */
-    .divider { height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; }
-
-    /* ── Section layout ── */
-    section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
-    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 2.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 18px; }
-    h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(38px, 5vw, 60px); line-height: 1.1; color: var(--text); margin-bottom: 20px; }
-    h2 em { font-style: italic; }
-    .lead { font-size: clamp(16px, 1.8vw, 19px); color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 52px; }
-
-    /* ── Problem section ── */
-    .problem-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-    }
-    .problem-quote {
-      font-family: var(--serif); font-size: clamp(24px, 3vw, 36px); font-weight: 300;
-      color: var(--text); line-height: 1.35; font-style: italic;
-      border-left: 2px solid var(--amber); padding-left: 24px; margin-bottom: 20px;
-    }
-    .problem-caption { font-size: 14px; color: var(--muted); }
-
-    .diff-card {
-      margin-top: 36px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .diff-title {
-      font-size: 11px; letter-spacing: 2px; color: var(--amber);
-      text-transform: uppercase; margin-bottom: 16px; font-weight: 500;
-    }
-    .diff-list { display: flex; flex-direction: column; gap: 14px; }
-    .diff-item {
-      display: flex; gap: 12px; align-items: flex-start;
-    }
-    .diff-icon {
-      width: 20px; height: 20px;
-      background: var(--amber-dim);
-      border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      margin-top: 1px;
-    }
-    .diff-icon span { font-size: 10px; color: var(--amber); }
-    .diff-item p { font-size: 14px; color: var(--muted); }
-    .diff-item strong { color: var(--text); }
-
-    /* ── Feature grid ── */
-    .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; }
-    .feature-card {
-      background: var(--surface); padding: 36px 32px;
-      position: relative; overflow: hidden;
-      transition: background .25s;
-    }
-    .feature-card:hover { background: var(--surface-hi); }
-    .feature-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 1px; background: var(--border);
-    }
-    .feature-card::after {
-      content: ''; position: absolute; top: 0; left: 0; width: 40px;
-      height: 1px; background: var(--amber); opacity: 0;
-      transition: opacity .25s, width .4s;
-    }
-    .feature-card:hover::after { opacity: 1; width: 60px; }
-    .fc-number { font-size: 11px; font-weight: 500; letter-spacing: 2px; color: var(--amber); opacity: .5; margin-bottom: 18px; }
-    .fc-title { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--text); line-height: 1.2; margin-bottom: 12px; }
-    .fc-body { font-size: 14px; color: var(--muted); line-height: 1.75; }
-
-    /* ── Comparison section ── */
-    .comparison {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 80px 48px;
-    }
-    .comparison-inner { max-width: 900px; margin: 0 auto; }
-    .comp-header { text-align: center; margin-bottom: 56px; }
-    .comp-table { display: grid; grid-template-columns: 1fr auto auto; gap: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-    .comp-row { display: contents; }
-    .comp-row > * { padding: 18px 24px; border-bottom: 1px solid var(--border); font-size: 14px; transition: background .2s; }
-    .comp-row:last-child > * { border-bottom: none; }
-    .comp-row:hover > * { background: rgba(200,148,58,.03); }
-    .comp-col-header { background: rgba(200,148,58,.06); font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-align: center; }
-    .comp-row:hover .comp-col-header { background: rgba(200,148,58,.06); }
-    .comp-feature { color: var(--text); }
-    .comp-opal { color: var(--muted); text-align: center; background: rgba(255,255,255,.02); }
-    .comp-sentio { color: var(--amber); text-align: center; background: rgba(200,148,58,.04); font-weight: 500; }
-    .check { color: var(--amber); }
-    .cross { color: rgba(237,232,223,.2); }
-
-    /* ── How it works ── */
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; }
-    .step {
-      padding: 48px 32px;
-      border-right: 1px solid var(--border);
-    }
-    .step:last-child { border-right: none; }
-    .step-num {
-      font-size: 11px; font-weight: 500; letter-spacing: 2px;
-      color: var(--amber); opacity: .6; margin-bottom: 20px;
-    }
-    .step-title { font-family: var(--serif); font-size: 24px; font-weight: 300; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
-    .step-body { font-size: 14px; color: var(--muted); line-height: 1.75; }
-    .step-extra { margin-top: 16px; font-size: 12px; color: var(--amber); }
-
-    /* ── Proof section ── */
-    .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; }
-    .proof-card { background: var(--surface); padding: 36px 28px; }
-    .proof-number {
-      font-family: var(--serif); font-size: 52px; font-weight: 300;
-      color: var(--amber); line-height: 1; margin-bottom: 8px;
-    }
-    .proof-label { font-size: 13px; color: var(--muted); }
-
-    /* ── Testimonials ── */
-    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .testimonial {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 28px;
-      position: relative;
-      transition: border-color .3s;
-    }
-    .testimonial:hover { border-color: rgba(200,148,58,.2); }
-    .testimonial::before {
-      content: '\201C';
-      font-family: var(--serif); font-size: 56px;
-      color: rgba(200,148,58,.1);
-      position: absolute; top: 8px; left: 20px; line-height: 1;
-      pointer-events: none;
-    }
-    .t-quote { font-family: var(--serif); font-size: 17px; font-weight: 300; color: var(--text); line-height: 1.55; margin-bottom: 16px; font-style: italic; position: relative; }
-    .t-author { font-size: 12px; color: var(--amber); font-weight: 500; letter-spacing: .05em; }
-    .t-role { font-size: 12px; color: var(--muted); }
-
-    /* ── CTA section ── */
-    .cta-section {
-      text-align: center; padding: 120px 48px;
-      position: relative; overflow: hidden;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(200,148,58,.1) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .cta-section h2 { max-width: 680px; margin: 0 auto 20px; }
-    .cta-sub { font-size: 17px; color: var(--muted); max-width: 440px; margin: 0 auto 44px; }
-    .cta-note { font-size: 13px; color: var(--dim); margin-top: 18px; }
-
-    /* ── CTA Form ── */
-    .cta-form {
-      max-width: 400px;
-      margin: 0 auto;
-      display: flex; flex-direction: column; gap: 12px;
-      position: relative; z-index: 2;
-      text-align: left;
-    }
-    .cta-form input[type="text"],
-    .cta-form input[type="email"] {
-      width: 100%;
-      padding: 16px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      transition: border-color .3s, box-shadow .3s;
-    }
-    .cta-form input::placeholder { color: var(--muted); }
-    .cta-form input:focus {
-      outline: none;
-      border-color: rgba(200,148,58,.45);
-      box-shadow: 0 0 0 3px rgba(200,148,58,.08);
-    }
-    .cta-form .btn-submit {
-      width: 100%;
-      font-size: 15px; font-weight: 500;
-      color: #14120E; background: var(--amber);
-      padding: 16px; border-radius: 12px;
-      border: none; cursor: pointer;
-      font-family: var(--sans);
-      letter-spacing: .01em;
-      transition: opacity .2s, transform .15s;
-      margin-top: 4px;
-    }
-    .cta-form .btn-submit:hover { opacity: .85; transform: translateY(-1px); }
-    .cta-form .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-
-    .cta-success {
-      display: none;
-      font-family: var(--serif);
-      font-size: 22px;
-      font-weight: 300;
-      color: var(--amber);
-      margin-top: 24px;
-      position: relative; z-index: 2;
-    }
-    .cta-success.visible {
-      animation: fadeUp .8s cubic-bezier(.215,.61,.355,1) forwards;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 48px;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
-    }
-    .footer-logo { font-family: var(--serif); font-size: 20px; color: var(--text); letter-spacing: .03em; }
-    .footer-links { display: flex; gap: 32px; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: 13px; color: var(--dim); }
-
-    /* ── Scroll-driven reveal ── */
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .reveal.visible {
-      opacity: 1; transform: translateY(0);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      nav { padding: 18px 24px; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .nav-cta { display: none; }
-      section { padding: 80px 24px; }
-      .problem-grid { grid-template-columns: 1fr; gap: 40px; }
-      .comp-table { grid-template-columns: 1fr auto; }
-      .comp-opal-col { display: none; }
-      .step { border-right: none; border-bottom: 1px solid var(--border); }
-      .step:last-child { border-bottom: none; }
-      footer { flex-direction: column; gap: 24px; padding: 48px 24px; }
-      .footer-links { flex-wrap: wrap; }
-      .phone-showcase { gap: 16px; }
-      .phone-wrap.secondary { display: none; }
-      .phone-frame { width: 240px; height: 500px; }
-      .comparison { padding: 60px 24px; }
-      .cta-section { padding: 80px 24px; }
-      .hero { padding: 120px 24px 60px; }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 { font-size: 42px; }
-      .hero-actions { flex-direction: column; width: 100%; max-width: 320px; }
-      .btn-primary, .btn-ghost { text-align: center; width: 100%; }
-      .feature-list { grid-template-columns: 1fr; }
-      .proof-grid { grid-template-columns: 1fr 1fr; }
-      .testimonials { grid-template-columns: 1fr; }
-    }
-  </style>
+  /* ── RESPONSIVE ── */
+  @media(max-width:780px){
+    nav .links a:not(.btn){display:none}
+    .beats{grid-template-columns:1fr}
+    .contrast-grid{grid-template-columns:1fr}
+    .col + .col{border-left:0;border-top:1px solid var(--line)}
+    section{padding:80px 0}
+    .manifesto,.final{padding:100px 28px}
+    .form{flex-direction:column;border-radius:14px;padding:8px;gap:6px}
+    .form button{width:100%;border-radius:10px}
+  }
+</style>
 </head>
 <body>
 
-<!-- Scroll progress bar -->
-<div class="scroll-progress" id="scrollProgress"></div>
+<!-- MailerLite hidden iframe target -->
+<iframe id="ml-frame" name="ml-frame"></iframe>
 
-<!-- Custom cursor -->
-<div class="cursor-dot" id="cd"></div>
-<div class="cursor-ring" id="cr"></div>
-
-<!-- ── Nav ── -->
 <nav id="nav">
-  <a href="/" class="nav-logo">Sentio</a>
-  <div class="nav-links">
+  <a href="#" class="mark">cove<span class="dot"></span></a>
+  <div class="links">
     <a href="#how">How it works</a>
-    <a href="#features">Features</a>
-    <a href="#why">Why Sentio</a>
-  </div>
-  <a href="#cta" class="nav-cta">Get Early Access</a>
-  <div class="nav-hamburger" id="hamburger">
-    <span></span><span></span><span></span>
+    <a href="#why">Why</a>
+    <a href="#waitlist" class="btn">Join waitlist</a>
   </div>
 </nav>
 
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#how" class="mobile-nav-link">How it works</a>
-  <a href="#features" class="mobile-nav-link">Features</a>
-  <a href="#why" class="mobile-nav-link">Why Sentio</a>
-  <a href="#cta" class="mobile-nav-link" style="color:var(--amber)">Get Early Access</a>
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="eyebrow">iOS · spring 2026</div>
+  <h1>cove<span class="dot"></span></h1>
+  <p class="tagline">A quiet place to put your <em>scroll</em>.</p>
+
+  <div class="form-wrap" id="hero-form-wrap">
+    <form class="form" id="hero-form" action="https://assets.mailerlite.com/forms/184049393692836944/subscribe" method="POST" target="ml-frame" novalidate>
+      <input type="hidden" name="ml-submit" value="1">
+      <input type="email" name="fields[email]" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" id="hero-btn">Join the waitlist</button>
+    </form>
+    <div class="form-success" id="hero-success">You're in. See you at the shore.</div>
+  </div>
+
+  <div class="hero-foot">
+    <span>Free forever</span>
+    <span>On-device</span>
+    <span>No streaks. No leaderboards.</span>
+  </div>
+
+  <div class="wave-wrap">
+    <svg class="wave-svg" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+      <g class="w1">
+        <path d="M0,60 Q180,34 360,60 T720,60 T1080,60 T1440,60 L1440,110 L0,110 Z" fill="rgba(79,144,180,.13)"/>
+        <path d="M-800,60 Q-620,34 -440,60 T-80,60 T280,60 L280,110 L-800,110 Z" fill="rgba(79,144,180,.13)"/>
+      </g>
+      <g class="w2">
+        <path d="M0,78 Q240,58 480,78 T960,78 T1440,78 L1440,110 L0,110 Z" fill="rgba(79,144,180,.22)"/>
+        <path d="M-800,78 Q-560,58 -320,78 T160,78 T640,78 L640,110 L-800,110 Z" fill="rgba(79,144,180,.22)"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<!-- ── WHAT IT IS ── -->
+<section id="why" class="wrap">
+  <div class="section-eyebrow reveal">what it is</div>
+  <h2 class="display reveal">Doomscrolling isn't a willpower problem.<br><span class="ocean">It's an emotional one.</span></h2>
+  <p class="lede reveal">You don't need a stricter app. You need somewhere to land between scrolls — a place that isn't shaming you, scoring you, or making you fight your own phone. Cove is that place.</p>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how" class="wrap">
+  <div class="section-eyebrow reveal">how it works</div>
+  <h2 class="display reveal">Three quiet beats. <span class="ocean">No fight required.</span></h2>
+
+  <div class="beats">
+    <div class="beat reveal">
+      <div class="num">i.</div>
+      <div class="name">Step in.</div>
+      <div class="desc">A five-second breath before the app opens. Your nervous system gets a moment to catch up to your thumb.</div>
+    </div>
+    <div class="beat reveal">
+      <div class="num">ii.</div>
+      <div class="name">Soft close.</div>
+      <div class="desc">Your scrolling window fades quietly to greyscale instead of slamming shut. No "Ignore Limit" button. No fight.</div>
+    </div>
+    <div class="beat reveal">
+      <div class="num">iii.</div>
+      <div class="name">The cove.</div>
+      <div class="desc">A guided breath, a one-tap mood check, your saved posts waiting. The pause between scrolls — held for you.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MANIFESTO ── -->
+<div class="manifesto">
+  <p class="reveal">You're not <span>broken</span>.<br>You're <span>misconfigured</span>.<br>Cove doesn't say no — <span>it regulates</span>.</p>
+  <div class="sig reveal">— the cove principle</div>
 </div>
 
-<!-- ── Hero ── -->
-<section class="hero" style="max-width:100%;padding-left:0;padding-right:0">
-  <div class="hero-pill"><span></span>Now in TestFlight</div>
+<!-- ── CONTRAST ── -->
+<section class="wrap">
+  <div class="section-eyebrow reveal">what it isn't</div>
+  <h2 class="display reveal">Less app. <span class="ocean">More you.</span></h2>
+  <p class="lede reveal">The screen-time category is full of products that gamify your shame. Cove deletes the scoreboard.</p>
 
-  <h1>Take the <em>doom</em><br>out of scrolling.</h1>
-
-  <p class="hero-sub">
-    Not a blocker. An intent protocol. Sentio introduces a breathing pause before you open and an enforced stopping point before you drift — so you stay in control of your time.
-  </p>
-
-  <div class="hero-actions">
-    <a href="#cta" class="btn-primary">Try it free</a>
-    <a href="#how" class="btn-ghost">See how it works</a>
-  </div>
-
-  <!-- Phone mockups -->
-  <div class="phone-showcase">
-
-    <!-- Left: Vagus Gate -->
-    <div class="phone-wrap secondary">
-      <div class="phone-frame">
-        <div class="screen screen-vagus">
-          <div class="vagus-ring">
-            <div class="vagus-glow"></div>
-            <div class="vagus-inner"></div>
-          </div>
-          <div class="vagus-phase">breathe in</div>
-          <div class="vagus-question">What are you<br>looking for?</div>
-        </div>
-      </div>
+  <div class="contrast-grid reveal">
+    <div class="col them">
+      <h4>The category</h4>
+      <ul>
+        <li>Streaks, gems, leaderboards</li>
+        <li>$100/year for the real features</li>
+        <li>Friends see your screen time</li>
+        <li>Hard blocks you'll bypass anyway</li>
+        <li>Treats you like a problem</li>
+      </ul>
     </div>
-
-    <!-- Center: Dashboard -->
-    <div class="phone-wrap primary">
-      <div class="phone-frame">
-        <div class="screen screen-dashboard">
-          <span class="s-label">Cooling down</span>
-          <div class="s-title">Apps<br>reclaimed.</div>
-          <div class="s-countdown" id="mockupTimer">24:07</div>
-          <div class="s-bar"></div>
-          <div class="s-sub">30 min cooldown · apps return when timer hits zero</div>
-
-          <span class="s-section-label">Open with intent</span>
-          <div class="s-intent-grid" style="margin-bottom:12px">
-            <div class="s-intent-card">
-              <span class="s-app-name">Instagram</span>
-              <span class="s-app-dest">→ DMs</span>
-            </div>
-            <div class="s-intent-card">
-              <span class="s-app-name">TikTok</span>
-              <span class="s-app-dest">choose destination</span>
-            </div>
-            <div class="s-intent-card">
-              <span class="s-app-name">Twitter</span>
-              <span class="s-app-dest">→ Following</span>
-            </div>
-            <div class="s-intent-card">
-              <span class="s-app-name">YouTube</span>
-              <span class="s-app-dest">→ Subscriptions</span>
-            </div>
-          </div>
-
-          <span class="s-section-label">This week</span>
-          <div class="s-grid">
-            <div class="s-card">
-              <span class="s-card-label">Reclaimed</span>
-              <div class="s-card-value">4.2h</div>
-            </div>
-            <div class="s-card">
-              <span class="s-card-label">Focus blocks</span>
-              <div class="s-card-value">11</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Cooldown -->
-    <div class="phone-wrap secondary">
-      <div class="phone-frame">
-        <div class="screen screen-cooldown">
-          <div class="breath-ring">
-            <div class="breath-inner"></div>
-          </div>
-          <div class="s-mood-title">How are you feeling?</div>
-          <div class="s-mood-grid">
-            <div class="s-mood-card"><div class="s-mood-emoji">😊</div><div class="s-mood-label">Happy</div></div>
-            <div class="s-mood-card"><div class="s-mood-emoji">😐</div><div class="s-mood-label">Okay</div></div>
-            <div class="s-mood-card"><div class="s-mood-emoji">😓</div><div class="s-mood-label">Stressed</div></div>
-            <div class="s-mood-card"><div class="s-mood-emoji">😑</div><div class="s-mood-label">Bored</div></div>
-          </div>
-          <div class="s-cooldown-footer">
-            <div class="s-cooldown-dot"></div>
-            Apps return in 24:07
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ── Problem ── -->
-<section id="why">
-  <div class="problem-grid">
-    <div class="problem-text">
-      <div class="section-label reveal">The real problem</div>
-      <h2 class="reveal">You don't lack<br><em>willpower.</em></h2>
-      <p class="lead reveal">
-        You open your phone when you're bored, stressed, or avoiding something. Blocking apps doesn't fix that — you just override the block. What actually works is a pause that helps your brain catch up with your hands.
-      </p>
-      <p class="reveal" style="font-size:15px;color:var(--muted);line-height:1.7">
-        Sentio gives you that pause. A short breathing moment before the app opens. A session that ends gracefully instead of abruptly. And a cooldown that fades the urge instead of fighting it.
-      </p>
-    </div>
-    <div>
-      <div class="problem-quote reveal">
-        "I'd just unblock myself. The limit wasn't the problem. <em>I</em> was the problem."
-      </div>
-
-
-      <div class="diff-card reveal">
-        <div class="diff-title">How Sentio is different</div>
-        <div class="diff-list">
-          <div class="diff-item">
-            <div class="diff-icon"><span>→</span></div>
-            <p><strong>It ends your session, not your access.</strong> Apps come back automatically after a cooldown. No willpower required.</p>
-          </div>
-          <div class="diff-item">
-            <div class="diff-icon"><span>→</span></div>
-            <p><strong>A 5-second pause before every open.</strong> A short breathing moment slows you down just enough to choose — not react.</p>
-          </div>
-          <div class="diff-item">
-            <div class="diff-icon"><span>→</span></div>
-            <p><strong>It gets easier each week.</strong> Session time gradually shortens as your habits improve — and only when you're ready.</p>
-          </div>
-        </div>
-      </div>
+    <div class="col us">
+      <h4>Cove</h4>
+      <ul>
+        <li>One feature, done warmly</li>
+        <li>Free forever</li>
+        <li>Private by design — no friends, no feed</li>
+        <li>Sensory fade. No fight, no override</li>
+        <li>Treats you like a person</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ── How it works ── -->
-<section id="how" style="padding-bottom:0;max-width:100%;padding-left:0;padding-right:0">
-  <div style="max-width:1200px;margin:0 auto;padding:120px 48px 0">
-    <div class="section-label reveal">How it works</div>
-    <h2 class="reveal">Three layers.<br><em>One protocol.</em></h2>
-  </div>
-  <div class="steps" style="margin-top:60px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-    <div class="step reveal">
-      <div class="step-num">01 — Before you open</div>
-      <div class="step-title">Pause before<br>you scroll.</div>
-      <p class="step-body">Every time you open a tracked app, Sentio plays a short breathing moment with a gentle haptic pulse. It's not a lecture — it's five seconds that help you choose instead of react.</p>
-      <div class="step-extra">+ Skip straight to DMs or Following instead of the main feed</div>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">02 — While you're in</div>
-      <div class="step-title">A timer, not<br>a blocker.</div>
-      <p class="step-body">You get a window of time (15 min by default) to use the app like normal. When it's almost up, the screen gently fades to grey. At zero, apps close on their own. No "Ignore Limit" button.</p>
-      <div class="step-extra">+ Gradual greyscale fade · + Can't be bypassed</div>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">03 — After it ends</div>
-      <div class="step-title">A cooldown that<br>actually works.</div>
-      <p class="step-body">After your session, Sentio gives you a 30-minute cooldown. You'll get a quick mood check-in and a breathing moment. The urge to open the app again usually fades in about 20 minutes.</p>
-      <div class="step-extra">+ Breathing animation · + Mood tracking · + Apps return automatically</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Features ── -->
-<section id="features">
-  <div class="section-label reveal">Features</div>
-  <h2 class="reveal">Simple by design.<br><em>Effective by default.</em></h2>
-  <p class="lead reveal">No complicated setup. No screens full of toggles. Sentio does one thing: helps you stop scrolling when you didn't mean to start.</p>
-
-  <div class="feature-list">
-    <div class="feature-card reveal">
-      <div class="fc-number">01</div>
-      <div class="fc-title">Enforced sessions</div>
-      <p class="fc-body">When your session ends, apps actually close. No "Ignore Limit" button, no workaround. They come back automatically after your cooldown — no willpower needed.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="fc-number">02</div>
-      <div class="fc-title">Greyscale fade</div>
-      <p class="fc-body">In the last minute of your session, the screen gradually drains to grey. It's a quiet visual cue — your brain registers "this is ending" without a single alert or popup.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="fc-number">03</div>
-      <div class="fc-title">Smart app launch</div>
-      <p class="fc-body">Open Instagram straight to DMs. Open Twitter to your Following feed. Skip the algorithm-curated discovery page entirely — go directly to what you actually opened the app for.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="fc-number">04</div>
-      <div class="fc-title">Breathing pause</div>
-      <p class="fc-body">Before any tracked app opens, you get a 5-second breathing moment with a gentle haptic pulse. Not a quiz, not a popup — just a beat that helps you open with intention.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="fc-number">05</div>
-      <div class="fc-title">Adaptive sessions</div>
-      <p class="fc-body">Each week, your session window can shorten by 2 minutes — but only when your mood data says you're ready, and only with your say-so. Progress at your own pace.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="fc-number">06</div>
-      <div class="fc-title">Your progress</div>
-      <p class="fc-body">See hours reclaimed, focus streaks, and mood trends. Everything on the dashboard highlights what you've gained — not what you've lost. You're not breaking a habit. You're building one.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ── Comparison ── -->
-<div class="comparison">
-  <div class="comparison-inner">
-    <div class="comp-header">
-      <div class="section-label" style="justify-content:center;display:flex">Why not Opal?</div>
-      <h2 style="font-size:clamp(32px,4vw,48px)">Simpler.<br><em>And it actually works.</em></h2>
-      <p style="font-size:16px;color:var(--muted);max-width:440px;margin:0 auto">Opal pioneered the space. Sentio is for the people who tried it and turned it off because it felt like another thing to manage.</p>
-    </div>
-
-    <div class="comp-table">
-      <div class="comp-row">
-        <div class="comp-col-header" style="text-align:left;color:var(--muted)">Feature</div>
-        <div class="comp-col-header comp-opal-col" style="color:var(--muted)">Opal</div>
-        <div class="comp-col-header" style="color:var(--amber)">Sentio</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">No "Ignore Limit" bypass</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">Breathing pause before opening apps</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">Gradual greyscale when session ends</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">Open apps directly to DMs or Following</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">Mood tracking during cooldowns</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">Setup in under 2 minutes</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">100% on-device — your data never leaves your phone</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span></div>
-        <div class="comp-sentio"><span class="check">✓</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-feature">Free during TestFlight</div>
-        <div class="comp-opal comp-opal-col"><span class="cross">✕</span> ($6.99/mo)</div>
-        <div class="comp-sentio"><span class="check">✓</span> Free</div>
-      </div>
-    </div>
-  </div>
+<!-- ── PRIVACY ── -->
+<div class="privacy">
+  <h3 class="reveal">Cove never sees what you scroll.</h3>
+  <p class="reveal">Everything stays on your device. No telemetry, no analytics, no profile. Mood and stats are yours alone, with optional iCloud sync if you want them on a second device.</p>
 </div>
 
-<!-- ── Testimonials ── -->
-<section>
-  <div class="section-label reveal">What people say</div>
-  <h2 class="reveal">Built from real<br><em>conversations.</em></h2>
-  <p class="lead reveal">Every feature in Sentio came from talking to real students about how they actually use their phones.</p>
+<!-- ── FINAL CTA ── -->
+<section class="final" id="waitlist">
+  <div class="section-eyebrow reveal" style="justify-content:center">join the waitlist</div>
+  <h2 class="reveal">cove<span class="dot"></span></h2>
+  <p class="tagline reveal">A quiet place to put your <em>scroll</em>.</p>
 
-  <div class="testimonials">
-    <div class="testimonial reveal">
-      <div class="t-quote">"I don't need an app to tell me I'm addicted. I need something that makes the pause feel possible."</div>
-      <div class="t-author">Research participant</div>
-      <div class="t-role">SMU, 21</div>
-    </div>
-    <div class="testimonial reveal">
-      <div class="t-quote">"The greyscale thing is actually genius. My brain literally goes 'okay this is over' without me having to fight myself."</div>
-      <div class="t-author">Beta tester</div>
-      <div class="t-role">College junior</div>
-    </div>
-    <div class="testimonial reveal">
-      <div class="t-quote">"Opening Instagram straight to DMs instead of the explore page — I didn't realize how much of my time was just the algorithm warming me up."</div>
-      <div class="t-author">Research participant</div>
-      <div class="t-role">SMU, 19</div>
-    </div>
+  <div class="form-wrap reveal" id="final-form-wrap" style="display:flex;flex-direction:column;align-items:center">
+    <form class="form" id="final-form" action="https://assets.mailerlite.com/forms/184049393692836944/subscribe" method="POST" target="ml-frame" novalidate>
+      <input type="hidden" name="ml-submit" value="1">
+      <input type="email" name="fields[email]" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" id="final-btn">Join the waitlist</button>
+    </form>
+    <div class="form-success" id="final-success">You're in. See you at the shore.</div>
+  </div>
+
+  <div class="hero-foot" style="justify-content:center;opacity:1">
+    <span>iOS first</span>
+    <span>Spring 2026</span>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ── Stats ── -->
-<section>
-  <div class="section-label reveal">The research</div>
-  <h2 class="reveal">The science<br><em>behind the design.</em></h2>
-  <div class="proof-grid">
-    <div class="proof-card reveal">
-      <div class="proof-number" data-prefix="~" data-value="20">~0</div>
-      <div class="proof-label">Minutes until the urge to scroll again fades on its own</div>
-    </div>
-    <div class="proof-card reveal">
-      <div class="proof-number" data-value="87" data-suffix="%">0%</div>
-      <div class="proof-label">Of heavy phone users say willpower alone has never worked</div>
-    </div>
-    <div class="proof-card reveal">
-      <div class="proof-number" data-value="5" data-suffix="s">0s</div>
-      <div class="proof-label">The breathing pause — long enough to shift from reacting to choosing</div>
-    </div>
-    <div class="proof-card reveal">
-      <div class="proof-number" data-value="0">0</div>
-      <div class="proof-label">Bytes of data that leave your phone. Everything stays on your device.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CTA ── -->
-<section class="cta-section" id="cta" style="max-width:100%;padding-left:0;padding-right:0;margin:0">
-  <div class="section-label" style="justify-content:center;display:flex">Early access</div>
-  <h2>Start reclaiming<br><em>your attention.</em></h2>
-  <p class="cta-sub">Join the beta. All features free. No subscription until you're ready.</p>
-
-  <form class="cta-form" id="waitlist-form" action="https://assets.mailerlite.com/forms/184049393692836944/subscribe" method="POST" target="ml_frame">
-    <input type="text" name="fields[name]" placeholder="Your name" required />
-    <input type="email" name="fields[email]" placeholder="Your email" required />
-    <input type="hidden" name="ml-submit" value="1">
-    <input type="hidden" name="anticsrf" value="true">
-    <button type="submit" class="btn-submit">Get early access →</button>
-  </form>
-  <iframe name="ml_frame" style="display:none;"></iframe>
-
-  <div class="cta-success" id="formSuccess">You're in. We'll reach out when your setup is ready.</div>
-
-  <p class="cta-note">iOS 17 required · iPhone only · Free during beta</p>
-</section>
-
-<!-- ── Footer ── -->
 <footer>
-  <div class="footer-logo">Sentio</div>
-  <div class="footer-links">
-    <a href="/privacy.html">Privacy</a>
-    <a href="/terms.html">Terms</a>
-    <a href="mailto:hello@sentioapp.com">Contact</a>
+  <a href="#" class="mark">cove<span class="dot"></span></a>
+  <div class="links">
+    <a href="#">Privacy</a>
+    <a href="#">Press</a>
+    <a href="mailto:hello@usecove.app">hello@usecove.app</a>
   </div>
-  <div class="footer-copy">© 2026 Sentio. Built with care.</div>
+  <div>© 2026 · Made for the in-between.</div>
 </footer>
 
 <script>
-  // ── Custom cursor ──
-  const dot = document.getElementById('cd');
-  const ring = document.getElementById('cr');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  /* ── Sticky nav ── */
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 10);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 
-  if (window.matchMedia('(hover: hover)').matches) {
-    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateCursor() {
-      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
+  /* ── Scroll reveal ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.08 + 's';
+    observer.observe(el);
+  });
 
-    document.querySelectorAll('a, button, input').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        dot.style.width = '6px'; dot.style.height = '6px';
-        ring.style.width = '60px'; ring.style.height = '60px';
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.style.width = '10px'; dot.style.height = '10px';
-        ring.style.width = '44px'; ring.style.height = '44px';
-      });
+  /* ── MailerLite form submission ── */
+  function handleForm(formId, btnId, successId, wrapId) {
+    const form   = document.getElementById(formId);
+    const btn    = document.getElementById(btnId);
+    const success = document.getElementById(successId);
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      const email = form.querySelector('input[type="email"]').value;
+      if (!email || !email.includes('@')) { e.preventDefault(); return; }
+
+      btn.textContent = 'Joining…';
+      btn.disabled = true;
+
+      // MailerLite receives the POST via the hidden iframe.
+      // After the iframe loads (success response), show confirmation.
+      const frame = document.getElementById('ml-frame');
+      const tid = setTimeout(showSuccess, 2800); // fallback
+
+      frame.addEventListener('load', () => {
+        clearTimeout(tid);
+        showSuccess();
+      }, { once: true });
+
+      function showSuccess() {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      }
     });
   }
 
-  // ── Smooth scroll for anchors ──
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-      // Close mobile menu if open
-      document.getElementById('mobileMenu').classList.remove('open');
-      document.getElementById('hamburger').classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
-
-  // ── Scroll progress bar ──
-  const progressBar = document.getElementById('scrollProgress');
-
-  // ── Nav scroll behavior ──
-  const nav = document.getElementById('nav');
-
-  window.addEventListener('scroll', () => {
-    // Progress bar
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = (scrollTop / docHeight * 100) + '%';
-
-    // Nav glass
-    if (scrollTop > 60) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-  });
-
-  // ── Hamburger menu ──
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-  });
-
-  // ── Intersection Observer — scroll reveal ──
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        // Add stagger delay based on position in parent
-        const siblings = entry.target.parentElement.querySelectorAll('.reveal');
-        let idx = Array.from(siblings).indexOf(entry.target);
-        entry.target.style.transitionDelay = (idx * 0.08) + 's';
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  // ── Proof number counter ──
-  const proofObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const value = parseFloat(el.dataset.value);
-        const prefix = el.dataset.prefix || '';
-        const suffix = el.dataset.suffix || '';
-        const duration = 1400;
-        const isFloat = String(value).includes('.');
-        let start = performance.now();
-
-        function step(now) {
-          const progress = Math.min((now - start) / duration, 1);
-          const ease = 1 - Math.pow(1 - progress, 3);
-          const current = value * ease;
-          el.textContent = prefix + (isFloat ? current.toFixed(1) : Math.round(current)) + suffix;
-          if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-        proofObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.proof-number[data-value]').forEach(el => proofObserver.observe(el));
-
-  // ── Hero entrance animation ──
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.hero-pill, .hero h1, .hero-sub, .hero-actions, .phone-showcase').forEach(el => {
-      el.classList.add('loaded');
-    });
-  });
-
-  // ── Dashboard mockup timer ──
-  (function() {
-    const timer = document.getElementById('mockupTimer');
-    if (!timer) return;
-    let minutes = 24, seconds = 7;
-    setInterval(() => {
-      seconds--;
-      if (seconds < 0) { seconds = 59; minutes--; }
-      if (minutes < 0) { minutes = 24; seconds = 7; }
-      timer.textContent = minutes + ':' + String(seconds).padStart(2, '0');
-    }, 1000);
-  })();
-
-  // ── MailerLite Submission Handler ──
-  document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-    const form = this;
-    const btn = form.querySelector('.btn-submit');
-
-    btn.textContent = 'Joining...';
-    btn.disabled = true;
-
-    // Show success message (the iframe handles the actual POST silently)
-    setTimeout(() => {
-      form.style.opacity = '0';
-      form.style.transition = 'opacity .6s';
-      setTimeout(() => {
-        form.style.display = 'none';
-        const success = document.getElementById('formSuccess');
-        success.style.display = 'block';
-        setTimeout(() => success.classList.add('visible'), 50);
-      }, 600);
-    }, 1000);
-  });
+  handleForm('hero-form',  'hero-btn',  'hero-success',  'hero-form-wrap');
+  handleForm('final-form', 'final-btn', 'final-success', 'final-form-wrap');
 </script>
+
 </body>
 </html>
