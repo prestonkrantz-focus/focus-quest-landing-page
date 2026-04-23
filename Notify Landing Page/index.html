@@ -94,24 +94,30 @@
 
   /* ── OTTER PEEK ── */
   .otter-peek{
-    position:absolute;
-    bottom:-10%;
-    right:5%;
-    width:min(450px, 80vw);
-    z-index:5;
+    position:fixed;
+    bottom:-60px; /* Hide most of it */
+    right:-20px;
+    width:280px;
+    height:280px;
+    z-index:200;
     pointer-events:none;
     opacity:0;
-    transform:translateY(30%) scale(0.95);
-    transition:transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
-    filter:drop-shadow(0 20px 50px rgba(0,0,0,0.4)) blur(0px);
+    transform:translateY(100%) rotate(10deg);
+    transition:transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s ease;
+    
+    /* MASK to hide the checkered background */
+    -webkit-mask-image: radial-gradient(circle at 50% 70%, black 30%, transparent 65%);
+    mask-image: radial-gradient(circle at 50% 70%, black 30%, transparent 65%);
   }
   .otter-peek.visible{
     opacity:1;
-    transform:translateY(0) scale(1);
-    filter:drop-shadow(0 20px 50px rgba(0,0,0,0.4)) blur(0px);
+    transform:translateY(0) rotate(0deg);
   }
   .otter-peek img{
-    width:100%;height:auto;display:block;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position: center 80%; /* Focus on the head */
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
   }
   /* ── HERO TYPE ── */
   .hero-mark{
@@ -381,9 +387,6 @@
 <header class="hero">
   <div class="hero-eyebrow">ios · spring 2026</div>
 
-  <div class="otter-peek" id="heroOtter">
-    <img src="otter-peek.png" alt="A professional, curious sea otter peeking up">
-  </div>
 
   <h1 class="hero-mark">cove<span class="dot"></span></h1>
   <p class="hero-line">an otter holds your phone <span class="ocean">for you</span>.</p>
@@ -510,9 +513,6 @@
 <!-- ── NAMING SECTION ── -->
 <div class="naming">
 
-  <div class="otter-peek" id="namingOtter" style="bottom: -20%; right: auto; left: 5%; transform: scaleX(-1) translateY(30%);">
-    <img src="otter-peek.png" alt="the sea otter sitting up alert, looking at you">
-  </div>
 
   <h2 class="reveal">name him whatever you want.</h2>
   <p class="reveal">or don't. he's your otter.</p>
@@ -524,9 +524,6 @@
   <div class="section-bg"></div>
   <div class="section-label reveal">join the waitlist</div>
 
-  <div class="otter-peek" id="finalOtter" style="bottom: -15%; right: 5%;">
-    <img src="otter-peek.png" alt="the sea otter floating happily, eyes open, ready to hand the phone back">
-  </div>
 
   <h2 class="reveal">let <em>the otter</em> hold it.</h2>
   <p class="hero-sub reveal" style="max-width:400px;margin:0 auto 32px">we'll email when it's on the app store. probably late spring.</p>
@@ -580,25 +577,53 @@
   }, {threshold:0.1, rootMargin:'0px 0px -36px 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* ── Mascot Peek Logic ── */
-  const peekMascots = [
-    { el: document.getElementById('heroOtter'), delay: 1000 },
-    { el: document.getElementById('namingOtter'), delay: 500 },
-    { el: document.getElementById('finalOtter'), delay: 200 }
-  ];
+  /* ── Curious Otter Logic ── */
+  const otter = document.getElementById('curiousOtter');
+  let isPeeking = false;
 
-  const mascotIO = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      const mascot = peekMascots.find(m => m.el === e.target);
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), mascot.delay);
-      } else {
-        e.target.classList.remove('visible');
-      }
-    });
-  }, { threshold: 0.1 });
+  function peek() {
+    if (isPeeking) return;
+    isPeeking = true;
+    
+    // Random position
+    const side = Math.random() > 0.5 ? 'right' : 'left';
+    otter.style.right = side === 'right' ? '-20px' : 'auto';
+    otter.style.left = side === 'left' ? '-20px' : 'auto';
+    otter.style.transform = side === 'left' ? 'scaleX(-1) translateY(100%)' : 'translateY(100%)';
+    
+    // Trigger peek
+    setTimeout(() => {
+      otter.classList.add('visible');
+      if (side === 'left') otter.style.transform = 'scaleX(-1) translateY(0)';
+      
+      // Dip back down after 2-4 seconds
+      setTimeout(() => {
+        otter.classList.remove('visible');
+        if (side === 'left') otter.style.transform = 'scaleX(-1) translateY(100%)';
+        isPeeking = false;
+        
+        // Schedule next peek
+        schedulePeek();
+      }, 2000 + Math.random() * 2000);
+    }, 100);
+  }
 
-  peekMascots.forEach(m => m.el && mascotIO.observe(m.el));
+  function schedulePeek() {
+    const delay = 5000 + Math.random() * 10000;
+    setTimeout(peek, delay);
+  }
+
+  // Initial peek after a few seconds
+  setTimeout(schedulePeek, 3000);
+
+  // Also peek on significant scroll
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    if (Math.abs(window.scrollY - lastScroll) > 500) {
+      peek();
+      lastScroll = window.scrollY;
+    }
+  }, {passive:true});
 
   /* ── MailerLite form wiring ── */
   function wireForm(formId, btnId, successId) {
@@ -622,6 +647,11 @@
   wireForm('hero-form',  'hero-btn',  'hero-success');
   wireForm('final-form', 'final-btn', 'final-success');
 </script>
+
+  <!-- ── Global Curious Otter ── -->
+  <div class="otter-peek" id="curiousOtter">
+    <img src="otter-peek.png" alt="A professional, curious sea otter peeking up">
+  </div>
 
 </body>
 </html>
