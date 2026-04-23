@@ -3,663 +3,177 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>cove — an otter holds your phone for you</title>
-<meta name="description" content="Cove is a screen-time app with a small sea otter. He holds your phone when you've been on TikTok too long. DMs stay open. Free, on-device. iOS, spring 2026.">
-<meta property="og:title" content="cove — an otter holds your phone for you">
-<meta property="og:description" content="15 minutes of TikTok, then the otter takes the phone for 30. DMs stay open. You stop getting cooked.">
-<meta property="og:type" content="website">
+<title>cove — coming soon</title>
+<meta name="description" content="Cove is coming soon for doomscrollers. The otter will hold your phone for you.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0F172A; /* Deep navy/slate */
-    --ink:#F1F5F9; /* Soft silver/white */
-    --ocean:#38BDF8; /* Brighter sky blue for accents */
-    --ocean-deep:#0EA5E9;
-    --wash:rgba(30, 41, 59, 0.7); /* Muted navy glass */
-    --line:rgba(255, 255, 255, 0.1);
+    --bg:#0F172A;
+    --ink:#F1F5F9;
+    --ocean:#38BDF8;
     --muted:rgba(241, 245, 249, 0.6);
-    --accent-glow: rgba(56, 189, 248, 0.15);
+    --line:rgba(255, 255, 255, 0.1);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
   body{
     background:var(--bg);color:var(--ink);
     font-family:'Instrument Sans',ui-sans-serif,system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
-    font-feature-settings:"ss01";
-    line-height:1.5;overflow-x:hidden;
-    background-image: 
-      radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.03) 0%, transparent 40%);
-    animation: drift 20s ease-in-out infinite alternate;
-  }
-  @keyframes drift{
-    0%{background-position: 0% 0%}
-    100%{background-position: 10% 5%}
-  }
-  .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
-
-  /* ── NAV ── */
-  nav{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:22px 32px;
-    position:fixed;top:0;left:0;right:0;z-index:100;
-    background:rgba(15, 23, 42, 0.8);
-    backdrop-filter:saturate(160%) blur(14px);
-    -webkit-backdrop-filter:saturate(160%) blur(14px);
-    border-bottom:1px solid transparent;
-    transition:border-color .4s;
-  }
-  nav.scrolled{border-bottom-color:var(--line)}
-  .wordmark{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:22px;letter-spacing:-.02em;line-height:1;
-    color:var(--ink);text-decoration:none;
-  }
-  .wordmark .dot{
-    display:inline-block;width:5px;height:5px;
-    background:var(--ocean);border-radius:50%;
-    vertical-align:baseline;margin-left:2px;transform:translateY(-3px);
-  }
-  .nav-links{display:flex;gap:24px;align-items:center;font-size:14px}
-  .nav-links a{color:var(--ink);text-decoration:none;opacity:.6;transition:opacity .2s}
-  .nav-links a:hover{opacity:1}
-  .nav-cta{
-    background:var(--ink);color:var(--bg)!important;opacity:1!important;
-    padding:8px 18px;border-radius:100px;font-size:13px;
-    transition:background .2s,transform .15s!important;
-  }
-  .nav-cta:hover{background:#1a3347;transform:translateY(-1px)!important}
-
-  /* ── HERO ── */
-  .hero{
-    min-height:100vh;
+    line-height:1.5;
+    height:100vh;
     display:flex;flex-direction:column;
     justify-content:center;align-items:center;
     text-align:center;
-    padding:110px 32px 80px;
-    position:relative;overflow:hidden;
+    padding:32px;
+    overflow:hidden;
   }
-  .hero-eyebrow{
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-    margin-bottom:36px;
-    display:flex;align-items:center;gap:10px;
-    opacity:0;animation:up .6s ease .1s forwards;
+  
+  .wordmark{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:32px;letter-spacing:-.02em;line-height:1;
+    color:var(--ink);text-decoration:none;
+    margin-bottom:60px;
+    animation: fade-up 0.8s ease forwards;
   }
-  .hero-eyebrow::before,.hero-eyebrow::after{
-    content:"";display:block;width:16px;height:1px;background:currentColor;opacity:.5;
+  .wordmark .dot{
+    display:inline-block;width:6px;height:6px;
+    background:var(--ocean);border-radius:50%;
+    vertical-align:baseline;margin-left:2px;transform:translateY(-4px);
   }
 
-  /* ── OTTER PEEK ── */
-  .otter-peek{
-    position:fixed;
-    bottom:-60px; /* Hide most of it */
-    right:-20px;
-    width:280px;
-    height:280px;
-    z-index:200;
-    pointer-events:none;
+  .content{
+    max-width:480px;
+    animation: fade-up 0.8s ease 0.2s forwards;
     opacity:0;
-    transform:translateY(100%) rotate(10deg);
-    transition:transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s ease;
-    
-    /* MASK to hide the checkered background */
-    -webkit-mask-image: radial-gradient(circle at 50% 70%, black 30%, transparent 65%);
-    mask-image: radial-gradient(circle at 50% 70%, black 30%, transparent 65%);
   }
-  .otter-peek.visible{
-    opacity:1;
-    transform:translateY(0) rotate(0deg);
-  }
-  .otter-peek img{
-    width:100%;height:100%;
-    object-fit:cover;
-    object-position: center 80%; /* Focus on the head */
-    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-  }
-  /* ── HERO TYPE ── */
-  .hero-mark{
+
+  h1{
     font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(72px,13vw,200px);
-    font-weight:400;line-height:.85;letter-spacing:-.05em;
-    margin-bottom:14px;
-    opacity:0;animation:up .7s ease .35s forwards;
+    font-size:clamp(40px, 8vw, 72px);
+    font-weight:400;line-height:0.95;letter-spacing:-.04em;
+    margin-bottom:24px;
   }
-  .hero-mark .dot{
-    display:inline-block;width:.13em;height:.13em;
-    background:var(--ocean);border-radius:50%;
-    vertical-align:baseline;margin-left:.04em;transform:translateY(.06em);
+  h1 em{font-style:italic;color:var(--ocean)}
+
+  p{
+    font-size:18px;color:var(--muted);
+    margin-bottom:40px;letter-spacing:-.01em;
   }
-  .hero-line{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(20px,3.2vw,44px);
-    font-weight:400;line-height:1.1;letter-spacing:-.02em;
-    max-width:640px;margin-bottom:12px;
-    opacity:0;animation:up .7s ease .5s forwards;
+
+  /* ── OTTER MOCKUP ── */
+  .mockup-wrap{
+    position:relative;
+    width:240px;
+    margin:0 auto 40px;
+    animation: float 6s ease-in-out infinite;
   }
-  .hero-line .ocean{color:var(--ocean)}
-  .hero-sub{
-    font-size:clamp(15px,1.8vw,18px);
-    color:var(--muted);line-height:1.6;letter-spacing:-.005em;
-    max-width:480px;margin-bottom:36px;
-    opacity:0;animation:up .7s ease .62s forwards;
+  .otter-img{
+    width:100%;height:auto;
+    display:block;
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
+  }
+  
+  @keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
   }
 
   /* ── FORM ── */
-  .form-block{opacity:0;animation:up .7s ease .74s forwards}
   .form{
-    display:flex;gap:6px;background:#fff;padding:5px;
-    border-radius:100px;border:1px solid var(--line);
-    width:min(430px,100%);
-    box-shadow:0 2px 6px rgba(14,28,42,.05);
+    display:flex;gap:8px;background:#fff;padding:6px;
+    border-radius:100px;width:100%;
+    margin-bottom:12px;
   }
-  .form input[type="email"]{
+  .form input{
     flex:1;border:0;background:transparent;outline:none;
-    padding:10px 16px;font:inherit;
-    font-size:15px;color:var(--ink);letter-spacing:-.005em;min-width:0;
+    padding:12px 20px;font:inherit;font-size:16px;
+    color:#0F172A;min-width:0;
   }
-  .form input::placeholder{color:var(--muted)}
   .form button{
-    border:0;background:var(--ink);color:var(--bg);
-    padding:10px 22px;border-radius:100px;
-    font:inherit;font-size:13px;letter-spacing:-.005em;
-    cursor:pointer;white-space:nowrap;flex-shrink:0;
-    transition:background .2s,transform .14s;
+    border:0;background:var(--bg);color:var(--ink);
+    padding:12px 24px;border-radius:100px;
+    font:inherit;font-size:14px;cursor:pointer;
+    transition: opacity 0.2s;
   }
-  .form button:hover{background:#1a3347;transform:translateY(-1px)}
-  .form button:disabled{opacity:.55;cursor:default;transform:none}
-  .form-success{
-    display:none;padding:14px 4px;
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:20px;color:var(--ocean);letter-spacing:-.01em;
-  }
-  .hero-foot{
-    margin-top:18px;font-size:12px;color:var(--muted);letter-spacing:.04em;
-    display:flex;gap:0;align-items:center;flex-wrap:wrap;justify-content:center;
-    opacity:0;animation:up .6s ease .86s forwards;
-  }
-  .hero-foot span+span::before{content:"·";margin:0 10px;color:var(--muted)}
+  .form button:hover{opacity:0.9}
+  .form button:disabled{opacity:0.5;cursor:default}
 
-  /* ── WAVE ── */
-  .wave-wrap{position:absolute;left:0;right:0;bottom:-1px;height:100px;pointer-events:none;opacity:.4}
-  .wave-svg{width:100%;height:100%;display:block}
-  .w1{animation:drift 24s linear infinite}
-  .w2{animation:drift 32s linear infinite reverse}
-  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-800px)}}
-  @media(prefers-reduced-motion:reduce){.w1,.w2{animation:none}}
-
-  /* ── ENTRANCE ── */
-  @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-  /* ── SCROLL REVEAL ── */
-  .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
-  .reveal.in{opacity:1;transform:none}
-
-  /* ── ATMOSPHERE ── */
-  .mist{
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    pointer-events:none;z-index:1;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-    opacity:.3;
+  .success-msg{
+    display:none;font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:22px;color:var(--ocean);
   }
 
-  /* ── SECTIONS ── */
-  section{
-    padding:200px 0 180px;
-    position:relative;z-index:2;
-  }
-  .section-bg{
-    position:absolute;top:100px;bottom:80px;left:20px;right:20px;
-    background:rgba(30, 41, 59, 0.4);
-    backdrop-filter:blur(10px);
-    border:1px solid var(--line);
-    border-radius:40px;
-    z-index:-1;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.2);
-  }
-  .section-label{
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-    margin-bottom:32px;display:flex;align-items:center;gap:12px;
-  }
-  .section-label::before{content:"";display:block;width:20px;height:1px;background:var(--ocean)}
-  .display{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(38px,5.5vw,70px);
-    font-weight:400;letter-spacing:-.03em;line-height:1.02;max-width:780px;
-  }
-  .display .ocean{color:var(--ocean)}
-  .lede{
-    font-size:17px;line-height:1.7;color:var(--muted);
-    max-width:560px;margin-top:24px;letter-spacing:-.005em;
-  }
-
-  /* ── STEPS ── */
-  .steps{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:10px;overflow:hidden;
-    margin-top:60px;
-  }
-  .step{
-    background:var(--bg);padding:44px 32px;
-    display:flex;flex-direction:column;gap:14px;min-height:290px;
-    transition:background .25s;cursor:default;
-  }
-  .step:hover{background:#EDEAE2}
-  .step-num{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:20px;color:var(--ocean);
-  }
-  .step-name{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:30px;letter-spacing:-.02em;line-height:1.05;font-weight:400;
-  }
-  .step-desc{font-size:15px;line-height:1.65;color:var(--muted);margin-top:auto}
-
-  /* ── MANIFESTO ── */
-  .manifesto{
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    padding:180px 32px;text-align:center;
-  }
-  .manifesto-text{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(32px,5.5vw,64px);
-    line-height:1.22;letter-spacing:-.03em;
-    max-width:760px;margin:0 auto;font-weight:400;
-  }
-  .manifesto-text span{color:var(--ocean)}
-  .manifesto-sig{
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-    margin-top:52px;
-  }
-
-  /* ── CONTRAST ── */
-  .contrast-grid{
-    display:grid;grid-template-columns:1fr 1fr;
-    margin-top:48px;border:1px solid var(--line);border-radius:10px;overflow:hidden;
-  }
-  .col{padding:44px 36px}
-  .col+.col{border-left:1px solid var(--line);background:rgba(79,144,180,.04)}
-  .col h4{
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--muted);margin-bottom:28px;font-weight:500;
-  }
-  .col ul{list-style:none}
-  .col li{padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.45}
-  .col li:last-child{border-bottom:0}
-  .col.them li{
-    color:var(--muted);text-decoration:line-through;
-    text-decoration-color:rgba(14,28,42,.18);text-decoration-thickness:1px;
-  }
-  .col.us li::before{
-    content:"·";color:var(--ocean);margin-right:10px;
-    font-size:20px;line-height:0;vertical-align:middle;
-  }
-
-  /* ── PRIVACY BAND ── */
-  .privacy-band{
-    background:var(--wash);border-top:1px solid var(--line);
-    padding:100px 32px;text-align:center;
-  }
-  .privacy-band h3{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(26px,3.5vw,42px);font-weight:400;letter-spacing:-.025em;line-height:1.2;
-    max-width:560px;margin:0 auto 18px;
-  }
-  .privacy-band p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.6}
-
-  /* ── NAMING SECTION ── */
-  .naming{
-    text-align:center;padding:160px 32px 140px;
-    border-top:1px solid var(--line);
-  }
-  .naming-otter{width:min(200px,48vw);margin:0 auto 32px}
-  .naming-otter svg{width:100%;height:auto;display:block}
-  .naming h2{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(28px,4vw,52px);font-weight:400;letter-spacing:-.03em;
-    line-height:1.1;margin-bottom:16px;
-  }
-  .naming p{font-size:17px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.6}
-
-  /* ── FINAL CTA ── */
-  .final{text-align:center;padding:180px 32px;border-top:1px solid var(--line)}
-  .final .section-label{justify-content:center}
-  .final .otter-wrap{margin:0 auto 20px}
-  .final h2{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:clamp(40px,7vw,96px);font-weight:400;letter-spacing:-.04em;
-    line-height:.95;margin-bottom:24px;
-  }
-  .final .hero-sub{margin:0 auto 32px;opacity:1;animation:none}
-  .final .form-block{margin:0 auto;opacity:1;animation:none}
-  .final .hero-foot{opacity:1;animation:none;justify-content:center}
-
-  /* ── FOOTER ── */
   footer{
-    border-top:1px solid var(--line);padding:40px 32px;
-    display:flex;justify-content:space-between;align-items:center;
-    flex-wrap:wrap;gap:20px;
-    font-size:13px;color:var(--muted);
+    position:absolute;bottom:40px;
+    display:flex;gap:24px;font-size:13px;
   }
-  footer a{color:var(--muted);text-decoration:none;transition:color .2s}
+  footer a{color:var(--muted);text-decoration:none;transition:color 0.2s}
   footer a:hover{color:var(--ink)}
-  .footer-links{display:flex;gap:24px}
 
-  /* ── HIDDEN ML FRAME ── */
-  #ml-frame{display:none;width:0;height:0;border:none}
+  #ml-frame{display:none}
 
-  /* ── RESPONSIVE ── */
-  @media(max-width:780px){
-    .nav-links a:not(.nav-cta){display:none}
-    section{padding:110px 0 100px}
-    .manifesto{padding:110px 32px}
-    .naming{padding:100px 32px 80px}
-    .final{padding:110px 32px}
-    .privacy-band{padding:70px 32px}
-    .steps{grid-template-columns:1fr}
-    .contrast-grid{grid-template-columns:1fr}
-    .col+.col{border-left:0;border-top:1px solid var(--line)}
-    .form{flex-direction:column;border-radius:14px;padding:8px;gap:6px}
-    .form button{width:100%;border-radius:10px}
-    footer{flex-direction:column;align-items:flex-start;gap:14px}
+  @keyframes fade-up{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:none}
+  }
+
+  @media(max-width:480px){
+    h1{font-size:48px}
+    .form{flex-direction:column;background:transparent;padding:0}
+    .form input{background:#fff;border-radius:100px;margin-bottom:8px}
+    .form button{width:100%;padding:16px}
   }
 </style>
 </head>
 <body>
 
-<div class="mist"></div>
-<iframe id="ml-frame" name="ml-frame"></iframe>
+<a href="/" class="wordmark">cove<span class="dot"></span></a>
 
-<!-- ── NAV ── -->
-<nav id="nav">
-  <a href="#" class="wordmark">cove<span class="dot"></span></a>
-  <div class="nav-links">
-    <a href="#how">how it works</a>
-    <a href="#why">why</a>
-    <a href="#waitlist" class="nav-cta">join the waitlist</a>
-  </div>
-</nav>
-
-<!-- ── HERO ── -->
-<header class="hero">
-  <div class="hero-eyebrow">ios · spring 2026</div>
-
-
-  <h1 class="hero-mark">cove<span class="dot"></span></h1>
-  <p class="hero-line">an otter holds your phone <span class="ocean">for you</span>.</p>
-  <p class="hero-sub">15 minutes of tiktok, then the otter takes the phone for 30. dms stay open. you stop getting cooked.</p>
-
-  <div class="form-block" id="hero-form-wrap">
-    <form class="form" id="hero-form"
-          action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
-          method="POST" target="ml-frame" novalidate>
-      <input type="hidden" name="ml-submit" value="1">
-      <input type="email" name="fields[email]" placeholder="your@email.com"
-             required autocomplete="email">
-      <button type="submit" id="hero-btn">join the waitlist</button>
-    </form>
-    <div class="form-success" id="hero-success">you're in. the otter's getting his floaties on.</div>
+<div class="content">
+  <div class="mockup-wrap">
+    <!-- Using the otter peek image as a centered mascot -->
+    <img src="otter-peek.png" class="otter-img" alt="a curious otter waiting for you">
   </div>
 
-  <div class="hero-foot">
-    <span>free forever</span>
-    <span>on-device</span>
-    <span>no streaks. no shame.</span>
-  </div>
+  <h1>coming soon for <em>doomscrollers</em>.</h1>
+  <p>the otter will hold your phone for you. join the waitlist to be the first to know.</p>
 
-  <div class="wave-wrap">
-    <svg class="wave-svg" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
-      <g class="w1">
-        <path d="M0,56 Q180,32 360,56 T720,56 T1080,56 T1440,56 L1440,100 L0,100 Z"
-              fill="rgba(56, 189, 248, .1)"/>
-        <path d="M-800,56 Q-620,32 -440,56 T-80,56 T280,56 L280,100 L-800,100 Z"
-              fill="rgba(56, 189, 248, .1)"/>
-      </g>
-      <g class="w2">
-        <path d="M0,74 Q240,56 480,74 T960,74 T1440,74 L1440,100 L0,100 Z"
-              fill="rgba(56, 189, 248, .15)"/>
-        <path d="M-800,74 Q-560,56 -320,74 T160,74 T640,74 L640,100 L-800,100 Z"
-              fill="rgba(56, 189, 248, .15)"/>
-      </g>
-    </svg>
-  </div>
-</header>
-
-<!-- ── WHAT IT IS ── -->
-<section id="why">
-  <div class="section-bg"></div>
-  <div class="wrap">
-    <div class="section-label reveal">what it is</div>
-    <h2 class="display reveal">your brainrot, <span class="ocean">on a timer</span>.</h2>
-    <p class="lede reveal">tiktok, reels, and shorts aren't designed to entertain you for two minutes — they're designed to put you in a trance. within the first fifteen minutes of scrolling, you stop choosing what to watch. you "wake up" forty-five minutes later and don't remember most of it. that's the trance. it's not a willpower problem. it's a chemical loop your phone is built to trigger. the otter ends the session before that happens.</p>
-  </div>
-</section>
-
-<!-- ── HOW IT WORKS ── -->
-<section id="how">
-  <div class="section-bg"></div>
-  <div class="wrap">
-    <div class="section-label reveal">how it works</div>
-    <h2 class="display reveal">three things. <span class="ocean">that's the app.</span></h2>
-
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">i.</div>
-        <div class="step-name">pick the apps.</div>
-        <div class="step-desc">tiktok, reels, shorts, snap — whatever's cooking your brain. the otter holds the apps you choose. he doesn't ask why.</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">ii.</div>
-        <div class="step-name">scroll for 15. then he takes it.</div>
-        <div class="step-desc">the screen fades to grey. the apps lock. dms stay open the whole time — cove routes you straight to your inbox.</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">iii.</div>
-        <div class="step-name">wait 30. he claps. window opens.</div>
-        <div class="step-desc">no ignore button. no bypass. just the otter, floating on his back, holding your phone until your nervous system catches up.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── MANIFESTO ── -->
-<div class="manifesto">
-  <p class="manifesto-text reveal">
-    you're not <span>broken</span>.<br>
-    you're just <span>cooked</span>.<br>
-    <span>the otter's got it</span>.
-  </p>
-  <div class="manifesto-sig reveal">— the cove rule</div>
+  <form class="form" id="waitlist-form" 
+        action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
+        method="POST" target="ml-frame">
+    <input type="hidden" name="ml-submit" value="1">
+    <input type="email" name="fields[email]" placeholder="your@email.com" required>
+    <button type="submit" id="submit-btn">join the waitlist</button>
+  </form>
+  <div class="success-msg" id="success-msg">you're on the list. 🦦</div>
 </div>
 
-<!-- ── CONTRAST ── -->
-<section id="why-not">
-  <div class="section-bg"></div>
-  <div class="wrap">
-    <div class="section-label reveal">what it isn't</div>
-    <h2 class="display reveal">fewer charts. <span class="ocean">more otters.</span></h2>
-    <p class="lede reveal">the screen-time category is full of apps that gamify your shame, charge $100 a year, and still let you hit "ignore." cove deletes the scoreboard.</p>
-
-    <div class="contrast-grid reveal">
-      <div class="col them">
-        <h4>the category</h4>
-        <ul>
-          <li>streaks, gems, leaderboards</li>
-          <li>$100/year for the real features</li>
-          <li>friends see your screen time</li>
-          <li>hard blocks you bypass anyway</li>
-          <li>charts of your brainrot</li>
-          <li>treats you like a problem</li>
-        </ul>
-      </div>
-      <div class="col us">
-        <h4>cove</h4>
-        <ul>
-          <li>one otter. one meter. that's it.</li>
-          <li>free, forever. no premium tier.</li>
-          <li>private — the otter can't see anything</li>
-          <li>soft fade. dms always open.</li>
-          <li>no charts. no scoreboard.</li>
-          <li>treats you like a person</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── PRIVACY BAND ── -->
-<div class="privacy-band">
-  <h3 class="reveal">the otter can't see what you scroll.</h3>
-  <p class="reveal">everything stays on your phone. no telemetry, no analytics, no profile. the otter holds the apps — he doesn't watch what's on them.</p>
-</div>
-
-<!-- ── NAMING SECTION ── -->
-<section class="naming" id="naming">
-  <div class="section-bg"></div>
-  <div class="wrap">
-    <h2 class="reveal">name him whatever you want.</h2>
-    <p class="reveal">or don't. he's your otter.</p>
-    <p class="reveal" style="margin-top:12px;font-size:15px">during setup, cove asks if you want to give him a name. jeff, dave, greg — whatever. after that, it's "jeff's holding your phone." if you skip it, it's just the otter. either way, he floats.</p>
-  </div>
-</section>
-
-<!-- ── FINAL CTA ── -->
-<section class="final" id="waitlist">
-  <div class="section-bg"></div>
-  <div class="wrap">
-    <div class="section-label reveal">join the waitlist</div>
-
-    <h2 class="reveal">let <em>the otter</em> hold it.</h2>
-    <p class="hero-sub reveal" style="max-width:400px;margin:0 auto 32px">we'll email when it's on the app store. probably late spring.</p>
-
-    <div class="form-block reveal" id="final-form-wrap">
-      <form class="form" id="final-form"
-            action="https://assets.mailerlite.com/forms/184049393692836944/subscribe"
-            method="POST" target="ml-frame" novalidate>
-        <input type="hidden" name="ml-submit" value="1">
-        <input type="email" name="fields[email]" placeholder="your@email.com"
-               required autocomplete="email">
-        <button type="submit" id="final-btn">join the waitlist</button>
-      </form>
-      <div class="form-success" id="final-success">you're in. the otter's getting his floaties on.</div>
-    </div>
-
-    <div class="hero-foot">
-      <span>ios first</span>
-      <span>spring 2026</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
-<footer style="background: rgba(15, 23, 42, 0.9); border-top: 1px solid var(--line);">
-  <a href="/" class="wordmark" style="color: var(--ink);">cove<span class="dot"></span></a>
-  <div class="footer-links">
-    <a href="/privacy.html" style="color: var(--muted);">privacy</a>
-    <a href="/terms.html" style="color: var(--muted);">terms</a>
-    <a href="#" style="color: var(--muted);">press</a>
-    <a href="mailto:hello@usecove.app" style="color: var(--muted);">hello@usecove.app</a>
-  </div>
-  <div style="color: var(--muted);">© 2026 · 🦦 the otter's holding it.</div>
+<footer>
+  <a href="/privacy.html">privacy</a>
+  <a href="/terms.html">terms</a>
+  <a href="mailto:hello@usecove.app">hello@usecove.app</a>
 </footer>
 
+<iframe id="ml-frame" name="ml-frame"></iframe>
+
 <script>
-  /* ── Sticky nav ── */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 10);
-  }, {passive:true});
-
-  /* ── Scroll reveal ── */
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.transitionDelay = (i % 3) * 0.1 + 's';
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, {threshold:0.1, rootMargin:'0px 0px -36px 0px'});
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  /* ── Curious Otter Logic ── */
-  const otter = document.getElementById('curiousOtter');
-  let isPeeking = false;
-
-  function peek() {
-    if (isPeeking) return;
-    isPeeking = true;
+  const form = document.getElementById('waitlist-form');
+  const btn = document.getElementById('submit-btn');
+  const success = document.getElementById('success-msg');
+  
+  form.addEventListener('submit', () => {
+    btn.disabled = true;
+    btn.textContent = 'joining...';
     
-    // Random position
-    const side = Math.random() > 0.5 ? 'right' : 'left';
-    otter.style.right = side === 'right' ? '-20px' : 'auto';
-    otter.style.left = side === 'left' ? '-20px' : 'auto';
-    otter.style.transform = side === 'left' ? 'scaleX(-1) translateY(100%)' : 'translateY(100%)';
-    
-    // Trigger peek
+    // Fallback if the iframe doesn't trigger load quickly
     setTimeout(() => {
-      otter.classList.add('visible');
-      if (side === 'left') otter.style.transform = 'scaleX(-1) translateY(0)';
-      
-      // Dip back down after 2-4 seconds
-      setTimeout(() => {
-        otter.classList.remove('visible');
-        if (side === 'left') otter.style.transform = 'scaleX(-1) translateY(100%)';
-        isPeeking = false;
-        
-        // Schedule next peek
-        schedulePeek();
-      }, 2000 + Math.random() * 2000);
-    }, 100);
-  }
-
-  function schedulePeek() {
-    const delay = 5000 + Math.random() * 10000;
-    setTimeout(peek, delay);
-  }
-
-  // Initial peek after a few seconds
-  setTimeout(schedulePeek, 3000);
-
-  // Also peek on significant scroll
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    if (Math.abs(window.scrollY - lastScroll) > 500) {
-      peek();
-      lastScroll = window.scrollY;
-    }
-  }, {passive:true});
-
-  /* ── MailerLite form wiring ── */
-  function wireForm(formId, btnId, successId) {
-    const form = document.getElementById(formId);
-    const btn  = document.getElementById(btnId);
-    const ok   = document.getElementById(successId);
-    if (!form) return;
-    form.addEventListener('submit', () => {
-      if (!form.querySelector('input[type="email"]').value) return;
-      btn.textContent = 'joining…';
-      btn.disabled = true;
-      const frame = document.getElementById('ml-frame');
-      const tid = setTimeout(showOk, 3000);
-      frame.addEventListener('load', () => { clearTimeout(tid); showOk(); }, {once:true});
-      function showOk() {
-        form.style.display = 'none';
-        ok.style.display = 'block';
-      }
-    });
-  }
-  wireForm('hero-form',  'hero-btn',  'hero-success');
-  wireForm('final-form', 'final-btn', 'final-success');
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }, 2000);
+  });
 </script>
-
-  <!-- ── Global Curious Otter ── -->
-  <div class="otter-peek" id="curiousOtter">
-    <img src="otter-peek.png" alt="A professional, curious sea otter peeking up">
-  </div>
 
 </body>
 </html>
