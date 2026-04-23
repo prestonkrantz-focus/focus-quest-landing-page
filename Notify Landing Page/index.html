@@ -13,13 +13,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F4F2EC;
-    --ink:#0E1C2A;
-    --ocean:#4F90B4;
-    --ocean-deep:#3A7895;
-    --wash:#DCE6EC;
-    --line:rgba(14,28,42,.09);
-    --muted:rgba(14,28,42,.52);
+    --bg:#0F172A; /* Deep navy/slate */
+    --ink:#F1F5F9; /* Soft silver/white */
+    --ocean:#38BDF8; /* Brighter sky blue for accents */
+    --ocean-deep:#0EA5E9;
+    --wash:rgba(30, 41, 59, 0.7); /* Muted navy glass */
+    --line:rgba(255, 255, 255, 0.1);
+    --muted:rgba(241, 245, 249, 0.6);
+    --accent-glow: rgba(56, 189, 248, 0.15);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -29,6 +30,14 @@
     -webkit-font-smoothing:antialiased;
     font-feature-settings:"ss01";
     line-height:1.5;overflow-x:hidden;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.03) 0%, transparent 40%);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes drift{
+    0%{background-position: 0% 0%}
+    100%{background-position: 10% 5%}
   }
   .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
 
@@ -37,7 +46,7 @@
     display:flex;justify-content:space-between;align-items:center;
     padding:22px 32px;
     position:fixed;top:0;left:0;right:0;z-index:100;
-    background:rgba(244,242,236,.9);
+    background:rgba(15, 23, 42, 0.8);
     backdrop-filter:saturate(160%) blur(14px);
     -webkit-backdrop-filter:saturate(160%) blur(14px);
     border-bottom:1px solid transparent;
@@ -83,16 +92,27 @@
     content:"";display:block;width:16px;height:1px;background:currentColor;opacity:.5;
   }
 
-  /* ── OTTER ── */
-  .otter-wrap{
-    width:min(400px,72vw);margin-bottom:20px;
-    opacity:0;animation:up .8s ease .2s forwards;
+  /* ── OTTER PEEK ── */
+  .otter-peek{
+    position:absolute;
+    bottom:-10%;
+    right:5%;
+    width:min(450px, 80vw);
+    z-index:5;
+    pointer-events:none;
+    opacity:0;
+    transform:translateY(30%) scale(0.95);
+    transition:transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+    filter:drop-shadow(0 20px 50px rgba(0,0,0,0.4)) blur(0px);
   }
-  .otter-wrap svg{width:100%;height:auto;display:block}
-  .otter-bob{animation:bob 5s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  @media(prefers-reduced-motion:reduce){.otter-bob{animation:none}}
-
+  .otter-peek.visible{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:drop-shadow(0 20px 50px rgba(0,0,0,0.4)) blur(0px);
+  }
+  .otter-peek img{
+    width:100%;height:auto;display:block;
+  }
   /* ── HERO TYPE ── */
   .hero-mark{
     font-family:'Instrument Serif',serif;font-style:italic;
@@ -157,7 +177,7 @@
   .hero-foot span+span::before{content:"·";margin:0 10px;color:var(--muted)}
 
   /* ── WAVE ── */
-  .wave-wrap{position:absolute;left:0;right:0;bottom:-1px;height:100px;pointer-events:none}
+  .wave-wrap{position:absolute;left:0;right:0;bottom:-1px;height:100px;pointer-events:none;opacity:.4}
   .wave-svg{width:100%;height:100%;display:block}
   .w1{animation:drift 24s linear infinite}
   .w2{animation:drift 32s linear infinite reverse}
@@ -171,8 +191,28 @@
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
   .reveal.in{opacity:1;transform:none}
 
+  /* ── ATMOSPHERE ── */
+  .mist{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    pointer-events:none;z-index:1;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    opacity:.3;
+  }
+
   /* ── SECTIONS ── */
-  section{padding:200px 0 180px;border-top:1px solid var(--line)}
+  section{
+    padding:200px 0 180px;
+    position:relative;z-index:2;
+  }
+  .section-bg{
+    position:absolute;top:100px;bottom:80px;left:20px;right:20px;
+    background:rgba(30, 41, 59, 0.4);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--line);
+    border-radius:40px;
+    z-index:-1;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.2);
+  }
   .section-label{
     font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
     margin-bottom:32px;display:flex;align-items:center;gap:12px;
@@ -324,6 +364,7 @@
 </head>
 <body>
 
+<div class="mist"></div>
 <iframe id="ml-frame" name="ml-frame"></iframe>
 
 <!-- ── NAV ── -->
@@ -340,101 +381,8 @@
 <header class="hero">
   <div class="hero-eyebrow">ios · spring 2026</div>
 
-  <!--
-    THE OTTER — calm state
-    Brown chibi sea otter, floating on back, holding phone.
-    Character bible: #8B6F47 body, #F4F2EC belly, #0E1C2A outline.
-    Replace with generated PNG once Midjourney assets land.
-  -->
-  <div class="otter-wrap">
-    <svg class="otter-bob" viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg"
-         aria-label="a small brown sea otter floating on his back, holding a phone, eyes closed peacefully">
-
-      <!-- water -->
-      <ellipse cx="220" cy="264" rx="185" ry="11" fill="#4F90B4" opacity=".3"/>
-
-      <!-- body — warm brown -->
-      <ellipse cx="228" cy="170" rx="148" ry="54"
-               fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
-
-      <!-- belly — cream -->
-      <ellipse cx="228" cy="163" rx="118" ry="40" fill="#F4F2EC"/>
-
-      <!-- tail -->
-      <path d="M362 182 Q414 148 392 218 Q376 199 366 191 Z"
-            fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8" stroke-linejoin="round"/>
-
-      <!-- back paws (peeking up) -->
-      <ellipse cx="326" cy="116" rx="22" ry="13"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(-22 326 116)"/>
-      <ellipse cx="298" cy="108" rx="22" ry="13"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(-32 298 108)"/>
-
-      <!-- HEAD — big, chibi (r=72) -->
-      <circle cx="86" cy="128" r="72"
-              fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
-
-      <!-- ears -->
-      <ellipse cx="54" cy="67" rx="13" ry="9"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(-15 54 67)"/>
-      <ellipse cx="112" cy="63" rx="13" ry="9"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(15 112 63)"/>
-
-      <!-- face cream patch -->
-      <ellipse cx="86" cy="142" rx="42" ry="32" fill="#F4F2EC"/>
-
-      <!-- eyes CLOSED — large curved arcs (chibi = eyes take up 1/3 face) -->
-      <path d="M56 120 Q70 110 84 120"
-            stroke="#0E1C2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-      <path d="M88 120 Q102 110 116 120"
-            stroke="#0E1C2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-
-      <!-- cheek blush (very subtle, below eyes) -->
-      <ellipse cx="54" cy="132" rx="10" ry="6" fill="#E8A598" opacity=".35"/>
-      <ellipse cx="118" cy="132" rx="10" ry="6" fill="#E8A598" opacity=".35"/>
-
-      <!-- nose -->
-      <ellipse cx="86" cy="143" rx="5.5" ry="3.8" fill="#0E1C2A"/>
-
-      <!-- smile -->
-      <path d="M76 154 Q86 160 96 154"
-            stroke="#0E1C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-      <!-- whiskers left -->
-      <line x1="54" y1="142" x2="26" y2="138"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-      <line x1="54" y1="150" x2="26" y2="154"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-
-      <!-- whiskers right -->
-      <line x1="118" y1="142" x2="146" y2="138"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-      <line x1="118" y1="150" x2="146" y2="154"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-
-      <!-- front paws (holding phone sides) -->
-      <ellipse cx="168" cy="154" rx="20" ry="12"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
-      <ellipse cx="258" cy="154" rx="20" ry="12"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
-
-      <!-- phone -->
-      <rect x="180" y="132" width="66" height="50" rx="8"
-            fill="#0E1C2A"/>
-      <rect x="185" y="137" width="56" height="40" rx="5"
-            fill="#F4F2EC"/>
-      <!-- screen lines -->
-      <rect x="192" y="144" width="42" height="4.5" rx="2"
-            fill="#4F90B4" opacity=".45"/>
-      <rect x="192" y="153" width="30" height="4.5" rx="2"
-            fill="#4F90B4" opacity=".3"/>
-      <rect x="192" y="162" width="36" height="4.5" rx="2"
-            fill="#4F90B4" opacity=".18"/>
-    </svg>
+  <div class="otter-peek" id="heroOtter">
+    <img src="otter-peek.png" alt="A professional, curious sea otter peeking up">
   </div>
 
   <h1 class="hero-mark">cove<span class="dot"></span></h1>
@@ -463,15 +411,15 @@
     <svg class="wave-svg" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
       <g class="w1">
         <path d="M0,56 Q180,32 360,56 T720,56 T1080,56 T1440,56 L1440,100 L0,100 Z"
-              fill="rgba(79,144,180,.13)"/>
+              fill="rgba(56, 189, 248, .1)"/>
         <path d="M-800,56 Q-620,32 -440,56 T-80,56 T280,56 L280,100 L-800,100 Z"
-              fill="rgba(79,144,180,.13)"/>
+              fill="rgba(56, 189, 248, .1)"/>
       </g>
       <g class="w2">
         <path d="M0,74 Q240,56 480,74 T960,74 T1440,74 L1440,100 L0,100 Z"
-              fill="rgba(79,144,180,.22)"/>
+              fill="rgba(56, 189, 248, .15)"/>
         <path d="M-800,74 Q-560,56 -320,74 T160,74 T640,74 L640,100 L-800,100 Z"
-              fill="rgba(79,144,180,.22)"/>
+              fill="rgba(56, 189, 248, .15)"/>
       </g>
     </svg>
   </div>
@@ -479,6 +427,7 @@
 
 <!-- ── WHAT IT IS ── -->
 <section id="why" class="wrap">
+  <div class="section-bg"></div>
   <div class="section-label reveal">what it is</div>
   <h2 class="display reveal">your brainrot, <span class="ocean">on a timer</span>.</h2>
   <p class="lede reveal">tiktok, reels, and shorts aren't designed to entertain you for two minutes — they're designed to put you in a trance. within the first fifteen minutes of scrolling, you stop choosing what to watch. you "wake up" forty-five minutes later and don't remember most of it. that's the trance. it's not a willpower problem. it's a chemical loop your phone is built to trigger. the otter ends the session before that happens.</p>
@@ -486,6 +435,7 @@
 
 <!-- ── HOW IT WORKS ── -->
 <section id="how" class="wrap">
+  <div class="section-bg"></div>
   <div class="section-label reveal">how it works</div>
   <h2 class="display reveal">three things. <span class="ocean">that's the app.</span></h2>
 
@@ -520,6 +470,7 @@
 
 <!-- ── CONTRAST ── -->
 <section class="wrap">
+  <div class="section-bg"></div>
   <div class="section-label reveal">what it isn't</div>
   <h2 class="display reveal">fewer charts. <span class="ocean">more otters.</span></h2>
   <p class="lede reveal">the screen-time category is full of apps that gamify your shame, charge $100 a year, and still let you hit "ignore." cove deletes the scoreboard.</p>
@@ -559,55 +510,8 @@
 <!-- ── NAMING SECTION ── -->
 <div class="naming">
 
-  <!-- alert state otter — sitting up, looking at viewer, small -->
-  <div class="naming-otter reveal">
-    <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg"
-         aria-label="the sea otter sitting up alert, looking at you">
-      <!-- body -->
-      <ellipse cx="100" cy="170" rx="70" ry="52"
-               fill="#8B6F47" stroke="#0E1C2A" stroke-width="2.8"/>
-      <!-- belly -->
-      <ellipse cx="100" cy="165" rx="52" ry="38" fill="#F4F2EC"/>
-      <!-- tail -->
-      <path d="M164 185 Q192 168 180 208 Q170 196 165 190 Z"
-            fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5" stroke-linejoin="round"/>
-      <!-- HEAD — chibi big -->
-      <circle cx="100" cy="90" r="66"
-              fill="#8B6F47" stroke="#0E1C2A" stroke-width="2.8"/>
-      <!-- ears -->
-      <ellipse cx="56" cy="38" rx="11" ry="8"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"
-               transform="rotate(-12 56 38)"/>
-      <ellipse cx="144" cy="38" rx="11" ry="8"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"
-               transform="rotate(12 144 38)"/>
-      <!-- face patch -->
-      <ellipse cx="100" cy="102" rx="38" ry="28" fill="#F4F2EC"/>
-      <!-- eyes OPEN — big solid circles with catch-lights -->
-      <circle cx="78" cy="88" r="14" fill="#0E1C2A"/>
-      <circle cx="122" cy="88" r="14" fill="#0E1C2A"/>
-      <circle cx="82" cy="84" r="5" fill="white"/>
-      <circle cx="126" cy="84" r="5" fill="white"/>
-      <!-- nose -->
-      <ellipse cx="100" cy="104" rx="5" ry="3.5" fill="#0E1C2A"/>
-      <!-- neutral mouth -->
-      <path d="M93 113 Q100 116 107 113"
-            stroke="#0E1C2A" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <!-- whiskers -->
-      <line x1="68" y1="102" x2="44" y2="98"
-            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
-      <line x1="68" y1="109" x2="44" y2="113"
-            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
-      <line x1="132" y1="102" x2="156" y2="98"
-            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
-      <line x1="132" y1="109" x2="156" y2="113"
-            stroke="#0E1C2A" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
-      <!-- paws on lap -->
-      <ellipse cx="76" cy="152" rx="18" ry="12"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"/>
-      <ellipse cx="124" cy="152" rx="18" ry="12"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.5"/>
-    </svg>
+  <div class="otter-peek" id="namingOtter" style="bottom: -20%; right: auto; left: 5%; transform: scaleX(-1) translateY(30%);">
+    <img src="otter-peek.png" alt="the sea otter sitting up alert, looking at you">
   </div>
 
   <h2 class="reveal">name him whatever you want.</h2>
@@ -617,79 +521,11 @@
 
 <!-- ── FINAL CTA ── -->
 <section class="final" id="waitlist">
+  <div class="section-bg"></div>
   <div class="section-label reveal">join the waitlist</div>
 
-  <!-- happy state otter — eyes open, smiling -->
-  <div class="otter-wrap reveal">
-    <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg"
-         aria-label="the sea otter floating happily, eyes open, ready to hand the phone back">
-      <!-- water -->
-      <ellipse cx="220" cy="264" rx="185" ry="11" fill="#4F90B4" opacity=".3"/>
-      <!-- body -->
-      <ellipse cx="228" cy="170" rx="148" ry="54"
-               fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
-      <!-- belly -->
-      <ellipse cx="228" cy="163" rx="118" ry="40" fill="#F4F2EC"/>
-      <!-- tail -->
-      <path d="M362 182 Q414 148 392 218 Q376 199 366 191 Z"
-            fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8" stroke-linejoin="round"/>
-      <!-- back paws -->
-      <ellipse cx="326" cy="116" rx="22" ry="13"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(-22 326 116)"/>
-      <ellipse cx="298" cy="108" rx="22" ry="13"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(-32 298 108)"/>
-      <!-- HEAD -->
-      <circle cx="86" cy="128" r="72"
-              fill="#8B6F47" stroke="#0E1C2A" stroke-width="3"/>
-      <!-- ears -->
-      <ellipse cx="54" cy="67" rx="13" ry="9"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(-15 54 67)"/>
-      <ellipse cx="112" cy="63" rx="13" ry="9"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"
-               transform="rotate(15 112 63)"/>
-      <!-- face patch -->
-      <ellipse cx="86" cy="142" rx="42" ry="32" fill="#F4F2EC"/>
-      <!-- eyes OPEN + happy (upward curve) -->
-      <circle cx="66" cy="120" r="16" fill="#0E1C2A"/>
-      <circle cx="106" cy="120" r="16" fill="#0E1C2A"/>
-      <circle cx="70" cy="114" r="6" fill="white"/>
-      <circle cx="110" cy="114" r="6" fill="white"/>
-      <!-- happy cheek blush -->
-      <ellipse cx="48" cy="136" rx="13" ry="8" fill="#E8A598" opacity=".55"/>
-      <ellipse cx="124" cy="136" rx="13" ry="8" fill="#E8A598" opacity=".55"/>
-      <!-- big smile with teeth -->
-      <path d="M70 154 Q86 164 102 154"
-            stroke="#0E1C2A" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <!-- nose -->
-      <ellipse cx="86" cy="143" rx="5.5" ry="3.8" fill="#0E1C2A"/>
-      <!-- whiskers -->
-      <line x1="54" y1="142" x2="26" y2="138"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-      <line x1="54" y1="150" x2="26" y2="154"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-      <line x1="118" y1="142" x2="146" y2="138"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-      <line x1="118" y1="150" x2="146" y2="154"
-            stroke="#0E1C2A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-      <!-- sparkles (happy state) -->
-      <text x="155" y="76" font-size="20" fill="#0E1C2A" opacity=".5">✦</text>
-      <text x="22" y="82" font-size="14" fill="#0E1C2A" opacity=".35">✦</text>
-      <text x="140" y="46" font-size="10" fill="#4F90B4" opacity=".6">✦</text>
-      <!-- paws holding phone -->
-      <ellipse cx="168" cy="154" rx="20" ry="12"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
-      <ellipse cx="258" cy="154" rx="20" ry="12"
-               fill="#7A5F3A" stroke="#0E1C2A" stroke-width="2.8"/>
-      <!-- phone -->
-      <rect x="180" y="132" width="66" height="50" rx="8" fill="#0E1C2A"/>
-      <rect x="185" y="137" width="56" height="40" rx="5" fill="#F4F2EC"/>
-      <rect x="192" y="144" width="42" height="4.5" rx="2" fill="#4F90B4" opacity=".45"/>
-      <rect x="192" y="153" width="30" height="4.5" rx="2" fill="#4F90B4" opacity=".3"/>
-      <rect x="192" y="162" width="36" height="4.5" rx="2" fill="#4F90B4" opacity=".18"/>
-    </svg>
+  <div class="otter-peek" id="finalOtter" style="bottom: -15%; right: 5%;">
+    <img src="otter-peek.png" alt="the sea otter floating happily, eyes open, ready to hand the phone back">
   </div>
 
   <h2 class="reveal">let <em>the otter</em> hold it.</h2>
@@ -714,15 +550,15 @@
 </section>
 
 <!-- ── FOOTER ── -->
-<footer>
-  <a href="/" class="wordmark">cove<span class="dot"></span></a>
+<footer style="background: rgba(15, 23, 42, 0.9); border-top: 1px solid var(--line);">
+  <a href="/" class="wordmark" style="color: var(--ink);">cove<span class="dot"></span></a>
   <div class="footer-links">
-    <a href="/privacy.html">privacy</a>
-    <a href="/terms.html">terms</a>
-    <a href="#">press</a>
-    <a href="mailto:hello@usecove.app">hello@usecove.app</a>
+    <a href="/privacy.html" style="color: var(--muted);">privacy</a>
+    <a href="/terms.html" style="color: var(--muted);">terms</a>
+    <a href="#" style="color: var(--muted);">press</a>
+    <a href="mailto:hello@usecove.app" style="color: var(--muted);">hello@usecove.app</a>
   </div>
-  <div>© 2026 · 🦦 the otter's holding it.</div>
+  <div style="color: var(--muted);">© 2026 · 🦦 the otter's holding it.</div>
 </footer>
 
 <script>
@@ -743,6 +579,26 @@
     });
   }, {threshold:0.1, rootMargin:'0px 0px -36px 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── Mascot Peek Logic ── */
+  const peekMascots = [
+    { el: document.getElementById('heroOtter'), delay: 1000 },
+    { el: document.getElementById('namingOtter'), delay: 500 },
+    { el: document.getElementById('finalOtter'), delay: 200 }
+  ];
+
+  const mascotIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const mascot = peekMascots.find(m => m.el === e.target);
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), mascot.delay);
+      } else {
+        e.target.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  peekMascots.forEach(m => m.el && mascotIO.observe(m.el));
 
   /* ── MailerLite form wiring ── */
   function wireForm(formId, btnId, successId) {
